@@ -6,7 +6,8 @@
     selectedCarriersStore,
     selectedShippersStore,
     selectedShipperGroupsStore,
-  } from "$lib/headerfiltersStore"; 
+  } from "$lib/headerfiltersStore";
+  export let activeMainPage = ""; 
   import FilterModal from "$lib/HeaderFilterModal.svelte";
 
   let selectedCustomers = [];
@@ -270,6 +271,26 @@
     </div>
     </div>
 
+
+	{#if activeMainPage == "dashboard" || activeMainPage == "reports"}
+			<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
+			<label for="filter-modal" class="btn btn-square btn-ghost">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
+					/>
+				</svg>
+			</label>
+		{/if}
     <!-- Theme Selector -->
     <div class="dropdown dropdown-end">
       <label tabindex="0" class="btn m-1">Theme</label>
