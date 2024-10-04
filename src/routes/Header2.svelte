@@ -58,10 +58,10 @@ selectedShipperGroupsStore.subscribe((value) => {
 
 </script>
 
-<div class="navbar flex    fixed left-0 right-0 z-50 bg-base-100 shadow-lg">
+<div class="navbar flex  px-5  sticky top-2 left-0 right-0 z-50 bg-base-100 shadow-lg">
 
-<div class="flex  flex">
-		<a href="/" class=" flex  text-xl ">
+<div class="flex px-1 flex">
+		<a href="/" class=" flex pl-8 px-2 text-xl ">
 			<img src={logo} alt="SvelteKit" class="h-8 mr-2" />KRISHNA
 		</a>
     <nav class="flex-grow ">
@@ -104,21 +104,28 @@ selectedShipperGroupsStore.subscribe((value) => {
 	<!-- Display Right side item in Nabar -->
 <div class="gap-4  pl-10" >
 	<!-- Display selected filters in the navbar -->
-<!-- Container with Y-Scroll -->
-<div class="w-[24rem] h-[4.5rem] overflow-x-auto scrollbar-custom cursor-pointer scrollbar-top  costum ">
-  <div class="grid grid-cols-3 justify-center w-[38rem]  gap-2">
-     <!-- Customers Section -->
-  <div class="text-sm flex flex-col py-1 space-y-1">
+<div class="w-[24rem] h-[4rem] overflow-y-auto cursor-pointer scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-green-400 scrollbar-track-pink-300">
+  <div class="grid grid-cols-2 justify-items-center items-center  p-4 h-[10rem]">
+
+  <!-- Customers Section -->
+  <div class="text-sm flex flex-col space-y-1">
     <div class="flex-grow relative group">
       <div
         class="truncate max-w-xs"
-        style=" width:160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
         title={appliedFilters.customersTooltip}
       >
         <!-- Customers content with truncation and ellipsis -->
         <div class="flex gap-1 items-center "> 
         <div  class="flex items-center ">
-  
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+  <g fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Head -->
+    <circle cx="12" cy="7" r="4"/>
+    <!-- Body -->
+    <path d="M5 21c0-4 3.582-7 7-7s7 3 7 7"/>
+  </g>
+</svg>
 <span>&#58;<span>
         </div>
         <p> {appliedFilters.customers}</p>
@@ -138,7 +145,7 @@ selectedShipperGroupsStore.subscribe((value) => {
     <div class="flex-grow relative group">
       <div
         class="truncate max-w-xs"
-        style=" width:160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
         title={appliedFilters.carriersTooltip}
       >
         <!-- Carriers content with truncation and ellipsis -->
@@ -166,7 +173,7 @@ selectedShipperGroupsStore.subscribe((value) => {
     <div class="flex-grow relative group">
       <div
         class="truncate max-w-xs"
-        style=" width:160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
         title={appliedFilters.dateTooltip}
       >
         <!-- Shipper Groups content with truncation and ellipsis -->
@@ -198,7 +205,7 @@ selectedShipperGroupsStore.subscribe((value) => {
     <div class="flex-grow relative group">
       <div
         class="truncate max-w-xs"
-        style=" width:160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
         title={appliedFilters.shipperGroupsTooltip}
       >
         <!-- Shipper Groups content with truncation and ellipsis -->
@@ -228,7 +235,7 @@ selectedShipperGroupsStore.subscribe((value) => {
     <div class="flex-grow relative group">
       <div
         class="truncate max-w-xs"
-        style="width:160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
         title={appliedFilters.shippersTooltip}
       >
         <!-- Shippers content with truncation and ellipsis -->
@@ -252,10 +259,8 @@ selectedShipperGroupsStore.subscribe((value) => {
       </div>
     </div>
   </div>
-
-  </div>
 </div>
-
+</div>
 
 
 		<!-- Filter Icon -->
@@ -405,37 +410,4 @@ selectedShipperGroupsStore.subscribe((value) => {
 	.navbar {
 		height: 5rem; /* Adjust this to match the height of your header */
 	}
- 
-   .scrollbar-custom {
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #22c55e #f3a1a1; /* Thumb (green) and Track (pink) */
-  }
-
-  /* Custom scrollbar for WebKit browsers (Chrome, Safari) */
-  .scrollbar-custom::-webkit-scrollbar {
-    width: 5px; /* Scrollbar width for vertical scroll */
-    height: 10px; /* Scrollbar height for horizontal scroll */
-  }
-
-  .scrollbar-custom::-webkit-scrollbar-thumb {
-    background-color: #22c55e; /* Thumb color (green) */
-    border-radius: 10px;
-  }
-
-  .scrollbar-custom::-webkit-scrollbar-track {
-    background-color: #f3a1a1; /* Track color (pink) */
-  }
-
-  /* Style for the scrollbar at the top */
-  .scrollbar-top {
-    transform: rotate(180deg);
-  }
-
-  /* Re-invert the content */
-  .scrollbar-top > * {
-    transform: rotate(180deg);
-  }
-
-
 </style>
-
