@@ -93,7 +93,7 @@
    <div class="hidden lg:flex items-center space-x-4">
     <!-- Filter Display -->
     <div class="text-sm space-y-1 hidden lg:block">
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-2  gap-2">
        <!-- Customers Section -->
   <div class="text-sm flex flex-col py-1 space-y-1">
     <div class="flex-grow relative group">

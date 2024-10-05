@@ -103,8 +103,8 @@
         title={appliedFilters.customersTooltip}
       >
         <!-- Customers content with truncation and ellipsis -->
-        <div class="flex gap-1   items-center ">
-      <div class="flex w-[2rem] gap-1 justify-center items-center">
+               <div class="flex gap-1 items-center">
+          <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- User group icon -->
   <path 
@@ -158,8 +158,8 @@
         title={appliedFilters.carriersTooltip}
       >
         <!-- Carriers content with truncation and ellipsis -->
-        <div class="flex gap-1  items-center ">
-      <div class="flex w-[2rem] gap-1 justify-center items-center">
+          <div class="flex gap-1 items-center">
+          <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
 
 <span>&#58;<span>
@@ -186,8 +186,8 @@
         title={appliedFilters.dateTooltip}
       >
         <!-- Date Groups content with truncation and ellipsis -->
-        <div class="flex gap-1  items-center ">
-      <div class="flex w-[2rem] gap-1 justify-center items-center">
+           <div class="flex gap-1 items-center">
+          <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-12 9h14a2 2 0 002-2V7a2 2 0 00-2-2h-14a2 2 0 00-2 2v10a2 2 0 002 2z"/>
 </svg>
@@ -218,8 +218,8 @@
         title={appliedFilters.shipperGroupsTooltip}
       >
         <!-- Shipper Groups content with truncation and ellipsis -->
-        <div class="flex gap-1  items-center ">
-      <div class="flex w-[2rem]  gap-1 justify-center items-center">
+         <div class="flex gap-1 items-center">
+          <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="25" height="24">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h3m4 9a2 2 0 104 0 2 2 0 00-4 0zm-9 2a2 2 0 100-4 2 2 0 000 4zm11-4V9a2 2 0 00-2-2h-1l-2-2H8a2 2 0 00-2 2v9h13z" />
 </svg>
@@ -248,8 +248,8 @@
         title={appliedFilters.shippersTooltip}
       >
         <!-- Shippers content with truncation and ellipsis -->
-       <div class="flex gap-1  items-center ">
-      <div class="flex gap-1 w-[2rem] justify-center items-center">
+          <div class="flex gap-1 items-center">
+          <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
   <path fill="none" stroke="currentColor" stroke-width="2" d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"/>
 </svg>
