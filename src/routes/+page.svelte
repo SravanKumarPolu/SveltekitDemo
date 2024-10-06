@@ -1,19 +1,26 @@
-<script>
-  import { page } from "$app/stores";
-  import logo from "$lib/Images/logo.png";
+<script lang="ts">
+  import { page } from "$app/stores";  // SvelteKit store for routing and current page data
+  import logo from "$lib/Images/logo.png"; // Importing the logo image
   import {
     selectedCustomersStore,
     selectedCarriersStore,
     selectedShippersStore,
     selectedShipperGroupsStore,
-  } from "$lib/headerfiltersStore";
-  export let activeMainPage = ""; 
+  } from "$lib/headerfiltersStore"; // Importing SvelteKit stores for managing filters
+  
+  // Importing a modal component for filters
   import FilterModal from "$lib/HeaderFilterModal.svelte";
 
-  let selectedCustomers = [];
-  let selectedCarriers = [];
-  let selectedShipperGroups = [];
-  let selectedShippers = [];
+  // Props passed to the component
+  export let activeMainPage = ""; // Prop to determine which page is currently active
+  
+  // Local variables for storing selected data from stores
+  let selectedCustomers: Array<{ name: string }> = [];
+  let selectedCarriers: Array<{ name: string }> = [];
+  let selectedShipperGroups: Array<{ groupName: string }> = [];
+  let selectedShippers: Array<{ accountNumber: string }> = [];
+  
+  // Object to store applied filter labels
   let appliedFilters = {
     customers: "No customers selected",
     carriers: "No carriers selected",
@@ -22,7 +29,7 @@
     date: "No date selected", // added the date filter
   };
 
-  // Tooltip texts
+  // Tooltip texts for the filters
   let appliedFiltersTooltips = {
     customersTooltip: "Detailed customer information here",
     carriersTooltip: "Detailed carrier information here",
@@ -30,10 +37,10 @@
     shippersTooltip: "Detailed shipper information here",
   };
 
-  // Show/Hide Menu for Small Layouts
+  // Variable to show/hide the menu in small screen layouts
   let showMenu = false;
 
-  // Subscribe to stores for dynamic updates
+  // Subscribe to the stores for dynamic updates and update local variables
   selectedCustomersStore.subscribe((value) => {
     selectedCustomers = value;
     appliedFilters.customers = selectedCustomers.length
@@ -63,15 +70,18 @@
   });
 </script>
 
+
 <!-- Navbar Section -->
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
-  <div class="flex-1">
-    <a href="/" class="flex text-xl items-center">
-      <img src={logo} alt="Logo" class="h-8 mr-2" /> KRISHNA
-    </a>
-     <!-- Desktop Navigation -->
+<div class="flex-1">
+  <!-- Logo and branding -->
+  <a href="/" class="flex text-xl items-center">
+    <img src={logo} alt="Logo" class="h-8 mr-2" /> KRISHNA
+  </a>
+
+  <!-- Desktop Navigation -->
   <nav class="hidden lg:flex">
-    <ul class="menu menu-horizontal px-1 ">
+    <ul class="menu menu-horizontal px-1">
       {#each [
         { path: "/admin", label: "Admin" },
         { path: "/", label: "Home" },
@@ -80,12 +90,14 @@
         { path: "/parcel", label: "Parcel" },
       ] as link}
         <li class={$page.url.pathname === link.path ? "active" : ""}>
+          <!-- Navigation link -->
           <a href={link.path} class="btn btn-ghost">{link.label}</a>
         </li>
       {/each}
     </ul>
   </nav>
-  </div>
+</div>
+
 
  
 
@@ -272,25 +284,26 @@
     </div>
 
 
-	{#if activeMainPage == "dashboard" || activeMainPage == "reports"}
-			<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
-			<label for="filter-modal" class="btn btn-square btn-ghost">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
-					/>
-				</svg>
-			</label>
-		{/if}
+{#if activeMainPage === "dashboard" || activeMainPage === "reports"}
+	<!-- Filter Icon (Shown only when activeMainPage is 'reports' or 'dashboard') -->
+	<label for="filter-modal" class="btn btn-square btn-ghost">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="h-6 w-6"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+			stroke-width="2"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
+			/>
+		</svg>
+	</label>
+{/if}
+
     <!-- Theme Selector -->
     <div class="dropdown dropdown-end">
       <label tabindex="0" class="btn m-1">Theme</label>
@@ -318,50 +331,66 @@
   </div>
 
   <!-- Mobile Navigation (Hamburger Menu) -->
-  <div class="lg:hidden flex items-center">
-    <button class="btn btn-square btn-ghost" on:click={() => showMenu = !showMenu}>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-    
-    <!-- Avatar Icon -->
-    <div class="dropdown dropdown-end ml-2">
-      <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full">
-          <img alt="User Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        </div>
-      </label>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a href="/profile" class="justify-between">Profile <span class="badge">New</span></a></li>
-        <li><a>Settings</a></li>
-        <li><a href="/logout" class="btn btn-ghost" on:click={() => logout()}>Logout</a></li>
-      </ul>
-    </div>
-  </div>
-
-  {#if showMenu}
-    <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0">
-      {#each [
-        { path: "/admin", label: "Admin" },
-        { path: "/", label: "Home" },
-        { path: "/dashboard", label: "Dashboard" },
-        { path: "/reports", label: "Reports" },
-        { path: "/parcel", label: "Parcel" },
-      ] as link}
-        <li><a href={link.path}>{link.label}</a></li>
-      {/each}
-    </ul>
-  {/if}
+<div class="lg:hidden flex items-center">
+	<button class="btn btn-square btn-ghost" on:click={() => showMenu = !showMenu} aria-label="Toggle menu">
+		<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+		</svg>
+	</button>
+	
+	<!-- Avatar Icon -->
+	<div class="dropdown dropdown-end ml-2">
+		<label tabindex="0" class="btn btn-ghost btn-circle avatar" aria-label="User menu">
+			<div class="w-10 rounded-full">
+				<img alt="User Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+			</div>
+		</label>
+		<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+			<li><a href="/profile" class="justify-between">Profile <span class="badge">New</span></a></li>
+			<li><a href="#">Settings</a></li>
+			<li>
+				<a href="/logout" class="btn btn-ghost" on:click={() => logout()}>Logout</a>
+			</li>
+		</ul>
+	</div>
 </div>
 
+
+ {#if showMenu}
+	<ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0">
+		{#each [
+			{ path: "/admin", label: "Admin" },
+			{ path: "/", label: "Home" },
+			{ path: "/dashboard", label: "Dashboard" },
+			{ path: "/reports", label: "Reports" },
+			{ path: "/parcel", label: "Parcel" }
+		] as link}
+			<li><a href={link.path} class="hover:bg-gray-200">{link.label}</a></li>
+		{/each}
+	</ul>
+{/if}
+
+</div>
 <!-- Modal for Filter Options -->
 <input type="checkbox" id="filter-modal" class="modal-toggle" />
+
 <div class="modal">
   <div class="modal-box w-11/12 max-w-4xl">
+    <!-- Title or Header for Modal -->
+    <h2 class="text-lg font-bold">Filter Options</h2>
+
+    <!-- Filter Modal Component -->
     <FilterModal bind:selectedCustomers bind:selectedShippers bind:selectedCarriers />
+
+    <!-- Modal Actions (Optional) -->
+    <div class="modal-action">
+      <label for="filter-modal" class="btn">Close</label>
+      <button class="btn btn-primary" on:click={() => applyFilters()}>Apply Filters</button>
+    </div>
   </div>
 </div>
+
+
 
 <style>
   .navbar {
