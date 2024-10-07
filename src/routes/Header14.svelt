@@ -5,7 +5,8 @@ import shipment from "$lib/Images/shipment.png";
 
   export let username="subbu" // Receive the username as a prop
   let firstLetter = username.charAt(0).toUpperCase();
-
+// Show/Hide Menu for Small Layouts
+	let showMenu = false;
 	import {
 		selectedCustomersStore,
 		selectedCarriersStore,
@@ -62,33 +63,30 @@ selectedShipperGroupsStore.subscribe((value) => {
 </script>
 
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
-<div class="flex-1">
-  <!-- Logo and branding -->
-  <a href="/" class="flex text-xl items-center">
-    <img src={logo} alt="Logo" class="h-8 mr-2" /> KRISHNA
-  </a>
+	<div class="flex-1">
+		<a href="/profile" class="flex text-xl items-center">
+			<img src={logo} alt="Logo" class="h-20 w-60 mr-2" />
+		</a>
+		<!-- Desktop Navigation -->
+		<nav class="hidden lg:flex">
+			<ul class="menu menu-horizontal px-1">
+				{#each [{ path: "/admin", label: "Admin" }, { path: "/profile", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
+					<li
+						class={$page.url.pathname === link.path ? "active" : ""}
+					>
+						<a href={link.path} class="btn btn-ghost"
+							>{link.label}</a
+						>
+					</li>
+				{/each}
+			</ul>
+		</nav>
+	</div>
 
-  <!-- Desktop Navigation -->
-  <nav class="hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      {#each [
-        { path: "/admin", label: "Admin" },
-        { path: "/", label: "Home" },
-        { path: "/dashboard", label: "Dashboard" },
-        { path: "/reports", label: "Reports" },
-        { path: "/parcel", label: "Parcel" },
-      ] as link}
-        <li class={$page.url.pathname === link.path ? "active" : ""}>
-          <!-- Navigation link -->
-          <a href={link.path} class="btn btn-ghost">{link.label}</a>
-        </li>
-      {/each}
-    </ul>
-  </nav>
-</div>
-	<div class="flex-none flex items-center space-x-4">
-	
-		<!-- Display selected filters in the navbar -->
+	<!-- Profile and Theme Selector (Desktop Only) -->
+	<div class="hidden lg:flex items-center space-x-4">
+		<!-- Filter Display -->
+				<!-- Display selected filters in the navbar -->
 <div class="flex-grow">
     <div class="text-sm grid grid-cols-2  gap-2">
         <!-- Customers Section -->
@@ -108,6 +106,40 @@ selectedShipperGroupsStore.subscribe((value) => {
                 </ul>
             </div>
         </div>
+    <!-- Date Section -->
+    <div class="flex-grow relative group">
+        <div
+            class="truncate max-w-xs"
+            style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+            title={appliedFilters.dateTooltip}
+        >
+            <strong>Date:</strong> {appliedFilters.date}
+        </div>
+        <div
+            class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+        >
+            <ul class="text-sm">
+                {appliedFilters.date}
+            </ul>
+        </div>
+    </div>
+    <!-- Currency Section -->
+    <div class="flex-grow relative group">
+        <div
+            class="truncate max-w-xs"
+            style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+            title={appliedFilters.selectedCurrenciesTooltip}
+        >
+            <strong>Currencies:</strong> {appliedFilters.selectedCurrencies}
+        </div>
+        <div
+            class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+        >
+            <ul class="text-sm">
+                {appliedFilters.selectedCurrencies}
+            </ul>
+        </div>
+    </div>
 
         <!-- Carriers Section -->
         <div class="flex-grow relative group">
@@ -165,30 +197,24 @@ selectedShipperGroupsStore.subscribe((value) => {
     </div>
 </div>
 
-
-		<!-- Filter Icon -->
-
-		{#if activeMainPage == "dashboard" || activeMainPage == "reports"}
-			<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
-			<label for="filter-modal" class="btn btn-square btn-ghost">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
-					/>
-				</svg>
-			</label>
-		{/if}
-
-
+		<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
+		<label for="filter-modal" class="btn btn-square btn-ghost">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
+				/>
+			</svg>
+		</label>
+		<!-- Theme Selector -->
 		<div class="dropdown dropdown-end">
 			<div tabindex="0" role="button" class="btn m-1">
 				Theme
@@ -206,7 +232,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 			</div>
 			<ul
 				tabindex="0"
-				class="dropdown-content bg-base-100 rounded-box w-52 rounded-box z-[1] w p-2 shadow-2xl"
+				class="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl"
 			>
 				<li>
 					<input
@@ -255,8 +281,9 @@ selectedShipperGroupsStore.subscribe((value) => {
 				</li>
 			</ul>
 		</div>
+		<!-- User Profile Menu -->
 		<div class="dropdown dropdown-end">
-	<div
+			<div
   tabindex="0"
   role="button"
   class=" avatar online placeholder rounded-full border border-neutral"
@@ -266,16 +293,14 @@ selectedShipperGroupsStore.subscribe((value) => {
   </div>
 </div>
 
-
 			<ul
 				tabindex="0"
-				class="menu menu-sm dropdown-content bg-base-100  rounded-box z-[1] mt-3 w-52 p-2 shadow"
+				class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 			>
 				<li>
-					<a class="justify-between">
-						Profile
-						<span class="badge">New</span>
-					</a>
+					<a href="/profile" class="justify-between"
+						>Profile <span class="badge">New</span></a
+					>
 				</li>
 				<li><a>Settings</a></li>
 				<li>
@@ -288,12 +313,74 @@ selectedShipperGroupsStore.subscribe((value) => {
 			</ul>
 		</div>
 	</div>
+
+	<!-- Mobile Navigation (Hamburger Menu) -->
+	<div class="lg:hidden flex items-center">
+		<button
+			class="btn btn-square btn-ghost"
+			on:click={() => (showMenu = !showMenu)}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M4 6h16M4 12h16M4 18h16"
+				/>
+			</svg>
+		</button>
+
+		<!-- Avatar Icon -->
+		<div class="dropdown dropdown-end ml-2">
+			<div
+  tabindex="0"
+  role="button"
+  class=" avatar online placeholder rounded-full border border-neutral"
+>
+  <div class="btn btn-ghost btn-circle text-neutral-content  flex items-center justify-center">
+    <span class="text-xl">{firstLetter}</span>
+  </div>
+</div>
+			<ul
+				tabindex="0"
+				class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+			>
+				<li>
+					<a href="/profile" class="justify-between"
+						>Profile <span class="badge">New</span></a
+					>
+				</li>
+				<li><a>Settings</a></li>
+				<li>
+					<a
+						href="/logout"
+						class="btn btn-ghost"
+						on:click={() => logout()}>Logout</a
+					>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	{#if showMenu}
+		<ul
+			tabindex="0"
+			class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0"
+		>
+			{#each [{ path: "/admin", label: "Admin" }, { path: "/", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
+				<li><a href={link.path}>{link.label}</a></li>
+			{/each}
+		</ul>
+	{/if}
 </div>
 
-
-
-
-<!-- DaisyUI Modal for Filter Options -->
+<!-- Modal for Filter Options -->
 <input type="checkbox" id="filter-modal" class="modal-toggle" />
 <div class="modal">
 	<div class="modal-box w-11/12 max-w-4xl">
@@ -305,12 +392,35 @@ selectedShipperGroupsStore.subscribe((value) => {
 	</div>
 </div>
 
-
 <style>
 	.navbar {
-		height: 6rem; /* Adjust this to match the height of your header */
+		height: 6rem; /* Adjust to match the height of the header */
+	}
+
+	.menu.menu-horizontal > li > a {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+	}
+
+	.menu.menu-compact {
+		right: 0;
+		left: auto;
+	}
+
+	.dropdown-content {
+		position: absolute;
+		top: 100%;
+		right: 0;
+	}
+
+	@media (max-width: 1024px) {
+		.dropdown-content {
+			left: 0;
+			right: auto;
+		}
 	}
 </style>
+
 
 
 

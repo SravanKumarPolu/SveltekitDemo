@@ -359,8 +359,8 @@ selectedShipperGroupsStore.subscribe((value) => {
   role="button"
   class="btn btn-ghost btn-circle avatar border-2  border-gray-400"
 >
-  <div class="bg-neutral text-neutral-content w-16 pt-1 rounded-full ">
-    <span class="text-xl">AI</span>
+  <div class="bg-neutral text-neutral-content w-16 rounded-full">
+    <span class="text-xl">{firstLetter}</span>
   </div>
 </div>
 
