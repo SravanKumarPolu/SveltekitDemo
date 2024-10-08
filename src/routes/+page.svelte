@@ -1,5 +1,14 @@
 <script>
-	import { page } from "$app/stores";
+	  import { page } from "$app/stores";
+
+  // Define the navigation links array once
+  const links = [
+    { path: "/admin", label: "Admin" },
+    { path: "/", label: "Home" },
+    { path: "/dashboard", label: "Dashboard" },
+    { path: "/reports", label: "Reports" },
+    { path: "/parcel", label: "Parcel" }
+  ];
 	import logo from "$lib/Images/logo.png";
 import shipment from "$lib/Images/shipment.png";
 
@@ -25,6 +34,7 @@ let showMenu = false;
 		shipperGroups: "",
 		carriers: "",
 	};
+
 
 	// Subscribe to the selectedCustomersStore to automatically update
 	selectedCustomersStore.subscribe((value) => {
@@ -61,35 +71,69 @@ selectedShipperGroupsStore.subscribe((value) => {
 
 </script>
 
+<!-- Navbar Section -->
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
 	<div class="flex-1">
 		<a href="/profile" class="flex text-xl items-center">
 			<img src={logo} alt="Logo" class="h-20 w-60 mr-2" />
 		</a>
 		<!-- Desktop Navigation -->
-		<nav class="hidden lg:flex">
-			<ul class="menu menu-horizontal px-1">
-				{#each [{ path: "/admin", label: "Admin" }, { path: "/profile", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
-					<li
-						class={$page.url.pathname === link.path ? "active" : ""}
-					>
-						<a href={link.path} class="btn btn-ghost"
-							>{link.label}</a
-						>
-					</li>
-				{/each}
-			</ul>
-		</nav>
+	<nav class="hidden lg:flex">
+  <ul class="menu menu-horizontal px-1">
+    {#each links as link}
+      <li class={$page.url.pathname === link.path ? "active" : ""}>
+        <a href={link.path} class="btn btn-ghost">{link.label}</a>
+      </li>
+    {/each}
+  </ul>
+
+  <!-- mobile Section -->
+  {#if showMenu}
+  <ul
+    tabindex="0"
+    class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0"
+  >
+    {#each links as link}
+      <li><a href={link.path}>{link.label}</a></li>
+    {/each}
+  </ul>
+{/if}
+</nav>
+
+	<!-- Mobile Navigation (Hamburger Menu) -->
+	<div class="lg:hidden flex items-center">
+		<button
+			class="btn btn-square btn-ghost"
+			on:click={() => (showMenu = !showMenu)}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M4 6h16M4 12h16M4 18h16"
+				/>
+			</svg>
+		</button>
+
+	</div>
+
 	</div>
 
 	<!-- Profile and Theme Selector (Desktop Only) -->
 	<div class=" lg:flex items-center space-x-4">
 		<!-- Filter Display -->
-<!-- Display selected filters in the navbar -->
-<div class="grid grid-cols-4 gap-2 w-[24rem] box-border ">
-
-      <!-- Item 1 (Customers) -->
-	<div class="text-sm flex flex-col col-span-2 py-1 space-y-1">
+<div class="h-[5.8rem] overflow-y-auto cursor-pointer bg-base-100  rounded-lg scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-success scrollbar-track-base-300">
+    <!-- Display selected filters in the navbar -->
+    <div class="flex flex-col sm:flex sm:gap-2 sm:w-auto h-auto  md:h-[8rem]   sm:space-y-1 md:grid md:grid-cols-4 md:gap-0 md:w-[22rem] lg:grid-cols-4 font-bold">
+        <!-- Item 1 (Customers) -->
+        <div class="text-sm flex flex-col col-span-2 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -135,7 +179,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.customers}
@@ -143,95 +187,9 @@ selectedShipperGroupsStore.subscribe((value) => {
 						</div>
 					</div>
 				</div>
-         
-           <!-- Item 2 (Currencies) -->
- <div class="text-sm flex flex-col py-1 space-y-1 col-start-4">
-					<div class="flex-grow relative group">
-						<div
-							class="truncate max-w-xs"
-							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={appliedFilters.selectedCurrenciesTooltip}
-						>
-							<!-- Currencies content with truncation and ellipsis -->
-							<div class="flex gap-1 items-center">
-								<div class="flex items-center">
-									<svg
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<!-- Currency icon -->
-										<path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.39.49-4.83-.15-6.54-1.72C5.16 17.16 5 15.12 5.89 13.46c.44-.83 1.15-1.49 2.05-1.84.86-.32 1.78-.45 2.67-.45 1.71 0 3.3.82 4.28 2.1.29.38.67.69 1.09.89v.05c-.69 1.45-1.92 2.7-3.48 3.39v.33zM16 11V7.07c-1.15.16-2.22.64-3 1.33V11h3zM13 4.07c-.47 0-.94.04-1.4.12C13.31 4.55 15 6.1 15 8v3h3V8c0-2.94-2.39-5.33-5.33-5.93-.34-.07-.69-.1-1.04-.1z"
-											fill="currentColor"
-										/>
-									</svg>
 
-									<span>&#58;<span> </span></span>
-								</div>
-								<p>{appliedFilters.selectedCurrencies}</p>
-							</div>
-						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
-						>
-							<ul class="text-sm">
-								{appliedFilters.selectedCurrencies}
-							</ul>
-						</div>
-					</div>
-				</div>
-
-        
-	<!-- Selected Run Option Display Section -->
-				<div class="text-sm flex flex-col py-1 space-y-1">
-					<div class="flex-grow relative group">
-						<div
-							class="truncate max-w-xs"
-							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={selectedRunOptDisplayText}
-						>
-							<!-- Display with truncation and ellipsis -->
-							<div class="flex gap-1 items-center">
-								<div class="flex items-center">
-									<svg
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<!-- Calendar icon representing the date range -->
-										<path
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"
-										/>
-									</svg>
-									<span>&#58;<span> </span></span>
-								</div>
-								<!-- Show truncated Run Option Display Text -->
-								<p>{selectedRunOptDisplayText}</p>
-							</div>
-						</div>
-						<!-- Tooltip for full text -->
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
-						>
-							<ul class="text-sm">
-								<li>{selectedRunOptDisplayText}</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-  <!-- Item 3 (Carriers) -->
-	<div class="bg-white text-sm  col-span-2 relative group">
+      <!-- Item 2 (Carriers) -->
+	<div class="text-sm flex flex-col col-span-2 space-y-1  col-start-3 row-1">
 						<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -269,7 +227,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.carriers}
@@ -278,9 +236,58 @@ selectedShipperGroupsStore.subscribe((value) => {
 					</div>
 				</div>
      
+      
  
-       <!-- Item 5 (Shipper Groups) -->
-				<div class="text-sm flex flex-col col-span-2 space-y-1">
+    <!-- Selected Run Option Display Section -->
+  
+  <!-- Item 3 (date) -->
+				<div class="text-sm flex flex-col col-span-4 space-y-1">
+					<div class="flex-grow relative group">
+						<div
+							class="truncate max-w-xs"
+							style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+								
+						>
+							<!-- Display with truncation and ellipsis -->
+							<div class="flex gap-1 items-center">
+							 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<!-- Calendar icon representing the date range -->
+										<path
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"
+										/>
+									</svg>
+									<span>&#58;<span> </span></span>
+								</div>
+								<!-- Show truncated Run Option Display Text -->
+								<p>invoice date:12-09-1025 to 1024-8-19</p>
+							</div>
+						</div>
+						<!-- Tooltip for full text -->
+						<div
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+						>
+							<ul class="text-sm">
+								<li></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+
+
+     
+           <!-- Item 4 (Shipper Groups) -->
+				<div class="text-sm flex flex-col col-span-2  space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -289,7 +296,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 						>
 							<!-- Shipper Groups content with truncation and ellipsis -->
 							<div class="flex items-center gap-1">
-								<div class="flex items-center gap-1">
+							 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
@@ -312,7 +319,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shipperGroups}
@@ -321,9 +328,9 @@ selectedShipperGroupsStore.subscribe((value) => {
 					</div>
 				</div>
 
-          <!-- Item 6 (Shippers) -->
+          <!-- Item 5 (Shippers) -->
 
-			<div class="text-sm flex flex-col space-y-1">
+			<div class="text-sm flex flex-col col-span-2 col-start-3 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -353,7 +360,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full  hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shippers}
@@ -361,8 +368,59 @@ selectedShipperGroupsStore.subscribe((value) => {
 						</div>
 					</div>
 				</div>
+
+       
+<!-- Item 6 (Currencies) -->
+ <div class="text-sm flex flex-col  space-y-1  col-span-2 ">
+					<div class="flex-grow relative group">
+						<div
+							class="truncate max-w-xs"
+							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+							title={appliedFilters.selectedCurrenciesTooltip}
+						>
+							<!-- Currencies content with truncation and ellipsis -->
+							<div class="flex gap-1 items-center">
+								 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<!-- Currency icon -->
+										<path
+											fill-rule="evenodd"
+											clip-rule="evenodd"
+											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.39.49-4.83-.15-6.54-1.72C5.16 17.16 5 15.12 5.89 13.46c.44-.83 1.15-1.49 2.05-1.84.86-.32 1.78-.45 2.67-.45 1.71 0 3.3.82 4.28 2.1.29.38.67.69 1.09.89v.05c-.69 1.45-1.92 2.7-3.48 3.39v.33zM16 11V7.07c-1.15.16-2.22.64-3 1.33V11h3zM13 4.07c-.47 0-.94.04-1.4.12C13.31 4.55 15 6.1 15 8v3h3V8c0-2.94-2.39-5.33-5.33-5.93-.34-.07-.69-.1-1.04-.1z"
+											fill="currentColor"
+										/>
+									</svg>
+
+									<span>&#58;<span> </span></span>
+								</div>
+								<p>{appliedFilters.selectedCurrencies}</p>
+							</div>
+						</div>
+						<div
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+						>
+							<ul class="text-sm">
+								{appliedFilters.selectedCurrencies}
+							</ul>
+						</div>
+					</div>
+				</div>
+      
    
 </div>
+
+</div>
+
+
+
+
+
 
 
 		<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
@@ -449,17 +507,21 @@ selectedShipperGroupsStore.subscribe((value) => {
 				</li>
 			</ul>
 		</div>
+
+  
 		<!-- User Profile Menu -->
 		<div class="dropdown dropdown-end">
 			<div
-  tabindex="0"
-  role="button"
-  class=" avatar online placeholder rounded-full border border-neutral"
->
-  <div class="btn btn-ghost btn-circle text-neutral-content  flex items-center justify-center">
-    <span class="text-xl">{firstLetter}</span>
-  </div>
-</div>
+				tabindex="0"
+				role="button"
+				class="btn btn-ghost btn-circle avatar border-2 border-gray-400"
+			>
+				<div
+					class="bg-neutral text-neutral-content w-16 pt-1 rounded-full"
+				>
+					<span class="text-xl">AI</span>
+				</div>
+			</div>
 
 			<ul
 				tabindex="0"
@@ -482,70 +544,9 @@ selectedShipperGroupsStore.subscribe((value) => {
 		</div>
 	</div>
 
-	<!-- Mobile Navigation (Hamburger Menu) -->
-	<div class="lg:hidden flex items-center">
-		<button
-			class="btn btn-square btn-ghost"
-			on:click={() => (showMenu = !showMenu)}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				stroke-width="2"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M4 6h16M4 12h16M4 18h16"
-				/>
-			</svg>
-		</button>
 
-		<!-- Avatar Icon -->
-		<div class="dropdown dropdown-end ml-2">
-			<div
-  tabindex="0"
-  role="button"
-  class=" avatar online placeholder rounded-full border border-neutral"
->
-  <div class="btn btn-ghost btn-circle text-neutral-content  flex items-center justify-center">
-    <span class="text-xl">{firstLetter}</span>
-  </div>
-</div>
-			<ul
-				tabindex="0"
-				class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-			>
-				<li>
-					<a href="/profile" class="justify-between"
-						>Profile <span class="badge">New</span></a
-					>
-				</li>
-				<li><a>Settings</a></li>
-				<li>
-					<a
-						href="/logout"
-						class="btn btn-ghost"
-						on:click={() => logout()}>Logout</a
-					>
-				</li>
-			</ul>
-		</div>
-	</div>
 
-	{#if showMenu}
-		<ul
-			tabindex="0"
-			class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0"
-		>
-			{#each [{ path: "/admin", label: "Admin" }, { path: "/", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
-				<li><a href={link.path}>{link.label}</a></li>
-			{/each}
-		</ul>
-	{/if}
+
 </div>
 
 <!-- Modal for Filter Options -->
@@ -587,61 +588,18 @@ selectedShipperGroupsStore.subscribe((value) => {
 			right: auto;
 		}
 	}
+ .group-hover:block {
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
 
-
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-    gap: 10px;
-    background-color: #2196F3;
-    padding: 10px;
-    width: 24rem; /* Total grid width is 24rem */
-    box-sizing: border-box;
-  }
-
-  .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    padding: 20px;
-    font-size: 30px;
-    word-wrap: break-word; /* Ensures long words are wrapped */
-    overflow-wrap: break-word; /* Breaks words to prevent overflow */
-    overflow: hidden; /* Hide content that overflows */
-    text-overflow: ellipsis; /* Add ellipsis (...) for overflow text */
-  }
-
-  .item1 {
-    grid-column: 1 / span 2; /* Span 2 columns */
-  }
-
-  .item3 {
-    grid-column: 3 / span 2; /* Span 2 columns in row 1 */
-    grid-row: 1;
-  }
-
-  .item4 {
-    grid-column: 4; /* Start in the first column of row 3 */
-    grid-row: 3;
-  }
-
-  .item2 {
-    grid-column: 1 / span 3; /* Span 3 columns in row 3 */
-    grid-row: 3;
-  }
-
-  .item5 {
-    grid-column: 1 / span 2; /* Span the first and second columns in row 4 */
-    grid-row: 4;
-  }
-
-  .item6 {
-    grid-column: 3 / span 2; /* Span the third and fourth columns in row 4 */
-    grid-row: 4;
-  }
+.group:hover .group-hover:block {
+    opacity: 1;
+    visibility: visible;
+}
 
 </style>
-
 
 
 

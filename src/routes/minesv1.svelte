@@ -1,5 +1,14 @@
 <script>
-	import { page } from "$app/stores";
+  import { page } from "$app/stores";
+
+  // Define the navigation links array once
+  const links = [
+    { path: "/admin", label: "Admin" },
+    { path: "/", label: "Home" },
+    { path: "/dashboard", label: "Dashboard" },
+    { path: "/reports", label: "Reports" },
+    { path: "/parcel", label: "Parcel" }
+  ];
 	import logo from "$lib/images/logo.png";
 	import github from "$lib/images/github.svg";
 	import API, { logout } from "$lib/api";
@@ -90,36 +99,71 @@
 	);
 </script>
 
+
 <!-- Navbar Section -->
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
-	<div class="flex-1">
-		<a href="/profile" class="flex text-xl items-center">
-			<img src={logo} alt="Logo" class="h-20 w-60 mr-2" />
-		</a>
-		<!-- Desktop Navigation -->
-		<nav class="hidden lg:flex">
-			<ul class="menu menu-horizontal px-1">
-				{#each [{ path: "/admin", label: "Admin" }, { path: "/profile", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
-					<li
-						class={$page.url.pathname === link.path ? "active" : ""}
-					>
-						<a href={link.path} class="btn btn-ghost"
-							>{link.label}</a
-						>
-					</li>
-				{/each}
-			</ul>
-		</nav>
-	</div>
+<div class="flex-1">
+  <!-- Hide logo on small screens and show it on larger screens -->
+  <a href="/profile" class="hidden lg:flex text-xl items-center">
+    <img src={logo} alt="Logo" class="h-20 hidden w-60 mr-2" />
+  </a>
+
+  <!-- Desktop Navigation -->
+  <nav class="hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      {#each links as link}
+        <li class={$page.url.pathname === link.path ? "active" : ""}>
+          <a href={link.path} class="btn btn-ghost">{link.label}</a>
+        </li>
+      {/each}
+    </ul>
+  </nav>
+
+  <!-- Mobile Navigation (Hamburger Menu) -->
+  <div class="lg:hidden flex items-center relative">
+    <!-- Hamburger button toggles the menu -->
+    <button
+      class="btn btn-square btn-ghost"
+      on:click={() => (showMenu = !showMenu)}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+		
+  <!-- Mobile Menu (below the hamburger) -->
+  {#if showMenu}
+    <ul
+      class="lg:hidden absolute flex flex-col mt-2 space-y-2 p-4 shadow bg-base-100 rounded-box w-full"
+    >
+      {#each links as link}
+        <li><a href={link.path} class="btn btn-ghost">{link.label}</a></li>
+      {/each}
+    </ul>
+  {/if}
+  </div>
+
+</div>
 
 	<!-- Profile and Theme Selector (Desktop Only) -->
-	<div class="hidden lg:flex items-center space-x-4">
+	<div class=" lg:flex items-center space-x-4">
 		<!-- Filter Display -->
-	<!-- Display selected filters in the navbar -->
-<div class="grid grid-cols-4 gap-2 w-[24rem] box-border ">
-
-      <!-- Item 1 (Customers) -->
-	<div class="text-sm flex flex-col col-span-2 py-1 space-y-1">
+	<div class="h-[5.8rem] overflow-y-auto cursor-pointer bg-base-100  rounded-lg scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-success scrollbar-track-base-300">
+    <!-- Display selected filters in the navbar -->
+    <div class="flex flex-col sm:flex sm:gap-2 sm:w-auto h-auto  md:h-[8rem]   sm:space-y-1 md:grid md:grid-cols-4 md:gap-0 md:w-[22rem] lg:grid-cols-4 font-bold">
+        <!-- Item 1 (Customers) -->
+        <div class="text-sm flex flex-col col-span-2 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -165,7 +209,7 @@
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.customers}
@@ -173,95 +217,9 @@
 						</div>
 					</div>
 				</div>
-         
-           <!-- Item 2 (Currencies) -->
- <div class="text-sm flex flex-col py-1 space-y-1 col-start-4">
-					<div class="flex-grow relative group">
-						<div
-							class="truncate max-w-xs"
-							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={appliedFilters.selectedCurrenciesTooltip}
-						>
-							<!-- Currencies content with truncation and ellipsis -->
-							<div class="flex gap-1 items-center">
-								<div class="flex items-center">
-									<svg
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<!-- Currency icon -->
-										<path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.39.49-4.83-.15-6.54-1.72C5.16 17.16 5 15.12 5.89 13.46c.44-.83 1.15-1.49 2.05-1.84.86-.32 1.78-.45 2.67-.45 1.71 0 3.3.82 4.28 2.1.29.38.67.69 1.09.89v.05c-.69 1.45-1.92 2.7-3.48 3.39v.33zM16 11V7.07c-1.15.16-2.22.64-3 1.33V11h3zM13 4.07c-.47 0-.94.04-1.4.12C13.31 4.55 15 6.1 15 8v3h3V8c0-2.94-2.39-5.33-5.33-5.93-.34-.07-.69-.1-1.04-.1z"
-											fill="currentColor"
-										/>
-									</svg>
 
-									<span>&#58;<span> </span></span>
-								</div>
-								<p>{appliedFilters.selectedCurrencies}</p>
-							</div>
-						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
-						>
-							<ul class="text-sm">
-								{appliedFilters.selectedCurrencies}
-							</ul>
-						</div>
-					</div>
-				</div>
-				
-				  <!-- Item 3 (Carriers) -->
-	<!-- Selected Run Option Display Section -->
-				<div class="text-sm flex flex-col py-1 space-y-1">
-					<div class="flex-grow relative group">
-						<div
-							class="truncate max-w-xs"
-							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={selectedRunOptDisplayText}
-						>
-							<!-- Display with truncation and ellipsis -->
-							<div class="flex gap-1 items-center">
-								<div class="flex items-center">
-									<svg
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<!-- Calendar icon representing the date range -->
-										<path
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"
-										/>
-									</svg>
-									<span>&#58;<span> </span></span>
-								</div>
-								<!-- Show truncated Run Option Display Text -->
-								<p>{selectedRunOptDisplayText}</p>
-							</div>
-						</div>
-						<!-- Tooltip for full text -->
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
-						>
-							<ul class="text-sm">
-								<li>{selectedRunOptDisplayText}</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-  <!-- Item 3 (Carriers) -->
-	<div class="bg-white text-sm  col-span-2 relative group">
+      <!-- Item 2 (Carriers) -->
+	<div class="text-sm flex flex-col col-span-2 space-y-1  col-start-3 row-1">
 						<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -299,7 +257,7 @@
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.carriers}
@@ -308,9 +266,58 @@
 					</div>
 				</div>
      
+      
  
-       <!-- Item 5 (Shipper Groups) -->
-				<div class="text-sm flex flex-col col-span-2 space-y-1">
+    <!-- Selected Run Option Display Section -->
+  
+  <!-- Item 3 (date) -->
+				<div class="text-sm flex flex-col col-span-4 space-y-1">
+					<div class="flex-grow relative group">
+						<div
+							class="truncate max-w-xs"
+							style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+							title={selectedRunOptDisplayText}	 
+						>
+							<!-- Display with truncation and ellipsis -->
+							<div class="flex gap-1 items-center">
+							 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<!-- Calendar icon representing the date range -->
+										<path
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"
+										/>
+									</svg>
+									<span>&#58;<span> </span></span>
+								</div>
+								<!-- Show truncated Run Option Display Text -->
+								<p>{selectedRunOptDisplayText}</p>
+							</div>
+						</div>
+						<!-- Tooltip for full text -->
+						<div
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+						>
+							<ul class="text-sm">
+								<li>{selectedRunOptDisplayText} </li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+
+
+     
+           <!-- Item 4 (Shipper Groups) -->
+				<div class="text-sm flex flex-col col-span-2  space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -319,7 +326,7 @@
 						>
 							<!-- Shipper Groups content with truncation and ellipsis -->
 							<div class="flex items-center gap-1">
-								<div class="flex items-center gap-1">
+							 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
@@ -342,7 +349,7 @@
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shipperGroups}
@@ -351,9 +358,9 @@
 					</div>
 				</div>
 
-          <!-- Item 6 (Shippers) -->
+          <!-- Item 5 (Shippers) -->
 
-			<div class="text-sm flex flex-col space-y-1">
+			<div class="text-sm flex flex-col col-span-2 col-start-3 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -383,7 +390,7 @@
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full  hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10"
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shippers}
@@ -391,9 +398,54 @@
 						</div>
 					</div>
 				</div>
+
+       
+<!-- Item 6 (Currencies) -->
+ <div class="text-sm flex flex-col  space-y-1  col-span-2 ">
+					<div class="flex-grow relative group">
+						<div
+							class="truncate max-w-xs"
+							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+							title={appliedFilters.selectedCurrenciesTooltip}
+						>
+							<!-- Currencies content with truncation and ellipsis -->
+							<div class="flex gap-1 items-center">
+								 <div class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<!-- Currency icon -->
+										<path
+											fill-rule="evenodd"
+											clip-rule="evenodd"
+											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.39.49-4.83-.15-6.54-1.72C5.16 17.16 5 15.12 5.89 13.46c.44-.83 1.15-1.49 2.05-1.84.86-.32 1.78-.45 2.67-.45 1.71 0 3.3.82 4.28 2.1.29.38.67.69 1.09.89v.05c-.69 1.45-1.92 2.7-3.48 3.39v.33zM16 11V7.07c-1.15.16-2.22.64-3 1.33V11h3zM13 4.07c-.47 0-.94.04-1.4.12C13.31 4.55 15 6.1 15 8v3h3V8c0-2.94-2.39-5.33-5.33-5.93-.34-.07-.69-.1-1.04-.1z"
+											fill="currentColor"
+										/>
+									</svg>
+
+									<span>&#58;<span> </span></span>
+								</div>
+								<p>{appliedFilters.selectedCurrencies}</p>
+							</div>
+						</div>
+						<div
+							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+						>
+							<ul class="text-sm">
+								{appliedFilters.selectedCurrencies}
+							</ul>
+						</div>
+					</div>
+				</div>
+      
    
 </div>
 
+</div>
 		<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
 		<label for="filter-modal" class="btn btn-square btn-ghost">
 			<svg
@@ -478,6 +530,8 @@
 				</li>
 			</ul>
 		</div>
+
+  
 		<!-- User Profile Menu -->
 		<div class="dropdown dropdown-end">
 			<div
@@ -513,71 +567,10 @@
 		</div>
 	</div>
 
-	<!-- Mobile Navigation (Hamburger Menu) -->
-	<div class="lg:hidden flex items-center">
-		<button
-			class="btn btn-square btn-ghost"
-			on:click={() => (showMenu = !showMenu)}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				stroke-width="2"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M4 6h16M4 12h16M4 18h16"
-				/>
-			</svg>
-		</button>
 
-		<!-- Avatar Icon -->
-		<div class="dropdown dropdown-end ml-2">
-			<label tabindex="0" class="btn btn-ghost btn-circle avatar">
-				<div class="w-10 rounded-full">
-					<img
-						alt="User Avatar"
-						src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-					/>
-				</div>
-			</label>
-			<ul
-				tabindex="0"
-				class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-			>
-				<li>
-					<a href="/profile" class="justify-between"
-						>Profile <span class="badge">New</span></a
-					>
-				</li>
-				<li><a>Settings</a></li>
-				<li>
-					<a
-						href="/logout"
-						class="btn btn-ghost"
-						on:click={() => logout()}>Logout</a
-					>
-				</li>
-			</ul>
-		</div>
-	</div>
 
-	{#if showMenu}
-		<ul
-			tabindex="0"
-			class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 absolute right-0"
-		>
-			{#each [{ path: "/admin", label: "Admin" }, { path: "/", label: "Home" }, { path: "/dashboard", label: "Dashboard" }, { path: "/reports", label: "Reports" }, { path: "/parcel", label: "Parcel" }] as link}
-				<li><a href={link.path}>{link.label}</a></li>
-			{/each}
-		</ul>
-	{/if}
+
 </div>
-
 <!-- Modal for Filter Options -->
 <input type="checkbox" id="filter-modal" class="modal-toggle" />
 <div class="modal">
@@ -617,4 +610,14 @@
 			right: auto;
 		}
 	}
+	 .group-hover:block {
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.group:hover .group-hover:block {
+    opacity: 1;
+    visibility: visible;
+}
 </style>
