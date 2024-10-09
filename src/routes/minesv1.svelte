@@ -102,10 +102,10 @@
 
 <!-- Navbar Section -->
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
-<div class="flex-1">
+<div class="flex-1 relative navbar">
   <!-- Hide logo on small screens and show it on larger screens -->
   <a href="/profile" class="hidden lg:flex text-xl items-center">
-    <img src={logo} alt="Logo" class="h-20 hidden w-60 mr-2" />
+    <img src={logo} alt="Logo" class="h-20 w-60 mr-2" />
   </a>
 
   <!-- Desktop Navigation -->
@@ -120,7 +120,7 @@
   </nav>
 
   <!-- Mobile Navigation (Hamburger Menu) -->
-  <div class="lg:hidden flex items-center relative">
+  <div class="lg:hidden flex items-center">
     <!-- Hamburger button toggles the menu -->
     <button
       class="btn btn-square btn-ghost"
@@ -141,29 +141,34 @@
         />
       </svg>
     </button>
-		
-  <!-- Mobile Menu (below the hamburger) -->
-  {#if showMenu}
-    <ul
-      class="lg:hidden absolute flex flex-col mt-2 space-y-2 p-4 shadow bg-base-100 rounded-box w-full"
-    >
-      {#each links as link}
-        <li><a href={link.path} class="btn btn-ghost">{link.label}</a></li>
-      {/each}
-    </ul>
-  {/if}
   </div>
 
+  <!-- Mobile Menu (below the header, block style) -->
+  {#if showMenu}
+   <ul
+  class="lg:hidden flex flex-col items-center mt-2 space-y-2 w-[14rem] shadow-lg bg-gray-100 rounded-sm absolute top-full left-0"
+>
+  {#each links as link}
+   <li class="flex justify-center w-full">
+  <a href={link.path} class="btn btn-ghost w-full text-left">
+    {link.label}
+  </a>
+</li>
+  {/each}
+</ul>
+
+  {/if}
 </div>
 
 	<!-- Profile and Theme Selector (Desktop Only) -->
 	<div class=" lg:flex items-center space-x-4">
+		<label for="filter-modal" class=" flex w-[22rem] justify-center items-center ">
 		<!-- Filter Display -->
-	<div class="h-[5.8rem] overflow-y-auto cursor-pointer bg-base-100  rounded-lg scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-success scrollbar-track-base-300">
+    <div class="h-[6rem] w-[19rem] overflow-x-auto md:overflow-x-hidden   cursor-pointer bg-base-100  rounded-lg overflow-y-auto scrollbar-thin">
     <!-- Display selected filters in the navbar -->
-    <div class="flex flex-col sm:flex sm:gap-2 sm:w-auto h-auto  md:h-[8rem]   sm:space-y-1 md:grid md:grid-cols-4 md:gap-0 md:w-[22rem] lg:grid-cols-4 font-bold">
+    <div class="flex flex-col sm:flex sm:gap-2 sm:w-auto h-auto mb-2 md:h-[8rem] w-[8rem]  md:w-[18.8rem] sm:space-y-1 md:grid md:grid-cols-4 md:gap-0  lg:grid-cols-4 font-bold">
         <!-- Item 1 (Customers) -->
-        <div class="text-sm flex flex-col col-span-2 space-y-1">
+        <div class="text-sm mb-1  flex flex-col col-span-2 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -208,8 +213,8 @@
 								<p>{appliedFilters.customers}</p>
 							</div>
 						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+					<div
+							class="absolute left-0 h-auto  hidden group-hover:flex bg-gray-400 text-white p-2 rounded-sm shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.customers}
@@ -219,7 +224,7 @@
 				</div>
 
       <!-- Item 2 (Carriers) -->
-	<div class="text-sm flex flex-col col-span-2 space-y-1  col-start-3 row-1">
+	<div class="text-sm mb-1  flex flex-col col-span-2 space-y-1  col-start-3 row-1">
 						<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -256,8 +261,8 @@
 								<p>{appliedFilters.carriers}</p>
 							</div>
 						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+				<div
+							class="absolute left-0 h-auto  hidden group-hover:flex bg-gray-400 text-white p-2 rounded-sm shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.carriers}
@@ -271,12 +276,12 @@
     <!-- Selected Run Option Display Section -->
   
   <!-- Item 3 (date) -->
-				<div class="text-sm flex flex-col col-span-4 space-y-1">
+				<div class="text-sm mb-1  flex flex-col col-span-4 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
 							style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={selectedRunOptDisplayText}	 
+								title={selectedRunOptDisplayText}	 
 						>
 							<!-- Display with truncation and ellipsis -->
 							<div class="flex gap-1 items-center">
@@ -299,15 +304,15 @@
 									<span>&#58;<span> </span></span>
 								</div>
 								<!-- Show truncated Run Option Display Text -->
-								<p>{selectedRunOptDisplayText}</p>
+									<p>{selectedRunOptDisplayText}</p>
 							</div>
 						</div>
 						<!-- Tooltip for full text -->
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+							class="absolute left-0  h-auto hidden group-hover:flex bg-gray-400 text-white p-2 rounded-sm shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
-								<li>{selectedRunOptDisplayText} </li>
+							<li>{selectedRunOptDisplayText} </li>
 							</ul>
 						</div>
 					</div>
@@ -317,7 +322,7 @@
 
      
            <!-- Item 4 (Shipper Groups) -->
-				<div class="text-sm flex flex-col col-span-2  space-y-1">
+				<div class="text-sm flex mb-1  flex-col col-span-2  space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -348,8 +353,8 @@
 								<p>{appliedFilters.shipperGroups}</p>
 							</div>
 						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+	<div
+							class="absolute left-0 h-auto  hidden group-hover:flex bg-gray-400 text-white p-2 rounded-sm shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shipperGroups}
@@ -360,7 +365,7 @@
 
           <!-- Item 5 (Shippers) -->
 
-			<div class="text-sm flex flex-col col-span-2 col-start-3 space-y-1">
+			<div class="text-sm flex mb-1 flex-col col-span-2 col-start-3 space-y-1">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
@@ -390,7 +395,7 @@
 							</div>
 						</div>
 						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+							class="absolute left-0 group-active:block  h-auto  hidden group-hover:block bg-gray-400 text-white p-2 rounded-sm shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.shippers}
@@ -401,12 +406,12 @@
 
        
 <!-- Item 6 (Currencies) -->
- <div class="text-sm flex flex-col  space-y-1  col-span-2 ">
+ <div class="text-sm flex flex-col mb-1  space-y-1  col-span-3 row-4 ">
 					<div class="flex-grow relative group">
 						<div
 							class="truncate max-w-xs"
-							style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-							title={appliedFilters.selectedCurrenciesTooltip}
+							style="max-width: 150px;  white-space: nowrap;"
+							
 						>
 							<!-- Currencies content with truncation and ellipsis -->
 							<div class="flex gap-1 items-center">
@@ -432,13 +437,13 @@
 								<p>{appliedFilters.selectedCurrencies}</p>
 							</div>
 						</div>
-						<div
-							class="absolute left-0 top-full mt-1 hidden group-hover:block bg-gray-800 text-white p-2 rounded shadow-lg max-w-xs z-10 pointer-events-none"
+							<!-- 	<div
+							class="absolute left-0 h-auto  hidden group-hover:flex bg-gray-400 text-white p-2 rounded-md shadow-lg max-w-xs z-10 pointer-events-none"
 						>
 							<ul class="text-sm">
 								{appliedFilters.selectedCurrencies}
 							</ul>
-						</div>
+						</div>-->
 					</div>
 				</div>
       
@@ -446,8 +451,15 @@
 </div>
 
 </div>
+
+
+
+
+
+
+
 		<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
-		<label for="filter-modal" class="btn btn-square btn-ghost">
+	<div class="btn btn-square btn-ghost item-center">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
@@ -462,7 +474,9 @@
 					d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
 				/>
 			</svg>
+			</div>
 		</label>
+
 		<!-- Theme Selector -->
 		<div class="dropdown dropdown-end">
 			<div tabindex="0" role="button" class="btn m-1">
@@ -481,7 +495,7 @@
 			</div>
 			<ul
 				tabindex="0"
-				class="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl"
+				class="dropdown-content bg-base-300 rounded-md z-[1] w-52 p-2 shadow-2xl"
 			>
 				<li>
 					<input
@@ -548,7 +562,7 @@
 
 			<ul
 				tabindex="0"
-				class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+				class="menu menu-sm dropdown-content mt-3 p-2 shadow-lg bg-base-100 rounded-md w-52"
 			>
 				<li>
 					<a href="/profile" class="justify-between"
@@ -584,25 +598,25 @@
 </div>
 
 <style>
-	.navbar {
-		height: 6rem; /* Adjust to match the height of the header */
-	}
+.navbar {
+    height: 6rem; /* Adjust to match the height of the header */
+}
 
-	.menu.menu-horizontal > li > a {
-		padding-left: 0.75rem;
-		padding-right: 0.75rem;
-	}
+.menu.menu-horizontal > li > a {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
 
-	.menu.menu-compact {
-		right: 0;
-		left: auto;
-	}
+.menu.menu-compact {
+    right: 0;
+    left: auto;
+}
 
-	.dropdown-content {
-		position: absolute;
-		top: 100%;
-		right: 0;
-	}
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+}
 
 	@media (max-width: 1024px) {
 		.dropdown-content {
@@ -620,4 +634,39 @@
     opacity: 1;
     visibility: visible;
 }
+/* Custom Scrollbar for WebKit Browsers (Chrome, Safari, Edge) */
+/* Initially hide the scrollbar */
+.scrollbar-hidden::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* Show the scrollbar on hover */
+.scrollbar-hidden:hover::-webkit-scrollbar {
+    width: 8px;  /* Adjust the width as needed */
+    height: 8px;
+}
+
+.scrollbar-hidden:hover::-webkit-scrollbar-thumb {
+    background-color: #22c55e;  /* Tailwind success color (green) */
+    border-radius: 10px;
+}
+
+.scrollbar-hidden:hover::-webkit-scrollbar-track {
+    background-color: #d1d5db;  /* Tailwind gray-300 */
+    border-radius: 10px;
+}
+
+/* For Firefox, hide the scrollbar by default */
+.scrollbar-hidden {
+    scrollbar-width: none; /* Hide the scrollbar */
+}
+
+/* Show the scrollbar on hover for Firefox */
+.scrollbar-hidden:hover {
+    scrollbar-width: thin; /* Show thin scrollbar on hover */
+    scrollbar-color: #22c55e #d1d5db;  /* Thumb and track colors */
+}
+
+
 </style>

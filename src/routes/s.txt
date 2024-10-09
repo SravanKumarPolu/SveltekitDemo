@@ -1,0 +1,123 @@
+{
+    "id": 1,
+    "username": "subba",
+    "navItems": {
+        "admin": [
+            {
+                "icon": "EcommerceIcon",
+                "name": "Admin",
+                "route": "/",
+                "subitems": [
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "Run Tasks",
+                        "route": "/admin/tasks/"
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "User",
+                        "route": "admin/user/"
+                    }
+                ]
+            }
+        ],
+        "parcel": [
+            {
+                "name": "Invoice Search",
+                "route": "summary"
+            }
+        ],
+        "profile": [
+            {
+                "icon": "ReportIcon",
+                "name": "Profile",
+                "route": "/reports",
+                "subitems": [
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "Change Password",
+                        "route": "/change-password/"
+                    }
+                ]
+            }
+        ],
+        "reports": [
+            {
+                "icon": "ReportIcon",
+                "name": "Reports",
+                "subitems": [
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "Reports Classification",
+                        "route": "/reports"
+                    }
+                ]
+            },
+            {
+                "icon": "EcommerceIcon",
+                "name": "Reports Status",
+                "subitems": [
+                    {
+                        "icon": "EcommerceIcon",
+                        "name": "Running",
+                        "route": "/reports/running-reports"
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "Completed",
+                        "route": "/reports/completed-reports"
+                    }
+                ]
+            }
+        ],
+        "dashboards": [
+            {
+                "icon": "DashboardIcon",
+                "name": "Dashboards",
+                "route": "/reports",
+                "subitems": [
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "Spend",
+                        "chatIds": [
+                            5,
+                            6
+                        ]
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "GEOMapsPage",
+                        "chatIds": [
+                            4
+                        ]
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "AnalyticsPage",
+                        "chatIds": [
+                            1,
+                            2
+                        ]
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "SavingsPage",
+                        "chatIds": [
+                            4,
+                            2
+                        ]
+                    },
+                    {
+                        "icon": "DashboardIcon",
+                        "name": "OverviewPage",
+                        "chatIds": [
+                            1,
+                            2,
+                            3
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
