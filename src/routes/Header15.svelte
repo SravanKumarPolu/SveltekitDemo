@@ -137,7 +137,7 @@ selectedShipperGroupsStore.subscribe((value) => {
 	<div class=" lg:flex items-center space-x-4">
 		<label for="filter-modal" class=" flex w-[22rem] justify-center items-center ">
 		<!-- Filter Display -->
-    <div class="h-[6rem] w-[19rem] overflow-x-auto md:overflow-x-hidden   cursor-pointer bg-base-100  rounded-lg overflow-y-auto scrollbar-thin">
+    <div class="h-[6rem] overflow-x-auto md:overflow-x-hidden   cursor-pointer bg-base-100  rounded-lg overflow-y-auto scrollbar-thin">
     <!-- Display selected filters in the navbar -->
     <div class="flex flex-col sm:flex sm:gap-2 sm:w-auto h-auto mb-2 md:h-[8rem] w-[8rem]  md:w-[18.8rem] sm:space-y-1 md:grid md:grid-cols-4 md:gap-0  lg:grid-cols-4 font-bold">
         <!-- Item 1 (Customers) -->

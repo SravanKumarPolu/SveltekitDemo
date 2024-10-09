@@ -216,9 +216,9 @@
  </script>
  
  <!-- Sidebar -->
- <aside id="sidebar-multi-level-sidebar" shadow-md class="fixed top-16 left-0 mt-4 z-40 w-70 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+ <aside id="sidebar-multi-level-sidebar" shadow-md class="fixed top-16 left-0 mt-4 z-40 w-68 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
    <div class="h-full  py-4 "> 
-     <ul class="menu py-4 w-68 bg-base-100  text-base-content">
+     <ul class="menu py-4 w-72 bg-base-100  text-base-content">
        {#if navItems.length > 0}
          {#each navItems as item}
            <li class="menu-dropdown">
