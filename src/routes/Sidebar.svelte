@@ -197,6 +197,8 @@
      }
    });
  
+
+  
    function navigateToPage(page) { 
          activePage = page;
          goto(page); 
@@ -213,56 +215,54 @@
    function toggleSubMenu(name) {
      openSubMenus = { ...openSubMenus, [name]: !openSubMenus[name] };
    }
- </script>
- 
- <!-- Sidebar -->
- <aside id="sidebar-multi-level-sidebar" shadow-md class="fixed top-16 left-0 mt-4 z-40 w-68 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-   <div class="h-full  py-4 "> 
-     <ul class="menu py-4 w-72 bg-base-100  text-base-content">
-       {#if navItems.length > 0}
-         {#each navItems as item}
-           <li class="menu-dropdown">
-             <a href="#" class="menu-button flex items-center {activePage === item.route ? 'bg-primary text-white' : ''}" on:click|preventDefault={() => item.subitems && toggleSubMenu(item.name)}>
-               <!-- Main item icon -->
-               <div class="icon ">
-                 {@html iconMap[item.icon] || ''}
-               </div>
-               <span class="flex-1 ms-2">{item.name}</span>
-               {#if item.subitems && item.subitems.length > 0}
-                 <svg class="w-3 h-3 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" on:click|preventDefault={() => toggleSubMenu(item.name)}>
-                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                 </svg>
-               {/if}
-             </a>
- 
-             {#if item.subitems && item.subitems.length > 0 && openSubMenus[item.name]}
-              <ul class="menu-sub ">
-                {#each item.subitems as subitem}
-                  <li class={activePage === subitem.route ? 'bg-primary text-white' : ''}>
-                    <a 
-                      href="#" 
-                      class="flex items-center {activePage === subitem.route ? 'bg-primary text-white' : ''}" 
-                      on:click|preventDefault={() => {
-                        if (activeMainPage === 'dashboard') {
-                          navigateToDashboardPage(subitem.name);
-                        } else {
-                          navigateToPage(subitem.route);
-                        }
-                      }}>
-                      <!-- Subitem icon -->
-                      <div class="icon mr-2">
-                        {@html iconMap[subitem.icon] || ''}
-                      </div>
-                      {subitem.name}
-                    </a>
-                  </li>
-                {/each}
-              </ul>
-            {/if}
 
-           </li>
-         {/each}
-       {/if}
-     </ul> 
+
+
+ </script>
+<aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 mt-4 z-40 w-68 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+  <div class="h-full flex flex-col py-4 overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"> 
+    <ul class="menu py-4 w-72 bg-base-100 text-base-content h-full">
+      {#each navItems as item}
+        <li class="menu-dropdown">
+          <a 
+            href="#" 
+            class="menu-button flex items-center {activePage === item.route ? 'bg-primary text-white' : ''}" 
+            on:click|preventDefault={() => toggleSubMenu(item.name)}>
+            <div class="icon">
+              {@html iconMap[item.icon] || ''}
+            </div>
+            <span class="flex-1 ms-2">{item.name}</span>
+
+            {#if item.subitems && item.subitems.length > 0}
+              <svg class="w-3 h-3 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d={openSubMenus[item.name] ? "m1 5 4-4 4 4" : "m1 1 4 4 4-4"} />
+              </svg>
+            {/if}
+          </a>
+
+        <ul class={`menu-sub ml-6 transition-transform duration-500 ease-in-out ${openSubMenus[item.name] ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'} overflow-hidden`}>
+  {#if openSubMenus[item.name]}
+    {#each item.subitems as subitem}
+      <li class={`mb-2 py-1 ${activePage === subitem.route ? 'bg-primary text-white' : ''}`}>
+        <a 
+          href="#" 
+          class="flex items-center {activePage === subitem.route ? 'bg-primary text-white' : ''}" 
+          on:click|preventDefault={() => navigateToPage(subitem.route)}>
+          <div class="icon mr-2">
+            {@html iconMap[subitem.icon] || ''}
+          </div>
+          <span class="truncate w-[7.6rem]">{subitem.name}</span>
+        </a>
+      </li>
+    {/each}
+  {/if}
+</ul>
+
+        </li>
+      {/each}
+    </ul>
   </div>
 </aside>
+
+

@@ -17,14 +17,21 @@ const mockCategories = [
   { id: 12, name: "Environmental Impact Reports", reports: [{ id: 112, name: "Environmental Q1", reportCustomizedName: "Custom Environmental Q1", description: "Environmental impact report for Q1" }] }
 ];
 
+const mockReports = [
+  { id: 101, report: { id: 101, name: "Sales Q1", description: "Quarterly sales report for Q1" }, reportCustomizedName: "Custom Sales Q1" },
+  { id: 102, report: { id: 102, name: "Marketing Q1", description: "Marketing analysis for Q1" }, reportCustomizedName: "Custom Marketing Q1" },
+  { id: 103, report: { id: 103, name: "Finance Q1", description: "Financial performance for Q1" }, reportCustomizedName: "Custom Finance Q1" },
+  { id: 104, report: { id: 104, name: "HR Q1", description: "HR data for Q1" }, reportCustomizedName: "Custom HR Q1" },
+  { id: 105, report: { id: 105, name: "IT Q1", description: "IT infrastructure report for Q1" }, reportCustomizedName: "Custom IT Q1" },
+  { id: 106, report: { id: 106, name: "Customer Feedback Q1", description: "Customer feedback report for Q1" }, reportCustomizedName: "Custom Customer Feedback Q1" },
+  { id: 107, report: { id: 107, name: "Product Performance Q1", description: "Product performance report for Q1" }, reportCustomizedName: "Custom Product Performance Q1" },
+  { id: 108, report: { id: 108, name: "Compliance Q1", description: "Compliance report for Q1" }, reportCustomizedName: "Custom Compliance Q1" },
+  { id: 109, report: { id: 109, name: "Risk Management Q1", description: "Risk management report for Q1" }, reportCustomizedName: "Custom Risk Management Q1" },
+  { id: 110, report: { id: 110, name: "Operational Q1", description: "Operational report for Q1" }, reportCustomizedName: "Custom Operational Q1" },
+  { id: 111, report: { id: 111, name: "Training Q1", description: "Training and development report for Q1" }, reportCustomizedName: "Custom Training Q1" },
+  { id: 112, report: { id: 112, name: "Environmental Q1", description: "Environmental impact report for Q1" }, reportCustomizedName: "Custom Environmental Q1" }
+];
 
-  const mockReports = [
-    { id: 101, report: { id: 101, name: "Sales Q1", description: "Quarterly sales report for Q1" }, reportCustomizedName: "Custom Sales Q1" },
-    { id: 102, report: { id: 102, name: "Marketing Q1", description: "Marketing analysis for Q1" }, reportCustomizedName: "Custom Marketing Q1" },
-    { id: 103, report: { id: 103, name: "Finance Q1", description: "Financial performance for Q1" }, reportCustomizedName: "Custom Finance Q1" },
-    { id: 104, report: { id: 104, name: "HR Q1", description: "HR data for Q1" }, reportCustomizedName: "Custom HR Q1" },
-    { id: 105, report: { id: 105, name: "IT Q1", description: "IT infrastructure report for Q1" }, reportCustomizedName: "Custom IT Q1" },
-  ];
 
   // Mock Functions
   const fetchCategoriesAndReports = async () => {
@@ -188,164 +195,170 @@ const mockCategories = [
   };
 </script>
 
-<div class="flex flex-col md:flex-row gap-4 p-4">
-<!-- Categories Column -->
-<div class="flex flex-col bg-base-100 w-full md:w-[22rem] p-4 rounded-md shadow-lg">
-  <!-- Success Ribbon -->
-  {#if showSuccess}  
-    <div class="alert alert-success">
-      <span>Message sent successfully.</span>
-    </div> 
-  {/if}
+<div class="flex flex-col md:flex-row gap-4 md:gap-2 p-2">
+  <!-- Categories Column -->
+  <div class="flex flex-col bg-base-100 w-full h-auto p-4 md:p-4 lg:p-8 rounded-md shadow-lg">
+    <!-- Success Ribbon -->
+    {#if showSuccess}
+      <div class="alert alert-success">
+        <span>Message sent successfully.</span>
+      </div>
+    {/if}
+    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 px-2 mb-4">
+      <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
+        <!-- Header Title -->
+        <h2 class="text-xl font-bold mb-2 md:mb-0">Categories</h2>
+        <!-- Search bar for categories -->
+        <input
+          type="text"
+          placeholder="Search categories..."
+          bind:value={searchCategory}
+          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-8 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+        />
+        <!-- Button Container -->
+        <div class="w-full md:w-auto md:ml-4 flex justify-center">
+          {#if editingCategories}
+            <div class="flex gap-2 flex-col md:flex-row">
+              <button class="btn btn-sm btn-outline" on:click={saveAllCategoryChanges}>Save</button>
+              <button class="btn btn-sm btn-outline" on:click={cancelCategoryEdit}>Cancel</button>
+            </div>
+          {:else}
+            <button class="btn btn-sm btn-outline" on:click={() => editingCategories = !editingCategories}>
+              Edit
+            </button>
+          {/if}
+        </div>
+      </div>
+    </div>
 
-  <!-- Button Container -->
-  <div class="flex flex-col mb-4">
-    {#if editingCategories}
-      <div class="flex flex-col gap-2">
-        <button class="btn btn-sm btn-outline" on:click={saveAllCategoryChanges}>
-          Save All Categories
-        </button>
-        <button class="btn btn-sm btn-outline" on:click={cancelCategoryEdit}>
-          Cancel
-        </button>
+    {#if filteredCategories && filteredCategories.length}
+      <div class="h-[32rem] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+        <ul class="menu bg-base-100 h-auto rounded-md">
+          <!-- "All" button to show all reports -->
+          <li>
+            <button
+              type="button"
+              class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
+              on:click={() => selectCategory(null)}
+            >
+              All Reports
+              {selectedCategoryId === null ? "➡" : ""}
+            </button>
+          </li>
+          <!-- Filtered Category buttons with edit functionality -->
+          {#each filteredCategories as category}
+            <li class="p-1">
+              {#if editingCategories}
+                <input
+                  type="text"
+                  bind:value={tempCategoryNames[category.id]}
+                  class="input input-bordered flex-grow mr-2"
+                />
+              {:else}
+                <button
+                  type="button"
+                  class={`btn btn-ghost w-full flex justify-between items-center text-start ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
+                  on:click={() => selectCategory(category.id)}
+                >
+                  <span class="truncate w-[8.6rem]" title={category.name}>
+                    {category.name}
+                  </span>
+                  {selectedCategoryId === category.id ? "➡" : ""}
+                </button>
+              {/if}
+            </li>
+          {/each}
+        </ul>
       </div>
     {:else}
-      <button class="btn btn-sm btn-outline" on:click={() => editingCategories = !editingCategories}>
-        Edit Categories
-      </button>
+      <p>No categories found.</p>
     {/if}
   </div>
 
-  <!-- Search bar for categories -->
-<input
-  type="text"
-  placeholder="Search categories..."
-  bind:value={searchCategory}
-  class="input input-bordered w-full mb-4 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
-/>
-
-
-  {#if filteredCategories && filteredCategories.length}
-    <div class="h-[350px] overflow-y-auto">
-      <ul class="menu bg-base-100 h-auto rounded-md">
-        <!-- "All" button to show all reports -->
-        <li>
-          <button
-            type="button"
-            class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
-            on:click={() => selectCategory(null)}
-          >
-            All Reports
-            {selectedCategoryId === null ? "➡" : ""}
-          </button>
-        </li>
-        <!-- Filtered Category buttons with edit functionality -->
-        {#each filteredCategories as category}
-          <li>
-            {#if editingCategories}
-              <input
-                type="text"
-                bind:value={tempCategoryNames[category.id]}
-                class="input input-bordered flex-grow mr-2"
-              />
-            {:else}
-              <button
-                type="button"
-                class={`btn btn-ghost w-full  flex justify-between items-center text-start ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
-                on:click={() => selectCategory(category.id)}
-              >
-              <span class=" truncate w-[8.6rem]" title={category.name}>
-                {category.name}
-                </span>
-                {selectedCategoryId === category.id ? "➡" : ""}
-              </button>
-            {/if}
-          </li>
-        {/each}
-      </ul>
-    </div>
-  {:else}
-    <p>No categories found.</p>
-  {/if}
-</div>
-
-
-
   <!-- Reports Column -->
-    <div class="flex flex-col bg-base-100 w-full md:w-[28rem] p-4 rounded-lg shadow-lg">
+  <div class="flex flex-col bg-base-100 w-full h-auto p-4 md:p-4 lg:p-8 rounded-md shadow-lg">
     <!-- Error Ribbon -->
     {#if showError}
-      <div class="alert alert-error">
+      <div class="alert alert-error mb-4">
         <span>There was an error saving changes.</span>
       </div>
     {/if}
- <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">Reports</h2>
-
-      <!-- Toggle between Edit mode and Save -->
-      {#if editingReports}
-        <div class="flex gap-2">
-          <button class="btn btn-sm btn-outline" on:click={saveAllReportChanges}>
-            Save All Reports
-          </button>
-          <button class="btn btn-sm btn-outline" on:click={cancelReportEdit}>
-            Cancel
-          </button>
+    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 px-1 mb-4">
+      <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
+        <h2 class="text-xl font-bold mb-2 md:mb-0">Reports</h2>
+        <!-- Search bar for reports -->
+        <input
+          type="text"
+          placeholder="Search reports..."
+          bind:value={searchReport}
+          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-8 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+        />
+        <!-- Toggle between Edit mode and Save -->
+        <div class="w-full md:w-auto md:ml-4 flex justify-center">
+          {#if editingReports}
+            <div class="flex gap-2 flex-col md:flex-row">
+              <button class="btn btn-sm btn-outline" on:click={saveAllReportChanges}>Save</button>
+              <button class="btn btn-sm btn-outline" on:click={cancelReportEdit}>Cancel</button>
+            </div>
+          {:else}
+            <button class="btn btn-sm btn-outline" on:click={() => editingReports = !editingReports}>
+              Edit Reports
+            </button>
+          {/if}
         </div>
-      {:else}
-        <button class="btn btn-sm btn-outline" on:click={() => editingReports = !editingReports}>
-          Edit Reports
-        </button>
-      {/if}
+      </div>
     </div>
-    <!-- Search bar for reports -->
-    <input
-      type="text"
-      placeholder="Search reports..."
-      bind:value={searchReport}
-      class="input input-bordered w-full mb-4 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
-    />
 
     {#if filteredReportsBySearch && filteredReportsBySearch.length}
-      <ul class="menu bg-base-100 rounded-box">
-        {#each filteredReportsBySearch as report}
-          <li class="flex justify-between items-center">
-            {#if editingReports}
-              <input
-                type="text"
-                bind:value={tempReportNames[report.report.id]}
-                class="input input-bordered flex-grow mr-2"
-              />
-            {:else}
-              <span class="flex-1 text-lg font-semibold">
-                <div class="tooltip" data-tip={report.report.name}>
-                  {report.reportCustomizedName || "No Custom Name"}
+      <div class="h-[32rem] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+        <ul class="menu bg-base-100 rounded-box h-auto">
+          {#each filteredReportsBySearch as report}
+             <li class="p-1">
+              {#if editingReports}
+                <input
+                  type="text"
+                  bind:value={tempReportNames[report.report.id]}
+                  class="input input-bordered flex-grow mr-2"
+                />
+              {:else}
+                <div class="flex justify-between w-full">
+                  <span class="flex-1 text-md flex justify-between items-center font-semibold">
+                    <div class="tooltip truncate w-[10rem] text-left" data-tip={report.report.name}>
+                      {report.reportCustomizedName || "No Custom Name"}
+                    </div>
+                  </span>
+                  <div class="flex gap-2">
+                    <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>
+                    <button class="btn btn-secondary btn-sm" on:click={() => showReportInfo(report)}>Info</button>
+                  </div>
                 </div>
-              </span>
-              <div class="flex gap-2">
-                <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>
-                <button class="btn btn-secondary btn-sm" on:click={() => showReportInfo(report)}>Info</button>
-              </div>
-            {/if}
-          </li>
-        {/each}
-      </ul>
+              {/if}
+            </li>
+          {/each}
+        </ul>
+      </div>
     {:else}
       <p>No reports found.</p>
     {/if}
   </div>
 </div>
 
+
 <!-- Modal for Report Info -->
 {#if selectedReportInfo}
   <div class="modal modal-open">
-    <div class="modal-box">
+    <div class="modal-box  flex flex-col gap-2 relative">
       <h2 class="font-bold text-lg">{selectedReportInfo.report.name}</h2>
-      <p>{selectedReportInfo.report.description}</p>
-      <button class="btn" on:click={closeReportInfo}>Close</button>
+      <p class="flex flex-col ">{selectedReportInfo.report.description}</p>
+      
+      <!-- Close Button at the bottom-right corner -->
+      <div class="absolute bottom-4 right-4">
+        <button class="btn " on:click={closeReportInfo}>Close</button>
+      </div>
     </div>
   </div>
 {/if}
+
 
 <style>
 .btn {
