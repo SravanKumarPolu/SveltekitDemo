@@ -94,7 +94,7 @@
       }
     } catch (error) {
       console.error("Failed to fetch customers", error);
-      alert("Error fetching customers. Please try again later.");
+     
     }
   });
  

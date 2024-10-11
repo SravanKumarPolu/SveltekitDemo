@@ -195,28 +195,27 @@ const mockReports = [
   };
 </script>
 
-<div class="flex flex-col md:flex-row gap-4 md:gap-1 p-2">
+
+
+<div class="flex flex-col md:flex-row gap-4 p-2">
   <!-- Categories Column -->
-  <div class="flex flex-col bg-base-100 w-full h-auto p-4 md:p-4 lg:p-8 rounded-md shadow-lg">
+  <div class="flex flex-col bg-base-100 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
     <!-- Success Ribbon -->
     {#if showSuccess}
       <div class="alert alert-success">
         <span>Message sent successfully.</span>
       </div>
     {/if}
-    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 px-2 mb-4">
+    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 mb-4">
       <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
-        <!-- Header Title -->
-        <h2 class="text-xl font-bold mb-2 md:mb-0">Categories</h2>
-        <!-- Search bar for categories -->
+        <h2 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Categories</h2>
         <input
           type="text"
           placeholder="Search categories..."
           bind:value={searchCategory}
-          class="input input-bordered w-full md:w-[11rem]  mb-4 md:mb-0 h-10 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-10 rounded-md shadow-lg"
         />
-        <!-- Button Container -->
-        <div class="w-full md:w-auto md:ml-4 flex justify-center">
+        <div class="w-full md:w-auto flex justify-center">
           {#if editingCategories}
             <div class="flex gap-2 flex-col md:flex-row">
               <button class="btn btn-sm btn-outline" on:click={saveAllCategoryChanges}>Save</button>
@@ -232,9 +231,8 @@ const mockReports = [
     </div>
 
     {#if filteredCategories && filteredCategories.length}
-      <div class="h-[32rem] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-        <ul class="menu bg-base-100 h-auto rounded-md">
-          <!-- "All" button to show all reports -->
+      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
+        <ul class="menu bg-base-100 rounded-md">
           <li>
             <button
               type="button"
@@ -245,7 +243,6 @@ const mockReports = [
               {selectedCategoryId === null ? "➡" : ""}
             </button>
           </li>
-          <!-- Filtered Category buttons with edit functionality -->
           {#each filteredCategories as category}
             <li class="p-1">
               {#if editingCategories}
@@ -257,12 +254,10 @@ const mockReports = [
               {:else}
                 <button
                   type="button"
-                  class={`btn-sm btn-ghost w-full flex justify-between items-center text-start ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
+                  class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
                   on:click={() => selectCategory(category.id)}
                 >
-                  <span class="truncate w-[8.6rem]" title={category.name}>
-                    {category.name}
-                  </span>
+                  <span class="truncate">{category.name}</span>
                   {selectedCategoryId === category.id ? "➡" : ""}
                 </button>
               {/if}
@@ -276,25 +271,23 @@ const mockReports = [
   </div>
 
   <!-- Reports Column -->
-  <div class="flex flex-col bg-base-100 w-full h-auto p-4 md:p-4 lg:p-8 rounded-md shadow-lg">
+  <div class="flex flex-col bg-base-100 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
     <!-- Error Ribbon -->
     {#if showError}
       <div class="alert alert-error mb-4">
         <span>There was an error saving changes.</span>
       </div>
     {/if}
-    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 px-1 mb-4">
+    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 mb-4">
       <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
-        <h2 class="text-xl font-bold mb-2 md:mb-0">Reports</h2>
-        <!-- Search bar for reports -->
+        <h2 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Reports</h2>
         <input
           type="text"
           placeholder="Search reports..."
           bind:value={searchReport}
-          class="input input-bordered w-full md:w-[11rem]  mb-4 md:mb-0 h-10 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-10 rounded-md shadow-lg"
         />
-        <!-- Toggle between Edit mode and Save -->
-        <div class="w-full md:w-auto md:ml-4 flex justify-center">
+        <div class="w-full md:w-auto flex justify-center">
           {#if editingReports}
             <div class="flex gap-2 flex-col md:flex-row">
               <button class="btn btn-sm btn-outline" on:click={saveAllReportChanges}>Save</button>
@@ -310,25 +303,19 @@ const mockReports = [
     </div>
 
     {#if filteredReportsBySearch && filteredReportsBySearch.length}
-      <div class="h-[32rem] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-        <ul class="menu bg-base-100 rounded-box h-auto">
+      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
+        <ul class="menu bg-base-100 rounded-box">
           {#each filteredReportsBySearch as report}
-             <li>
+            <li>
               {#if editingReports}
-              <span class="flex justify-between w-full p-1">
                 <input
                   type="text"
                   bind:value={tempReportNames[report.report.id]}
-                  class="input input-bordered  flex-grow mr-2"
+                  class="input input-bordered flex-grow mr-2"
                 />
-                </span>
               {:else}
                 <div class="flex justify-between w-full">
-                  <span class="flex-1 text-md flex justify-between items-center ">
-                    <div class="tooltip truncate w-[10rem] text-left" data-tip={report.report.name}>
-                      {report.reportCustomizedName || "No Custom Name"}
-                    </div>
-                  </span>
+                  <span class="truncate">{report.reportCustomizedName}</span>
                   <div class="flex gap-2">
                     <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>
                     <button class="btn btn-secondary btn-sm" on:click={() => showReportInfo(report)}>Info</button>
@@ -344,6 +331,10 @@ const mockReports = [
     {/if}
   </div>
 </div>
+
+
+
+
 
 
 <!-- Modal for Report Info -->

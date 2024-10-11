@@ -11,7 +11,8 @@
   export let activeMainPage = '';
 
   let navItems = [];  // Initialize as an empty array
-  let openSubMenu = ''; // State to track the currently open submenu
+  let openSubMenu = ''; // State to track the open submenu
+  let isSidebarOpen = false; // State to control sidebar visibility for mobile
 
   // Create a map to reference icons by name
   const iconMap = {
@@ -44,7 +45,7 @@
 
       // Open the first submenu by default if there are items
       if (navItems.length > 0) {
-        openSubMenu = navItems[0].name; // Set the first submenu to be open by default
+        openSubMenu = navItems[0].name;
       }
       
     } catch (error) {
@@ -58,7 +59,6 @@
     goto(page); 
   }
 
-  // Function to handle navigation
   function navigateToDashboardPage(name) {
     if (name) {
       goto(`/dashboard/${name.toLowerCase()}`);
@@ -66,21 +66,36 @@
   }
 
   function toggleSubMenu(name) {
-    // Toggle the submenu: close it if it's already open, or open it if it's not
     openSubMenu = openSubMenu === name ? '' : name;
+  }
+
+  function toggleSidebar() {
+    isSidebarOpen = !isSidebarOpen;
   }
 </script>
 
- 
+<!-- Mobile Menu Button -->
+<button class="sm:hidden p-2 bg-primary text-white fixed top-4 left-4 z-50" on:click={toggleSidebar} aria-label="Toggle sidebar">
+  <!-- SVG for Menu Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+</button>
+
 <!-- Sidebar -->
-<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+<aside 
+  id="sidebar-multi-level-sidebar" 
+  class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] bg-base-100 shadow-lg transition-transform duration-300 transform sm:translate-x-0"
+  class:translate-x-0={isSidebarOpen} 
+  class:-translate-x-full={!isSidebarOpen}
+  aria-label="Sidebar"
+>
   <div class="h-full py-4 overflow-y-auto"> 
     <ul class="menu w-[260px] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
             <a href="#" class="menu-button flex items-center {activePage === item.route ? 'bg-primary text-white' : ''}" on:click|preventDefault={() => item.subitems && toggleSubMenu(item.name)}>
-              <!-- Main item icon -->
               <div class="icon mr-2">
                 {@html iconMap[item.icon] || ''}
               </div>
@@ -111,9 +126,9 @@
                         } else {
                           navigateToPage(subitem.route);
                         }
-                        toggleSubMenu(item.name); // Close the submenu when a subitem is clicked
+                        toggleSubMenu(item.name);
+                        toggleSidebar(); // Close sidebar on mobile when a subitem is clicked
                       }}>
-                      <!-- Subitem icon -->
                       <div class="icon mr-2">
                         {@html iconMap[subitem.icon] || ''}
                       </div>
