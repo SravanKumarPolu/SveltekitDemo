@@ -11,7 +11,7 @@
   export let activeMainPage = '';
 
   let navItems = [];  // Initialize as an empty array
-  let openSubMenu = ''; // State to track the currently open submenu
+  let openSubMenus = {}; // State to track open submenus
 
   // Create a map to reference icons by name
   const iconMap = {
@@ -20,6 +20,7 @@
     DownloadReportIcon: DownloadReportIcon,
     RunningReportIcon: RunningReportIcon,
     ReportIcon: ReportIcon
+    // Add other icons as needed
   };
 
   onMount(async () => {
@@ -42,9 +43,9 @@
         navItems = Array.isArray(data.parcel) ? data.parcel : [];
       }
 
-      // Open the first submenu by default if there are items
+      // Initialize openSubMenus state to have the first item open by default
       if (navItems.length > 0) {
-        openSubMenu = navItems[0].name; // Set the first submenu to be open by default
+        openSubMenus[navItems[0].name] = true;
       }
       
     } catch (error) {
@@ -66,16 +67,15 @@
   }
 
   function toggleSubMenu(name) {
-    // Toggle the submenu: close it if it's already open, or open it if it's not
-    openSubMenu = openSubMenu === name ? '' : name;
+    // Ensure only the clicked submenu is open
+    openSubMenus = { [name]: !openSubMenus[name] };
   }
 </script>
 
- 
 <!-- Sidebar -->
-<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-  <div class="h-full py-4 overflow-y-auto"> 
-    <ul class="menu w-[260px] bg-base-100 text-base-content">
+<aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto"> 
+    <ul class="menu p-4 w-80 bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
@@ -86,19 +86,13 @@
               </div>
               <span class="flex-1 ms-2">{item.name}</span>
               {#if item.subitems && item.subitems.length > 0}
-                <svg 
-                  class="w-3 h-3 cursor-pointer transition-transform duration-300 {openSubMenu === item.name ? 'rotate-180' : 'rotate-0'}" 
-                  aria-hidden="true" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 10 6"
-                >
+                <svg class="w-3 h-3 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" on:click|preventDefault={() => toggleSubMenu(item.name)}>
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
               {/if}
             </a>
 
-            {#if item.subitems && item.subitems.length > 0 && openSubMenu === item.name}
+            {#if item.subitems && item.subitems.length > 0 && openSubMenus[item.name]}
               <ul class="menu-sub pl-4">
                 {#each item.subitems as subitem}
                   <li class={activePage === subitem.route ? 'bg-primary text-white' : ''}>
@@ -111,15 +105,12 @@
                         } else {
                           navigateToPage(subitem.route);
                         }
-                        toggleSubMenu(item.name); // Close the submenu when a subitem is clicked
                       }}>
                       <!-- Subitem icon -->
                       <div class="icon mr-2">
                         {@html iconMap[subitem.icon] || ''}
                       </div>
-                      <span class="truncate w-[7.6rem]" title={subitem.name}>
-                        {subitem.name}
-                      </span>
+                      {subitem.name}
                     </a>
                   </li>
                 {/each}

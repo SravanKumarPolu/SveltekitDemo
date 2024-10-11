@@ -25,7 +25,7 @@ const mockReports = [
   { id: 105, report: { id: 105, name: "IT Q1", description: "IT infrastructure report for Q1" }, reportCustomizedName: "Custom IT Q1" },
   { id: 106, report: { id: 106, name: "Customer Feedback Q1", description: "Customer feedback report for Q1" }, reportCustomizedName: "Custom Customer Feedback Q1" },
   { id: 107, report: { id: 107, name: "Product Performance Q1", description: "Product performance report for Q1" }, reportCustomizedName: "Custom Product Performance Q1" },
-  { id: 108, report: { id: 108, name: "Compliance Q1", description: "Compliance report for Q1" }, reportCustomizedName: "Custom Compliance Q1" },
+  { id: 108, report: { id: 108, name: "Compliance Q1", description: "Compliance report for Q1" }, reportCustomizedName: "Custom Compliance Q1 Compliance report for Q1" },
   { id: 109, report: { id: 109, name: "Risk Management Q1", description: "Risk management report for Q1" }, reportCustomizedName: "Custom Risk Management Q1" },
   { id: 110, report: { id: 110, name: "Operational Q1", description: "Operational report for Q1" }, reportCustomizedName: "Custom Operational Q1" },
   { id: 111, report: { id: 111, name: "Training Q1", description: "Training and development report for Q1" }, reportCustomizedName: "Custom Training Q1" },
@@ -197,9 +197,9 @@ const mockReports = [
 
 
 
-<div class="flex flex-col md:flex-row gap-4 p-2">
+<div class="flex flex-col  md:flex-row gap-2 mt-2 py-4">
   <!-- Categories Column -->
-  <div class="flex flex-col bg-base-100 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
+  <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
     <!-- Success Ribbon -->
     {#if showSuccess}
       <div class="alert alert-success">
@@ -231,8 +231,9 @@ const mockReports = [
     </div>
 
     {#if filteredCategories && filteredCategories.length}
-      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
-        <ul class="menu bg-base-100 rounded-md">
+    
+      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">
+        <ul class="menu bg-base-100 rounded-md w-auto ">
           <li>
             <button
               type="button"
@@ -244,7 +245,7 @@ const mockReports = [
             </button>
           </li>
           {#each filteredCategories as category}
-            <li class="p-1">
+            <li class="py-1">
               {#if editingCategories}
                 <input
                   type="text"
@@ -257,7 +258,7 @@ const mockReports = [
                   class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
                   on:click={() => selectCategory(category.id)}
                 >
-                  <span class="truncate">{category.name}</span>
+                  <span class="truncate w-[80%]" title={category.name}>{category.name}</span>
                   {selectedCategoryId === category.id ? "➡" : ""}
                 </button>
               {/if}
@@ -271,7 +272,7 @@ const mockReports = [
   </div>
 
   <!-- Reports Column -->
-  <div class="flex flex-col bg-base-100 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
+   <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
     <!-- Error Ribbon -->
     {#if showError}
       <div class="alert alert-error mb-4">
@@ -303,10 +304,10 @@ const mockReports = [
     </div>
 
     {#if filteredReportsBySearch && filteredReportsBySearch.length}
-      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
-        <ul class="menu bg-base-100 rounded-box">
+      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">
+        <ul class="menu bg-base-100 rounded-box ">
           {#each filteredReportsBySearch as report}
-            <li>
+            <li class="py-1">
               {#if editingReports}
                 <input
                   type="text"
@@ -314,8 +315,8 @@ const mockReports = [
                   class="input input-bordered flex-grow mr-2"
                 />
               {:else}
-                <div class="flex justify-between w-full">
-                  <span class="truncate">{report.reportCustomizedName}</span>
+                <div class="flex justify-between  w-auto">
+                  <span class="truncate w-[70%]" title={report.name}>{report.reportCustomizedName}</span>
                   <div class="flex gap-2">
                     <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>
                     <button class="btn btn-secondary btn-sm" on:click={() => showReportInfo(report)}>Info</button>

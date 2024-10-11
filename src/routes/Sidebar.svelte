@@ -137,8 +137,8 @@
 </script>
 
 <!-- Sidebar -->
-<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-  <div class="h-full py-4 overflow-y-auto"> 
+<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+  <div class="h-full py-4 overflow-y-auto">
     <ul class="menu w-[260px] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
@@ -155,7 +155,8 @@
                   aria-hidden="true" 
                   xmlns="http://www.w3.org/2000/svg" 
                   fill="none" 
-                  viewBox="0 0 10 6"
+                  viewBox="0 0 10 6" 
+                  on:click|preventDefault={() => toggleSubMenu(item.name)}
                 >
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
@@ -192,7 +193,6 @@
           </li>
         {/each}
       {/if}
-    </ul> 
+    </ul>
   </div>
 </aside>
-
