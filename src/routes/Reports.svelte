@@ -195,7 +195,7 @@ const mockReports = [
   };
 </script>
 
-<div class="flex flex-col md:flex-row gap-4 md:gap-2 p-2">
+<div class="flex flex-col md:flex-row gap-4 md:gap-1 p-2">
   <!-- Categories Column -->
   <div class="flex flex-col bg-base-100 w-full h-auto p-4 md:p-4 lg:p-8 rounded-md shadow-lg">
     <!-- Success Ribbon -->
