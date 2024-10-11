@@ -213,7 +213,7 @@ const mockReports = [
           type="text"
           placeholder="Search categories..."
           bind:value={searchCategory}
-          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-8 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+          class="input input-bordered w-full md:w-[11rem]  mb-4 md:mb-0 h-10 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
         />
         <!-- Button Container -->
         <div class="w-full md:w-auto md:ml-4 flex justify-center">
@@ -257,7 +257,7 @@ const mockReports = [
               {:else}
                 <button
                   type="button"
-                  class={`btn btn-ghost w-full flex justify-between items-center text-start ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
+                  class={`btn-sm btn-ghost w-full flex justify-between items-center text-start ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
                   on:click={() => selectCategory(category.id)}
                 >
                   <span class="truncate w-[8.6rem]" title={category.name}>
@@ -291,7 +291,7 @@ const mockReports = [
           type="text"
           placeholder="Search reports..."
           bind:value={searchReport}
-          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-8 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
+          class="input input-bordered w-full md:w-[11rem]  mb-4 md:mb-0 h-10 rounded-md shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 border border-[1px] focus:border-gray-500"
         />
         <!-- Toggle between Edit mode and Save -->
         <div class="w-full md:w-auto md:ml-4 flex justify-center">
@@ -313,16 +313,18 @@ const mockReports = [
       <div class="h-[32rem] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
         <ul class="menu bg-base-100 rounded-box h-auto">
           {#each filteredReportsBySearch as report}
-             <li class="p-1">
+             <li>
               {#if editingReports}
+              <span class="flex justify-between w-full p-1">
                 <input
                   type="text"
                   bind:value={tempReportNames[report.report.id]}
-                  class="input input-bordered flex-grow mr-2"
+                  class="input input-bordered  flex-grow mr-2"
                 />
+                </span>
               {:else}
                 <div class="flex justify-between w-full">
-                  <span class="flex-1 text-md flex justify-between items-center font-semibold">
+                  <span class="flex-1 text-md flex justify-between items-center ">
                     <div class="tooltip truncate w-[10rem] text-left" data-tip={report.report.name}>
                       {report.reportCustomizedName || "No Custom Name"}
                     </div>
