@@ -5,19 +5,19 @@
   // Importing icons
   import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from './icons';
 
-  export let activePage = '';
-  export let activeMainPage = 'reports';
+  export let activePage = ''; // Current active subitem route
+  export let activeMainPage = 'reports'; // Set main page context
 
   let navItems = []; // Initialize as an empty array
   let openSubMenus = {}; // State to track open submenus
 
   // Create a map to reference icons by name
   const iconMap = {
-    DashboardIcon: DashboardIcon,
-    EcommerceIcon: EcommerceIcon,
-    DownloadReportIcon: DownloadReportIcon,
-    RunningReportIcon: RunningReportIcon,
-    ReportIcon: ReportIcon
+    DashboardIcon,
+    EcommerceIcon,
+    DownloadReportIcon,
+    RunningReportIcon,
+    ReportIcon
   };
 
   onMount(() => {
@@ -30,18 +30,35 @@
             admin: [
               {
                 icon: "EcommerceIcon",
-                name: "Admin",
-                route: "/",
+                name: "Admins",
+                route: "/", // Unique route
                 subitems: [
                   {
                     icon: "DashboardIcon",
                     name: "Run Tasks",
-                    route: "/admin/tasks/"
+                    route: "/admin/tasks/" // Unique route
                   },
                   {
                     icon: "DashboardIcon",
                     name: "User",
-                    route: "admin/user/"
+                    route: "/admin/user/" // Unique route
+                  }
+                ]
+              },
+              {
+                icon: "EcommerceIcon",
+                name: "Admins reports adiminfghjk",
+                route: "/admin/reports", // Unique route
+                subitems: [
+                  {
+                    icon: "DashboardIcon",
+                    name: "Run Tasks",
+                    route: "/admin/reports/tasks/" // Unique route
+                  },
+                  {
+                    icon: "DashboardIcon",
+                    name: "User",
+                    route: "/admin/reports/user/" // Unique route
                   }
                 ]
               }
@@ -49,13 +66,13 @@
             profile: [
               {
                 icon: "ReportIcon",
-                name: "Profile",
-                route: "/reports",
+                name: "Profiles",
+                route: "/", // Unique route
                 subitems: [
                   {
                     icon: "DashboardIcon",
                     name: "Change Password",
-                    route: "/change-password/"
+                    route: "/profile/change-password/" // Unique route
                   }
                 ]
               }
@@ -64,27 +81,29 @@
               {
                 icon: "ReportIcon",
                 name: "Reports",
+                route: "/reports", // Unique route
                 subitems: [
                   {
                     icon: "DashboardIcon",
                     name: "Reports Classification",
-                    route: "/reports"
+                    route: "/reports/classification/" // Unique route
                   }
                 ]
               },
               {
                 icon: "EcommerceIcon",
                 name: "Reports Status",
+                route: "/", // Unique route
                 subitems: [
                   {
                     icon: "EcommerceIcon",
                     name: "Running",
-                    route: "/reports/running-reports"
+                    route: "/reports/status/running/" // Unique route
                   },
                   {
                     icon: "DashboardIcon",
                     name: "Completed",
-                    route: "/reports/completed-reports"
+                    route: "/reports/status/completed/" // Unique route
                   }
                 ]
               }
@@ -100,14 +119,12 @@
           subitems: value,
         }));
 
-        // Open the first item by default if it has subitems
-        if (navItems.length > 0) {
-          openSubMenus[navItems[0].name] = true;
-        }
+        // Open all items by default
+        navItems.forEach(item => {
+          openSubMenus[item.name] = true;
+        });
       }
 
-      console.log('navItems:', navItems);
-      console.log('openSubMenus:', openSubMenus);
     } catch (error) {
       console.error('Failed to load nav items:', error);
       navItems = [];
@@ -116,48 +133,32 @@
 
   // Function to handle page navigation
   function navigateToPage(page) {
-    activePage = page;
-    goto(page);
+    activePage = page;  // Update the active page to the clicked subitem's route
+    goto(page); // Navigate to the subitem's page
   }
 
-  // Function to handle dashboard navigation
-  function navigateToDashboardPage(name) {
-    if (name) {
-      goto(`/dashboard/${name.toLowerCase()}`);
-    }
-  }
-
-  // Function to toggle submenu visibility, ensuring only one item is open at a time
+  // Function to toggle submenu visibility (on click)
   function toggleSubMenu(name) {
-    openSubMenus = {
-      // Set the clicked item to be open
-      [name]: !openSubMenus[name],
-    };
+    openSubMenus[name] = !openSubMenus[name]; // Toggle the submenu
   }
 </script>
 
 <!-- Sidebar -->
-<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-  <div class="h-full py-4 overflow-y-auto">
+<aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+  <div class="h-full py-4 overflow-y-auto"> 
     <ul class="menu w-[260px] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
-            <a href="#" class="menu-button flex items-center {activePage === item.route ? 'bg-primary text-white' : ''}" on:click|preventDefault={() => item.subitems && toggleSubMenu(item.name)}>
+            <a href="#" class="menu-button flex items-center" on:click|preventDefault={() => item.subitems && toggleSubMenu(item.name)}>
               <!-- Main item icon -->
               <div class="icon mr-2">
                 {@html iconMap[item.icon] || ''}
               </div>
               <span class="flex-1 ms-2">{item.name}</span>
+              
               {#if item.subitems && item.subitems.length > 0}
-                <svg 
-                  class="w-3 h-3 cursor-pointer transition-transform duration-300 {openSubMenus[item.name] ? 'rotate-180' : 'rotate-0'}" 
-                  aria-hidden="true" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 10 6" 
-                  on:click|preventDefault={() => toggleSubMenu(item.name)}
-                >
+                <svg class="w-3 h-3 cursor-pointer transition-transform duration-300 {openSubMenus[item.name] ? 'rotate-180' : 'rotate-0'}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
               {/if}
@@ -167,25 +168,30 @@
               <ul class="menu-sub pl-4">
                 {#each item.subitems as subitem}
                   <li class={activePage === subitem.route ? 'bg-primary text-white' : ''}>
+                    
+
                     <a 
-                      href="#" 
-                      class="flex items-center {activePage === subitem.route ? 'bg-primary text-white' : ''}" 
-                      on:click|preventDefault={() => {
-                        if (activeMainPage === 'dashboard') {
-                          navigateToDashboardPage(subitem.name);
-                        } else {
-                          navigateToPage(subitem.route);
-                        }
-                        toggleSubMenu(item.name); // Close the submenu when a subitem is clicked
-                      }}>
-                      <!-- Subitem icon -->
-                      <div class="icon mr-2">
-                        {@html iconMap[subitem.icon] || ''}
-                      </div>
-                      <span class="truncate w-[7.6rem]" title={subitem.name}>
+                    href="#" 
+                    class="flex items-center {activePage === subitem.route ? 'bg-primary text-white' : ''}" 
+                    on:click|preventDefault={() => navigateToPage(subitem.route)}>
+                    
+                 <div class="flex justify-start">
+                     <!-- Subitem icon -->
+                     <div class="icon mr-2">
+                      {@html iconMap[subitem.icon] || ''}
+                    </div>
+                  
+                    <!-- Tooltip container -->
+                    <div class="relative">
+                      <!-- The visible truncated text -->
+                      <span class="truncate max-w-28 tooltip text-left" title={subitem.name}>
                         {subitem.name}
                       </span>
-                    </a>
+                    </div>
+                 </div>
+                  </a>
+                  
+
                   </li>
                 {/each}
               </ul>
@@ -193,6 +199,7 @@
           </li>
         {/each}
       {/if}
-    </ul>
+    </ul> 
   </div>
 </aside>
+

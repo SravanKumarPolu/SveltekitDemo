@@ -1,145 +1,73 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-
-  // Importing icons
-  import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from './icons';
+  import { goto } from '$app/navigation'; 
+  import API from '$lib/api';
+  import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from '$lib/icons';
 
   export let activePage = '';
-  export let activeMainPage = 'reports';
+  export let activeMainPage = '';
 
-  let navItems = []; // Initialize as an empty array
-  let openSubMenus = {}; // State to track open submenus
+  let navItems = [];
+  let openSubMenus = {};
 
-  // Create a map to reference icons by name
   const iconMap = {
     DashboardIcon: DashboardIcon,
-    EcommerceIcon: EcommerceIcon,
-    DownloadReportIcon: DownloadReportIcon,
-    RunningReportIcon: RunningReportIcon,
-    ReportIcon: ReportIcon
+     EcommerceIcon: EcommerceIcon,
+     DownloadReportIcon:DownloadReportIcon,
+     RunningReportIcon:RunningReportIcon,
+     ReportIcon: ReportIcon
   };
 
-  onMount(() => {
+  onMount(async () => {
     try {
-      const data = [
-        {
-          id: 1,
-          username: "subba",
-          navItems: {
-            admin: [
-              {
-                icon: "EcommerceIcon",
-                name: "Admin",
-                route: "/",
-                subitems: [
-                  {
-                    icon: "DashboardIcon",
-                    name: "Run Tasks",
-                    route: "/admin/tasks/"
-                  },
-                  {
-                    icon: "DashboardIcon",
-                    name: "User",
-                    route: "admin/user/"
-                  }
-                ]
-              }
-            ],
-            profile: [
-              {
-                icon: "ReportIcon",
-                name: "Profile",
-                route: "/reports",
-                subitems: [
-                  {
-                    icon: "DashboardIcon",
-                    name: "Change Password",
-                    route: "/change-password/"
-                  }
-                ]
-              }
-            ],
-            reports: [
-              {
-                icon: "ReportIcon",
-                name: "Reports",
-                subitems: [
-                  {
-                    icon: "DashboardIcon",
-                    name: "Reports Classification",
-                    route: "/reports"
-                  }
-                ]
-              },
-              {
-                icon: "EcommerceIcon",
-                name: "Reports Status",
-                subitems: [
-                  {
-                    icon: "EcommerceIcon",
-                    name: "Running",
-                    route: "/reports/running-reports"
-                  },
-                  {
-                    icon: "DashboardIcon",
-                    name: "Completed",
-                    route: "/reports/completed-reports"
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ];
+      const res = await API.get('/reports-nav-items');
+      const data = res.data.navItems || {};
+      
+      navItems = Array.isArray(data) ? data : Object.values(data);
 
-      // Set navItems based on the data structure
-      if (Array.isArray(data) && data.length > 0) {
-        navItems = Object.entries(data[0].navItems).map(([key, value]) => ({
-          name: key,
-          subitems: value,
-        }));
-
-        // Open the first item by default if it has subitems
-        if (navItems.length > 0) {
-          openSubMenus[navItems[0].name] = true;
-        }
+      if (activeMainPage === 'reports') {
+        navItems = Array.isArray(data.reports) ? data.reports : [];
+      } else if (activeMainPage === 'dashboard') {
+        navItems = Array.isArray(data.dashboards) ? data.dashboards : [];
+      } else if (activeMainPage === 'profile') {
+        navItems = Array.isArray(data.profile) ? data.profile : [];
+      } else if (activeMainPage === 'admin') {
+        navItems = Array.isArray(data.admin) ? data.admin : [];      
+      } else if (activeMainPage === 'parcel') {
+        navItems = Array.isArray(data.parcel) ? data.parcel : [];
       }
 
-      console.log('navItems:', navItems);
-      console.log('openSubMenus:', openSubMenus);
+      navItems.forEach(item => {
+        openSubMenus[item.name] = item.subitems && item.subitems.length > 0;
+      });
+      
     } catch (error) {
       console.error('Failed to load nav items:', error);
       navItems = [];
     }
   });
 
-  // Function to handle page navigation
   function navigateToPage(page) {
     activePage = page;
     goto(page);
   }
 
-  // Function to handle dashboard navigation
   function navigateToDashboardPage(name) {
     if (name) {
       goto(`/dashboard/${name.toLowerCase()}`);
+      activePage = `/dashboard/${name.toLowerCase()}`;
     }
   }
 
-  // Function to toggle submenu visibility, ensuring only one item is open at a time
   function toggleSubMenu(name) {
-    openSubMenus = {
-      // Set the clicked item to be open
-      [name]: !openSubMenus[name],
-    };
+    openSubMenus = { ...openSubMenus, [name]: !openSubMenus[name] };
   }
 </script>
 
 <!-- Sidebar -->
-<aside id="sidebar-multi-level-sidebar" class="fixed pt-4 top-16 left-0 z-40 w-72 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-  <div class="h-full py-4 overflow-y-auto">
-    <ul class="menu w-[260px] bg-base-100 text-base-content">
+<aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
+  <div class="h-full  py-4 overflow-y-auto"> 
+    <ul class="menu  w-[260px] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
@@ -149,9 +77,11 @@
                 {@html iconMap[item.icon] || ''}
               </div>
               <span class="flex-1 ms-2">{item.name}</span>
+            
+              <!-- Toggle Arrow -->
               {#if item.subitems && item.subitems.length > 0}
                 <svg 
-                  class="w-3 h-3 cursor-pointer transition-transform duration-300 {openSubMenus[item.name] ? 'rotate-180' : 'rotate-0'}" 
+                  class="w-3 h-3 cursor-pointer transition-transform duration-300 {openSubMenus[item.name] ? 'rotate-180' : ''}" 
                   aria-hidden="true" 
                   xmlns="http://www.w3.org/2000/svg" 
                   fill="none" 
@@ -162,6 +92,7 @@
                 </svg>
               {/if}
             </a>
+            
 
             {#if item.subitems && item.subitems.length > 0 && openSubMenus[item.name]}
               <ul class="menu-sub pl-4">
@@ -176,13 +107,12 @@
                         } else {
                           navigateToPage(subitem.route);
                         }
-                        toggleSubMenu(item.name); // Close the submenu when a subitem is clicked
                       }}>
                       <!-- Subitem icon -->
                       <div class="icon mr-2">
                         {@html iconMap[subitem.icon] || ''}
                       </div>
-                      <span class="truncate w-[7.6rem]" title={subitem.name}>
+                      <span class="truncate w-40 ">
                         {subitem.name}
                       </span>
                     </a>
@@ -193,6 +123,6 @@
           </li>
         {/each}
       {/if}
-    </ul>
+    </ul> 
   </div>
 </aside>

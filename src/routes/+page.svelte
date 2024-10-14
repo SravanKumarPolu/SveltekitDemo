@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import Header from './Header15.svelte';
   import Sidebar from './Sidebar.svelte';
   import Footer from './Footer.svelte';
@@ -17,6 +19,7 @@
       <!-- Main Content -->
       <main class="flex-grow ml-64 mt-16 p-4">
         <Report />  <!-- This is where the page-specific content will be injected -->
+       
       </main>
     </div>
   

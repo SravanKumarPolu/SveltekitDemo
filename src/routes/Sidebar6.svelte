@@ -1,15 +1,19 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation'; 
+  import { goto } from '$app/navigation';
   import API from '$lib/api';
+
+  // Importing icons
   import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from '$lib/icons';
 
+  let dashboardConfig = { navItems: [] };  // Initialize dashboard config
   export let activePage = '';
   export let activeMainPage = '';
 
-  let navItems = [];
-  let openSubMenus = {};
+  let navItems = [];  // Initialize as an empty array
+  let openSubMenus = {}; // State to track open submenus
 
+  // Create a map to reference icons by name
   const iconMap = {
     DashboardIcon,
     EcommerceIcon,
@@ -21,8 +25,9 @@
   onMount(async () => {
     try {
       const res = await API.get('/reports-nav-items');
-      const data = res.data.navItems || {};
-      
+      const data = res.data.navItems || {};  // Fallback to an empty object if data is not found
+
+      // Ensure that navItems is an array before using it
       navItems = Array.isArray(data) ? data : Object.values(data);
 
       if (activeMainPage === 'reports') {
@@ -32,18 +37,18 @@
       } else if (activeMainPage === 'profile') {
         navItems = Array.isArray(data.profile) ? data.profile : [];
       } else if (activeMainPage === 'admin') {
-        navItems = Array.isArray(data.admin) ? data.admin : [];      
+        navItems = Array.isArray(data.admin) ? data.admin : [];
       } else if (activeMainPage === 'parcel') {
         navItems = Array.isArray(data.parcel) ? data.parcel : [];
       }
 
+      // Initialize openSubMenus state and default expand the submenu
       navItems.forEach(item => {
-        openSubMenus[item.name] = item.subitems && item.subitems.length > 0;
+        openSubMenus[item.name] = item.subitems && item.subitems.length > 0; // Expand by default if there are subitems
       });
-      
     } catch (error) {
       console.error('Failed to load nav items:', error);
-      navItems = [];
+      navItems = [];  // Fallback to an empty array in case of an error
     }
   });
 
@@ -52,10 +57,10 @@
     goto(page);
   }
 
+  // Function to handle navigation
   function navigateToDashboardPage(name) {
     if (name) {
       goto(`/dashboard/${name.toLowerCase()}`);
-      activePage = `/dashboard/${name.toLowerCase()}`;
     }
   }
 
@@ -67,7 +72,7 @@
 <!-- Sidebar -->
 <aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
   <div class="h-full px-3 py-4 overflow-y-auto"> 
-    <ul class="menu p-4 w-[260px] bg-base-100 text-base-content">
+    <ul class="menu p-4 w-80 bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
@@ -102,9 +107,7 @@
                       <div class="icon mr-2">
                         {@html iconMap[subitem.icon] || ''}
                       </div>
-                      <span class="truncate w-40 ">
-                        {subitem.name}
-                      </span>
+                      {subitem.name}
                     </a>
                   </li>
                 {/each}

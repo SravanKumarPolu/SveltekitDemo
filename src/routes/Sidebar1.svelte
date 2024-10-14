@@ -1,16 +1,14 @@
-<script>
+<script> 
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation'; 
-  import API from '$lib/api';
+  import { goto } from '$app/navigation';
 
   // Importing icons
-  import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from '$lib/icons';
-  let dashboardConfig = { navItems: [] };  // Initialize dashboard config
+  import { DashboardIcon, EcommerceIcon, DownloadReportIcon, RunningReportIcon, ReportIcon } from './icons';
 
   export let activePage = '';
-  export let activeMainPage = '';
+  export let activeMainPage = 'reports';
 
-  let navItems = [];  // Initialize as an empty array
+  let navItems = []; // Initialize as an empty array
   let openSubMenus = {}; // State to track open submenus
 
   // Create a map to reference icons by name
@@ -20,62 +18,127 @@
     DownloadReportIcon: DownloadReportIcon,
     RunningReportIcon: RunningReportIcon,
     ReportIcon: ReportIcon
-    // Add other icons as needed
   };
 
-  onMount(async () => {
+  onMount(() => {
     try {
-      const res = await API.get('/reports-nav-items');
-      const data = res.data.navItems || {};  // Fallback to an empty object if data is not found
+      const data = [
+        {
+          id: 1,
+          username: "subba",
+          navItems: {
+            admin: [
+              {
+                icon: "EcommerceIcon",
+                name: "Admin",
+                route: "/",
+                subitems: [
+                  {
+                    icon: "DashboardIcon",
+                    name: "Run Tasks",
+                    route: "/admin/tasks/"
+                  },
+                  {
+                    icon: "DashboardIcon",
+                    name: "User",
+                    route: "admin/user/"
+                  }
+                ]
+              }
+            ],
+            profile: [
+              {
+                icon: "ReportIcon",
+                name: "Profile",
+                route: "/reports",
+                subitems: [
+                  {
+                    icon: "DashboardIcon",
+                    name: "Change Password",
+                    route: "/change-password/"
+                  }
+                ]
+              }
+            ],
+            reports: [
+              {
+                icon: "ReportIcon",
+                name: "Reports",
+                subitems: [
+                  {
+                    icon: "DashboardIcon",
+                    name: "Reports Classification",
+                    route: "/reports"
+                  }
+                ]
+              },
+              {
+                icon: "EcommerceIcon",
+                name: "Reports Status",
+                subitems: [
+                  {
+                    icon: "EcommerceIcon",
+                    name: "Running",
+                    route: "/reports/running-reports"
+                  },
+                  {
+                    icon: "DashboardIcon",
+                    name: "Completed",
+                    route: "/reports/completed-reports"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ];
 
-      // Ensure that navItems is an array before using it
-      navItems = Array.isArray(data) ? data : Object.values(data);
+      // Set navItems based on the data structure
+      if (Array.isArray(data) && data.length > 0) {
+        navItems = Object.entries(data[0].navItems).map(([key, value]) => ({
+          name: key,
+          subitems: value,
+        }));
 
-      if (activeMainPage === 'reports') {
-        navItems = Array.isArray(data.reports) ? data.reports : [];
-      } else if (activeMainPage === 'dashboard') {
-        navItems = Array.isArray(data.dashboards) ? data.dashboards : [];
-      } else if (activeMainPage === 'profile') {
-        navItems = Array.isArray(data.profile) ? data.profile : [];
-      } else if (activeMainPage === 'admin') {
-        navItems = Array.isArray(data.admin) ? data.admin : [];      
-      } else if (activeMainPage === 'parcel') {
-        navItems = Array.isArray(data.parcel) ? data.parcel : [];
+        // Open the first item by default if it has subitems
+        if (navItems.length > 0) {
+          openSubMenus[navItems[0].name] = true;
+        }
       }
 
-      // Initialize openSubMenus state to have the first item open by default
-      if (navItems.length > 0) {
-        openSubMenus[navItems[0].name] = true;
-      }
-      
+      console.log('navItems:', navItems);
+      console.log('openSubMenus:', openSubMenus);
     } catch (error) {
       console.error('Failed to load nav items:', error);
-      navItems = [];  // Fallback to an empty array in case of an error
+      navItems = [];
     }
   });
 
-  function navigateToPage(page) { 
+  // Function to handle page navigation
+  function navigateToPage(page) {
     activePage = page;
-    goto(page); 
+    goto(page);
   }
 
-  // Function to handle navigation
-  function navigateToDashboardPage(name) {
-    if (name) {
-      goto(`/dashboard/${name.toLowerCase()}`);
-    }
+// Function to handle dashboard navigation
+function navigateToDashboardPage(name) {
+  if (name) {
+    goto(`/dashboard/${name.toLowerCase()}`);
   }
+}
 
+
+  // Function to toggle submenu visibility, ensuring only one item is open at a time
   function toggleSubMenu(name) {
-    // Ensure only the clicked submenu is open
-    openSubMenus = { [name]: !openSubMenus[name] };
+    openSubMenus = { ...openSubMenus, [name]: !openSubMenus[name] };
   }
+
 </script>
 
 <!-- Sidebar -->
 <aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
-  <div class="h-full px-3 py-4 overflow-y-auto"> 
-    <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+  <div class="h-full  py-4 overflow-y-auto"> 
+    <ul class="menu  w-[260] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">
@@ -110,7 +173,9 @@
                       <div class="icon mr-2">
                         {@html iconMap[subitem.icon] || ''}
                       </div>
-                      {subitem.name}
+                      <span class="truncate w-30 ">
+                        {subitem.name}
+                      </span>
                     </a>
                   </li>
                 {/each}

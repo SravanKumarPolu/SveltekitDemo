@@ -3,7 +3,7 @@
 
   // Mock Data for Categories and Reports
 const mockCategories = [
-  { id: 1, name: "Sales Reports", reports: [{ id: 101, name: "Sales Q1", reportCustomizedName: "Custom Sales Q1", description: "Quarterly sales report for Q1" }] },
+  { id: 1, name: "Sales Reports asdfgh dferyadgkkccvffdgh Quarterly sales report for Q1", reports: [{ id: 101, name: "Sales Q1", reportCustomizedName: "Custom Sales Q1", description: "Quarterly sales report for Q1 Quarterly sales report for Q1" }] },
   { id: 2, name: "Marketing Reports", reports: [{ id: 102, name: "Marketing Q1", reportCustomizedName: "Custom Marketing Q1", description: "Marketing analysis for Q1" }] },
   { id: 3, name: "Finance Reports", reports: [{ id: 103, name: "Finance Q1", reportCustomizedName: "Custom Finance Q1", description: "Financial performance for Q1" }] },
   { id: 4, name: "HR Reports", reports: [{ id: 104, name: "HR Q1", reportCustomizedName: "Custom HR Q1", description: "HR data for Q1" }] },
@@ -233,7 +233,7 @@ const mockReports = [
     {#if filteredCategories && filteredCategories.length}
     
       <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">
-        <ul class="menu bg-base-100 rounded-md w-auto ">
+        <ul class="menu bg-base-100 rounded-md  ">
           <li>
             <button
               type="button"
@@ -258,7 +258,7 @@ const mockReports = [
                   class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
                   on:click={() => selectCategory(category.id)}
                 >
-                  <span class="truncate w-[80%]" title={category.name}>{category.name}</span>
+                  <span class="truncate w-96" title={category.name}>{category.name}</span>
                   {selectedCategoryId === category.id ? "➡" : ""}
                 </button>
               {/if}
@@ -315,8 +315,8 @@ const mockReports = [
                   class="input input-bordered flex-grow mr-2"
                 />
               {:else}
-                <div class="flex justify-between  w-auto">
-                  <span class="truncate w-[70%]" title={report.name}>{report.reportCustomizedName}</span>
+                <div class="flex justify-between  ">
+                  <span class="truncate w-72 " title={report.name}>{report.reportCustomizedName}</span>
                   <div class="flex gap-2">
                     <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>
                     <button class="btn btn-secondary btn-sm" on:click={() => showReportInfo(report)}>Info</button>
