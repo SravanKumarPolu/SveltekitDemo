@@ -5,7 +5,7 @@
    import Header from './Header15.svelte';
    import Sidebar from './Sidebar.svelte';
    import Footer from './Footer.svelte';
-  import Report from './Reports.svelte';
+  import Reports from './Reports.svelte';
   </script>
   
   
@@ -18,7 +18,8 @@
        <Sidebar  class="fixed top-18 left-0 z-40 w-68 h-full bg-base-100 shadow-lg" />
         <!-- Main Content -->
        <main class="flex-grow ml-64 mt-16 p-4">
-         <Report />  <!-- This is where the page-specific content will be injected -->
+        <slot />
+        <Reports />
        
        </main>
      </div>

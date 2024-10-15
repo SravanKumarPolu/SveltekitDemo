@@ -2,7 +2,8 @@
   import Header from './Header15.svelte';
   import Sidebar from './Sidebar.svelte';
   import Footer from './Footer.svelte';
-    import Report from './Report.svelte';
+
+    import Reports from './Reports/+page.svelte';
 
 </script>
 
@@ -17,7 +18,7 @@
   
       <!-- Main Content -->
       <main class="flex-grow ml-64 mt-16 p-4">
-      <Report />
+      <Reports />
         <slot /> <!-- This is where the page-specific content will be injected -->
       </main>
     </div>

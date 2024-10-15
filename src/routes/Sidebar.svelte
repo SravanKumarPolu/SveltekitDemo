@@ -137,6 +137,7 @@
     goto(page); // Navigate to the subitem's page
   }
 
+
   // Function to toggle submenu visibility (on click)
   function toggleSubMenu(name) {
     openSubMenus[name] = !openSubMenus[name]; // Toggle the submenu
