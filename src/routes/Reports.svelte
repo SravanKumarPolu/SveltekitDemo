@@ -68,6 +68,8 @@
   }
 
   function refreshPage() {
+    // Reset the filter to "All" and fetch the reports again
+    statusFilter.set('All');
     fetchReports();
   }
 
@@ -77,82 +79,81 @@
   }
 </script>
 
-<div class="container mx-auto px-4 py-8">
-<!-- Header Section with Background -->
-<div class="bg-gray-100 p-4 rounded-lg shadow-md mb-6">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-2xl font-semibold text-gray-800">Reports</h2>
-    <button class="btn btn-primary" on:click={refreshPage}>Refresh</button>
-  </div>
-
-  <!-- Second Row for Status Filters -->
-  <div class="flex justify-center space-x-4">
-    <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('All')}>All</button>
-    <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Completed')}>Completed</button>
-    <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Failed')}>Failed</button>
-    <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Running')}>Running</button>
-    <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Scheduled')}>Scheduled</button>
-  </div>
-</div>
-
-
-
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    {#each $filteredReports.slice(($currentPage - 1) * $itemsPerPage, $currentPage * $itemsPerPage) as report, index (report.id)}
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-      <!-- Card Header -->
-      <div class="card-header bg-primary text-primary-content p-4 text-center">
-        <h3 class="text-xl font-bold">{report.fileName || 'N/A'}</h3>
-      </div>
-      
-      <!-- Card Body -->
-      <div class="card-body p-6">
-        <p class="text-gray-700 my-2">Status: <span class="font-medium">{report.status || 'N/A'}</span></p>
-        <p class="text-gray-700 my-2">Completion Date: <span class="font-medium text-black">{report.completionDate ? formatDate(report.completionDate) : 'N/A'}</span></p>
-        <p class="text-gray-700 my-2">Expires Date: <span class="font-medium">{report.expiresDate ? formatDate(report.expiresDate) : 'N/A'}</span></p>
-        <p class="text-gray-700 my-2">Size: <span class="font-medium">{report.fileSizeInKbs ? `${report.fileSizeInKbs} KB` : 'N/A'}</span></p>
-      </div>
-      
-      <!-- Card Footer -->
-      <div class="card-footer p-4 text-center">
-        <button
-          class="btn btn-primary w-full"
-          on:click={() => downloadFile(report.filePath)}
-          disabled={!report.filePath}
-        >
-          Download
-        </button>
-      </div>
+<div class="container h-[70%] mx-auto px-4 py-8">
+  <!-- Header Section with Background -->
+  <div class="bg-gray-100  p-4 rounded-lg shadow-md mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-semibold text-gray-800">Reports</h2>
+      <button class="btn btn-primary" on:click={refreshPage}>Refresh</button>
     </div>
-    
-    {/each}
+
+    <!-- Second Row for Status Filters -->
+    <div class="flex justify-center space-x-4">
+      <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('All')}>All</button>
+      <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Completed')}>Completed</button>
+      <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Failed')}>Failed</button>
+      <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Running')}>Running</button>
+      <button class="btn btn-sm btn-outline" on:click={() => setStatusFilter('Scheduled')}>Scheduled</button>
+    </div>
   </div>
 
+  <!-- Cards Container with Scrollbar -->
+  <div class="h-[30rem] overflow-y-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  h-auto">
+      {#each $filteredReports.slice(($currentPage - 1) * $itemsPerPage, $currentPage * $itemsPerPage) as report, index (report.id)}
+      <div class="card bg-base-100 shadow-xl border border-gray-200">
+        <!-- Card Header -->
+        <div class="card-header bg-primary text-primary-content p-4 text-center">
+          <p class="text-sm font-semibold">{report.fileName || 'N/A'}</p>
+        </div>
+      
+        <!-- Card Body -->
+        <div class="card-body p-6">
+          <p class="text-gray-600 my-2">Status: <span class="text-black font-semibold">{report.status || 'N/A'}</span></p>
+          <p class="text-gray-600 my-2">Completion Date: <span class=" text-black font-semibold">{report.completionDate ? formatDate(report.completionDate) : 'N/A'}</span></p>
+          <p class="text-gray-600 my-2">Expires Date: <span class="text-black font-semibold">{report.expiresDate ? formatDate(report.expiresDate) : 'N/A'}</span></p>
+          <p class="text-gray-600 my-2">Size: <span class="text-black font-semibold">{report.fileSizeInKbs ? `${report.fileSizeInKbs} KB` : 'N/A'}</span></p>
+        </div>
+      
+        <!-- Card Footer -->
+        <div class="card-footer p-4 text-center">
+          {#if report.status === 'Failed'}
+            <!-- Failed button with DaisyUI's btn-error class -->
+            <button class="btn btn-error w-full" disabled>Failed</button>
+          {:else if report.status === 'Running'}
+            <!-- Running button with DaisyUI's btn-primary and loading spinner -->
+            <button class="btn btn-primary w-full" disabled>
+              <span class="loading loading-spinner mr-2"></span>
+              Running
+            </button>
+          {:else}
+            <!-- Download button with DaisyUI's btn-success class -->
+            <button
+              class="btn btn-success w-full"
+              on:click={() => downloadFile(report.filePath)}
+              disabled={!report.filePath}
+            >
+              Download
+            </button>
+          {/if}
+        </div>
+      </div>
+      {/each}
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
   <div class="flex justify-between items-center mt-6">
-    <button 
-      class="btn btn-secondary"
-      on:click={prevPage}
-      disabled={$currentPage === 1}
-    >
-      Previous
-    </button>
-
-    <span class="text-gray-700">Page {$currentPage} / {$totalPages}</span> 
-
+    <button class="btn btn-secondary" on:click={prevPage} disabled={$currentPage === 1}>Previous</button>
+    <span class="text-gray-700">Page {$currentPage} / {$totalPages}</span>
     <select id="itemsPerPage" class="select select-bordered w-40" on:change={changeItemsPerPage}>
       <option value="4">4 per page</option>
       <option value="8" selected>8 per page</option>
       <option value="16">16 per page</option>
       <option value="32">32 per page</option>
     </select>
-
-    <button 
-      class="btn btn-secondary"
-      on:click={nextPage}
-      disabled={$currentPage * $itemsPerPage >= $filteredReports.length}
-    >
-      Next
-    </button>
+    <button class="btn btn-secondary" on:click={nextPage} disabled={$currentPage * $itemsPerPage >= $filteredReports.length}>Next</button>
   </div>
 </div>
+
+
