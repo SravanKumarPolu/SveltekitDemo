@@ -2,12 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.multiline-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  /* Limits the text to 2 lines */
-  -webkit-box-orient: vertical;
-  text-wrap: ;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}

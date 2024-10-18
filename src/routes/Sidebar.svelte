@@ -147,7 +147,7 @@
 <!-- Sidebar -->
 <aside id="sidebar-multi-level-sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-lg" aria-label="Sidebar">
   <div class="h-full mt-4 py-4 overflow-y-auto"> 
-    <ul class="menu w-[260px] bg-base-100 text-base-content">
+    <ul class="menu w-[240px] bg-base-100 text-base-content">
       {#if navItems.length > 0}
         {#each navItems as item}
           <li class="menu-dropdown">

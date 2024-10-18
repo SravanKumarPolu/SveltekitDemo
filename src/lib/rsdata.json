@@ -20,13 +20,14 @@
         "createdDate": "2024-10-09T18:35:00",
         "lastUpdatedBy": null,
         "lastUpdatedDate": "2024-10-09T18:40:00",
-        "timeTaken": "N/A"
+        "timeTaken": "N/A",
+        "isScheduled": true
     },
     {
         "id": 130,
         "submitedId": 1216,
         "format": ".xlsx",
-        "fileName": "geeta_report ,Rich Harris created Svelte, a free and opensource",
+        "fileName": "geeta_report ,Rich Harris is created Svelte, it's free and open source code  ",
         "status": "Running",
         "selectedInfo": "{}",
         "completionDate": null,
@@ -43,12 +44,15 @@
         "createdDate": "2024-10-13T09:00:00",
         "lastUpdatedBy": null,
         "timeTaken": "N/A",
+        "isScheduled": true,
         "lastUpdatedDate": "2024-10-13T09:45:00"
+
     },
     {
         "id": 470,
         "submitedId": 1556,
-        "fileName": "krishna_Multiple_Customers_UPS_FedEx_Shipment_Date_2024-10-06_to_2024-10-12",
+        "format": ".pdf",
+        "fileName": " Rich Harris is created Svelte krishna_Multiple_Customers_UPS_FedEx_Shipment_Date_2024-10-06_to_2024-10-12",
         "status": "Completed",
         "selectedInfo": "{}",
         "completionDate": "2024-10-17T10:46:50",
@@ -435,7 +439,7 @@
         "lastUpdatedBy": null,
         "lastUpdatedDate": "2024-10-16T17:37:05",
         "timeTaken": "N/A",
-        "isScheduled": false
+        "isScheduled": true
     },
     {
         "id": 463,
