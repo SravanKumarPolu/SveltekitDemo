@@ -1,6 +1,6 @@
 [
     {
-        "id": 126,
+        "id": 11,
         "submitedId": 1212,
         "format": ".xlsx",
         "fileName": "john_report to get that color to get that",
@@ -21,7 +21,7 @@
         "lastUpdatedBy": null,
         "lastUpdatedDate": "2024-10-09T18:40:00",
         "timeTaken": "N/A",
-        "isScheduled": true
+        "isScheduled": false
     },
     {
         "id": 130,
@@ -234,7 +234,54 @@
         "timeTaken": "N/A",
         "lastUpdatedDate": "2024-10-12T08:20:00"
     },
-
+    {
+        "id": 12,
+        "submitedId": 1215,
+        "format": ".xlsx",
+        "fileName": "ram_report",
+        "status": "Running",
+        "selectedInfo": "{}",
+        "completionDate": null,
+        "expiresDate": "2024-10-25T16:00:00",
+        "fileSizeInKbs": 2500,
+        "filePath": "D:\\Genrep\\report_1215.xlsx",
+        "errorDetails": null,
+        "queries": null,
+        "queriesAfterModify": null,
+        "queryRuntimeInMillis": 5000,
+        "totalNoOfRows": 3000,
+        "noOfRowsWrittenTillNow": 1000,
+        "createdBy": "subba",
+        "createdDate": "2024-10-12T08:00:00",
+        "lastUpdatedBy": null,
+        "timeTaken": "N/A",
+        "isScheduled": false,
+        "lastUpdatedDate": "2024-10-12T08:20:00"
+    },
+    {
+        "id": 13,
+        "submitedId": 1215,
+        "format": ".xlsx",
+        "fileName": "ram_report",
+        "status": "Running",
+        "selectedInfo": "{}",
+        "completionDate": null,
+        "expiresDate": "2024-10-25T16:00:00",
+        "fileSizeInKbs": 2500,
+        "filePath": "D:\\Genrep\\report_1215.xlsx",
+        "errorDetails": null,
+        "queries": null,
+        "queriesAfterModify": null,
+        "queryRuntimeInMillis": 5000,
+        "totalNoOfRows": 3000,
+        "noOfRowsWrittenTillNow": 1000,
+        "createdBy": "subba",
+        "createdDate": "2024-10-12T08:00:00",
+        "lastUpdatedBy": null,
+        "timeTaken": "N/A",
+        "isScheduled": true,
+        "lastUpdatedDate": "2024-10-12T08:20:00"
+    },
     {
         "id": 131,
         "submitedId": 1217,
@@ -600,7 +647,7 @@
         "lastUpdatedBy": null,
         "lastUpdatedDate": "2024-10-16T15:26:29",
         "timeTaken": "N/A",
-        "isScheduled": false
+        "isScheduled": true
     },
     {
         "id": 442,
