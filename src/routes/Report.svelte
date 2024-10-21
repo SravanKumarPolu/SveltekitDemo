@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
 
   // Mock Data for Categories and Reports
+  let newCategoryName = "";
+
 const mockCategories = [
   { id: 1, name: "Sales Reports asdfgh dferyadgkkccvffdgh Quarterly sales report for Q1", reports: [{ id: 101, name: "Sales Q1", reportCustomizedName: "Custom Sales Q1", description: "Quarterly sales report for Q1 Quarterly sales report for Q1" }] },
   { id: 2, name: "Marketing Reports", reports: [{ id: 102, name: "Marketing Q1", reportCustomizedName: "Custom Marketing Q1", description: "Marketing analysis for Q1" }] },
@@ -142,6 +144,40 @@ const mockReports = [
       showError = true; // Optionally, show error state
     }
   };
+  const addCategory = async () => {
+  if (!newCategoryName.trim()) return; // Avoid empty categories
+
+  const newCategory = {
+    id: categories.length + 1, // Simple ID logic for now
+    name: newCategoryName.trim(),
+    reports: [],
+  };
+
+  categories = [...categories, newCategory]; // Update categories list
+  tempCategoryNames[newCategory.id] = newCategory.name; // Track changes
+
+  newCategoryName = ""; // Clear input field
+
+  // Optionally, show success notification
+  showSuccess = true;
+  setTimeout(() => (showSuccess = false), 3000);
+
+  console.log("New category added:", newCategory);
+};
+
+
+const deleteCategory = async (categoryId) => {
+  const confirmed = confirm("Are you sure you want to delete this category?");
+  if (!confirmed) return;
+
+  categories = categories.filter((category) => category.id !== categoryId);
+  delete tempCategoryNames[categoryId];
+
+  showSuccess = true;
+  setTimeout(() => (showSuccess = false), 3000);
+
+  console.log(`Deleted category with ID: ${categoryId}`);
+};
 
   const cancelCategoryEdit = () => {
     // Reset temp names
@@ -197,79 +233,102 @@ const mockReports = [
 
 
 
-<div class="flex flex-col  md:flex-row gap-2 mt-2 py-4">
+<div class="flex flex-col  md:flex-row gap-2 mt-2 py-4 ">
+ 
   <!-- Categories Column -->
-  <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
-    <!-- Success Ribbon -->
-    {#if showSuccess}
-      <div class="alert alert-success">
-        <span>Message sent successfully.</span>
-      </div>
-    {/if}
-    <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 mb-4">
-      <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
-        <h2 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Categories</h2>
-        <input
-          type="text"
-          placeholder="Search categories..."
-          bind:value={searchCategory}
-          class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-10 rounded-md shadow-lg"
-        />
-        <div class="w-full md:w-auto flex justify-center">
-          {#if editingCategories}
-            <div class="flex gap-2 flex-col md:flex-row">
-              <button class="btn btn-sm btn-outline" on:click={saveAllCategoryChanges}>Save</button>
-              <button class="btn btn-sm btn-outline" on:click={cancelCategoryEdit}>Cancel</button>
-            </div>
-          {:else}
-            <button class="btn btn-sm btn-outline" on:click={() => editingCategories = !editingCategories}>
-              Edit
-            </button>
-          {/if}
-        </div>
+<div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
+  <!-- Success Ribbon -->
+  {#if showSuccess}
+    <div class="alert alert-success">
+      <span>Category added successfully.</span>
+    </div>
+  {/if}
+
+  <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 mb-4">
+    <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
+      <h2 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Categories</h2>
+      <input
+        type="text"
+        placeholder="Search categories..."
+        bind:value={searchCategory}
+        class="input input-bordered w-full md:w-[11rem] mb-4 md:mb-0 h-10 rounded-md shadow-lg"
+      />
+      <div class="w-full md:w-auto flex justify-center">
+        {#if editingCategories}
+          <div class="flex gap-2 flex-col md:flex-row">
+            <button class="btn btn-sm btn-outline" on:click={saveAllCategoryChanges}>Save</button>
+            <button class="btn btn-sm btn-outline" on:click={cancelCategoryEdit}>Cancel</button>
+          </div>
+        {:else}
+          <button class="btn btn-sm btn-outline" on:click={() => (editingCategories = !editingCategories)}>
+            Edit
+          </button>
+        {/if}
       </div>
     </div>
-
-    {#if filteredCategories && filteredCategories.length}
-    
-      <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">
-        <ul class="menu bg-base-100 rounded-md  ">
-          <li>
-            <button
-              type="button"
-              class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
-              on:click={() => selectCategory(null)}
-            >
-              All Reports
-              {selectedCategoryId === null ? "➡" : ""}
-            </button>
-          </li>
-          {#each filteredCategories as category}
-            <li class="py-1">
-              {#if editingCategories}
-                <input
-                  type="text"
-                  bind:value={tempCategoryNames[category.id]}
-                  class="input input-bordered flex-grow mr-2"
-                />
-              {:else}
-                <button
-                  type="button"
-                  class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
-                  on:click={() => selectCategory(category.id)}
-                >
-                  <span class="truncate w-96" title={category.name}>{category.name}</span>
-                  {selectedCategoryId === category.id ? "➡" : ""}
-                </button>
-              {/if}
-            </li>
-          {/each}
-        </ul>
-      </div>
-    {:else}
-      <p>No categories found.</p>
-    {/if}
   </div>
+
+  <!-- New Category Form -->
+  <div class="flex flex-col md:flex-row gap-2 mt-4">
+    <input
+      type="text"
+      placeholder="Enter new category name..."
+      bind:value={newCategoryName}
+      class="input input-bordered w-full md:w-2/3 rounded-md shadow-lg"
+    />
+    <button class="btn btn-sm btn-primary" on:click={addCategory}>Add Category</button>
+  </div>
+
+  {#if filteredCategories && filteredCategories.length}
+    <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
+      <ul class="menu bg-base-100 rounded-md">
+        <li>
+          <button
+            type="button"
+            class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
+            on:click={() => selectCategory(null)}
+          >
+            All Reports
+            {selectedCategoryId === null ? "➡" : ""}
+          </button>
+        </li>
+        {#each filteredCategories as category}
+          <li class="py-1">
+            {#if editingCategories}
+              <input
+                type="text"
+                bind:value={tempCategoryNames[category.id]}
+                class="input input-bordered flex-grow mr-2"
+              />
+            {:else}
+              <button
+                type="button"
+                class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
+                on:click={() => selectCategory(category.id)}
+              >
+                <span class="truncate w-72" title={category.name}>{category.name}
+                
+                </span>
+                <button
+                class="btn btn-sm btn-error"
+                on:click={() => deleteCategory(category.id)}
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 text-primary-content" viewBox="0 0 16 16">
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+              </svg>
+              </button>
+                {selectedCategoryId === category.id ? "➡" : ""}
+              </button>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    </div>
+  {:else}
+    <p>No categories found.</p>
+  {/if}
+</div>
+
 
   <!-- Reports Column -->
    <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
