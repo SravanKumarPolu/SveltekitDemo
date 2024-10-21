@@ -8,7 +8,17 @@ export default {
     require('daisyui'),
 
     require('tailwind-scrollbar'),
-    require('@tailwindcss/line-clamp'),
+
+
 
   ],
+  daisyui: {
+    themes: [
+      'default', 'retro', 'cyberpunk', 'valentine', 'aqua', 'dark', // Existing themes
+      'luxury', 'dracula', 'coffee', 'autumn', 'emerald', 'business', 'forest', // New themes
+      'night', 'halloween', 'pastel', 'fantasy', 'emerald', 'synthwave',
+      'winter', 'lofi',
+    ],
+  },
+
 };

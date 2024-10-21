@@ -4,6 +4,7 @@
   import Sidebar from './Sidebar.svelte';
   import Footer from './Footer.svelte';
   import Reports from './Reports.svelte';
+  import Report from './Report.svelte';
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -16,9 +17,9 @@
     <Sidebar class="fixed top-16 left-0 z-40 w-64 h-full bg-base-100 shadow-lg" />
 
     <!-- Main Content -->
-    <main class="flex-grow ml-64 mt-16 p-4">
+    <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
-      <Reports />
+      <Report />
     </main>
   </div>
 
