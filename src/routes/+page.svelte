@@ -5,6 +5,7 @@
   import Footer from './Footer.svelte';
   import Reports from './Reports.svelte';
   import Report from './Report.svelte';
+    import CustomizeReport from './customizeReport.svelte';
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -20,6 +21,7 @@
     <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
       <Report />
+      <CustomizeReport />
     </main>
   </div>
 

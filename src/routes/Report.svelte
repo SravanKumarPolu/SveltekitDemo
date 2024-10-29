@@ -3,35 +3,18 @@
 
   // Mock Data for Categories and Reports
   let newCategoryName = "";
-
+  let newReportName = "";
 const mockCategories = [
   { id: 1, name: "Sales Reports asdfgh dferyadgkkccvffdgh Quarterly sales report for Q1", reports: [{ id: 101, name: "Sales Q1", reportCustomizedName: "Custom Sales Q1", description: "Quarterly sales report for Q1 Quarterly sales report for Q1" }] },
   { id: 2, name: "Marketing Reports", reports: [{ id: 102, name: "Marketing Q1", reportCustomizedName: "Custom Marketing Q1", description: "Marketing analysis for Q1" }] },
-  { id: 3, name: "Finance Reports", reports: [{ id: 103, name: "Finance Q1", reportCustomizedName: "Custom Finance Q1", description: "Financial performance for Q1" }] },
-  { id: 4, name: "HR Reports", reports: [{ id: 104, name: "HR Q1", reportCustomizedName: "Custom HR Q1", description: "HR data for Q1" }] },
-  { id: 5, name: "IT Reports", reports: [{ id: 105, name: "IT Q1", reportCustomizedName: "Custom IT Q1", description: "IT infrastructure report for Q1" }] },
-  { id: 6, name: "Customer Feedback Reports", reports: [{ id: 106, name: "Customer Feedback Q1", reportCustomizedName: "Custom Customer Feedback Q1", description: "Customer feedback report for Q1" }] },
-  { id: 7, name: "Product Performance Reports", reports: [{ id: 107, name: "Product Performance Q1", reportCustomizedName: "Custom Product Performance Q1", description: "Product performance report for Q1" }] },
-  { id: 8, name: "Compliance Reports", reports: [{ id: 108, name: "Compliance Q1", reportCustomizedName: "Custom Compliance Q1", description: "Compliance report for Q1" }] },
-  { id: 9, name: "Risk Management Reports", reports: [{ id: 109, name: "Risk Management Q1", reportCustomizedName: "Custom Risk Management Q1", description: "Risk management report for Q1" }] },
-  { id: 10, name: "Operational Reports", reports: [{ id: 110, name: "Operational Q1", reportCustomizedName: "Custom Operational Q1", description: "Operational report for Q1" }] },
-  { id: 11, name: "Training and Development Reports", reports: [{ id: 111, name: "Training Q1", reportCustomizedName: "Custom Training Q1", description: "Training and development report for Q1" }] },
-  { id: 12, name: "Environmental Impact Reports", reports: [{ id: 112, name: "Environmental Q1", reportCustomizedName: "Custom Environmental Q1", description: "Environmental impact report for Q1" }] }
+  
 ];
 
 const mockReports = [
   { id: 101, report: { id: 101, name: "Sales Q1", description: "Quarterly sales report for Q1" }, reportCustomizedName: "Custom Sales Q1" },
   { id: 102, report: { id: 102, name: "Marketing Q1", description: "Marketing analysis for Q1" }, reportCustomizedName: "Custom Marketing Q1" },
   { id: 103, report: { id: 103, name: "Finance Q1", description: "Financial performance for Q1" }, reportCustomizedName: "Custom Finance Q1" },
-  { id: 104, report: { id: 104, name: "HR Q1", description: "HR data for Q1" }, reportCustomizedName: "Custom HR Q1" },
-  { id: 105, report: { id: 105, name: "IT Q1", description: "IT infrastructure report for Q1" }, reportCustomizedName: "Custom IT Q1" },
-  { id: 106, report: { id: 106, name: "Customer Feedback Q1", description: "Customer feedback report for Q1" }, reportCustomizedName: "Custom Customer Feedback Q1" },
-  { id: 107, report: { id: 107, name: "Product Performance Q1", description: "Product performance report for Q1" }, reportCustomizedName: "Custom Product Performance Q1" },
-  { id: 108, report: { id: 108, name: "Compliance Q1", description: "Compliance report for Q1" }, reportCustomizedName: "Custom Compliance Q1 Compliance report for Q1" },
-  { id: 109, report: { id: 109, name: "Risk Management Q1", description: "Risk management report for Q1" }, reportCustomizedName: "Custom Risk Management Q1" },
-  { id: 110, report: { id: 110, name: "Operational Q1", description: "Operational report for Q1" }, reportCustomizedName: "Custom Operational Q1" },
-  { id: 111, report: { id: 111, name: "Training Q1", description: "Training and development report for Q1" }, reportCustomizedName: "Custom Training Q1" },
-  { id: 112, report: { id: 112, name: "Environmental Q1", description: "Environmental impact report for Q1" }, reportCustomizedName: "Custom Environmental Q1" }
+
 ];
 
 
@@ -72,6 +55,7 @@ const mockReports = [
   let showSuccess = false;
   let showError = false;
 
+  let deleteSuccess = false; // State to show success message
   // Load categories and reports data
   const loadCategoriesAndReports = async () => {
     try {
@@ -144,40 +128,88 @@ const mockReports = [
       showError = true; // Optionally, show error state
     }
   };
+
+  async function saveChanges(type) {
+    try {
+      if (type === "categories") {
+        const updates = Object.keys(tempCategoryNames).map((id) => ({
+          id,
+          name: tempCategoryNames[id]
+        }));
+        await bulkUpdateCategories(updates);
+      } else {
+        const updates = Object.keys(tempReportNames).map((id) => ({
+          id,
+          name: tempReportNames[id]
+        }));
+        await bulkUpdateReports(updates);
+      }
+      showSuccess = true;
+      setTimeout(() => (showSuccess = false), 3000);
+      loadData();
+    } catch (error) {
+      console.error("Error saving changes:", error);
+      showError = true;
+    }
+  }
   const addCategory = async () => {
-  if (!newCategoryName.trim()) return; // Avoid empty categories
+  if (!newCategoryName.trim()) return; // Avoid empty input
 
   const newCategory = {
-    id: categories.length + 1, // Simple ID logic for now
+    id: Date.now(), // Use timestamp for unique ID
     name: newCategoryName.trim(),
     reports: [],
   };
 
-  categories = [...categories, newCategory]; // Update categories list
-  tempCategoryNames[newCategory.id] = newCategory.name; // Track changes
+  categories = [...categories, newCategory]; // Add new category
+  tempCategoryNames[newCategory.id] = newCategory.name; // Track temp changes
 
   newCategoryName = ""; // Clear input field
 
-  // Optionally, show success notification
   showSuccess = true;
-  setTimeout(() => (showSuccess = false), 3000);
+  setTimeout(() => (showSuccess = false), 3000); // Hide success message
 
   console.log("New category added:", newCategory);
 };
+const addReport = () => {
+    if (!newReportName.trim()) {
+      showError = true;
+      return;
+    }
 
+    const newReport = {
+      id: Date.now(),
+      report: { id: Date.now(), name: newReportName.trim(), description: '' },
+      reportCustomizedName: newReportName.trim(),
+    };
 
+    reports.update((currentReports) => [...currentReports, newReport]);
+    newReportName = '';
+    showError = false;
+
+    console.log('New report added:', newReport);
+  };
 const deleteCategory = async (categoryId) => {
   const confirmed = confirm("Are you sure you want to delete this category?");
-  if (!confirmed) return;
+  if (!confirmed) return; // Exit if the user cancels
 
+  // Filter out the category to delete
   categories = categories.filter((category) => category.id !== categoryId);
+
+  // Remove the deleted category from tempCategoryNames
   delete tempCategoryNames[categoryId];
 
-  showSuccess = true;
-  setTimeout(() => (showSuccess = false), 3000);
+  // Update the filtered categories after deletion
+  filteredCategories = categories.filter(cat =>
+    cat.name.toLowerCase().includes(searchCategory.toLowerCase())
+  );
 
-  console.log(`Deleted category with ID: ${categoryId}`);
+  // Display success notification
+
 };
+
+
+
 
   const cancelCategoryEdit = () => {
     // Reset temp names
@@ -235,15 +267,19 @@ const deleteCategory = async (categoryId) => {
 
 <div class="flex flex-col  md:flex-row gap-2 mt-2 py-4 ">
  
-  <!-- Categories Column -->
+<!-- Categories Column -->
 <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
-  <!-- Success Ribbon -->
+  
+  <!-- Success Notifications -->
   {#if showSuccess}
     <div class="alert alert-success">
       <span>Category added successfully.</span>
     </div>
   {/if}
+  
 
+
+  <!-- Header and Search Section -->
   <div class="bg-gray-300 shadow-md w-full flex flex-col md:flex-row justify-center items-center rounded-lg h-auto p-4 mb-4">
     <div class="flex flex-col md:flex-row gap-2 justify-between items-center w-full">
       <h2 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Categories</h2>
@@ -260,78 +296,84 @@ const deleteCategory = async (categoryId) => {
             <button class="btn btn-sm btn-outline" on:click={cancelCategoryEdit}>Cancel</button>
           </div>
         {:else}
-          <button class="btn btn-sm btn-outline" on:click={() => (editingCategories = !editingCategories)}>
-            Edit
-          </button>
+          <button class="btn btn-sm btn-outline" on:click={() => (editingCategories = !editingCategories)}>Edit</button>
         {/if}
       </div>
     </div>
   </div>
 
   <!-- New Category Form -->
-  <div class="flex flex-col md:flex-row gap-2 mt-4">
+  <div class="flex flex-col items-center md:flex-row gap-2 mt-4 m-1">
     <input
       type="text"
       placeholder="Enter new category name..."
       bind:value={newCategoryName}
-      class="input input-bordered w-full md:w-2/3 rounded-md shadow-lg"
+      class="input input-bordered h-10 w-full md:w-2/3 rounded-md shadow-lg"
     />
-    <button class="btn btn-sm btn-primary" on:click={addCategory}>Add Category</button>
+    <button class="btn btn-sm btn-secondary" on:click={addCategory}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+      </svg>
+    </button>
   </div>
 
-  {#if filteredCategories && filteredCategories.length}
-    <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
-      <ul class="menu bg-base-100 rounded-md">
-        <li>
+<!-- Categories List -->
+{#if filteredCategories && filteredCategories.length}
+  <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin">
+    <ul class="menu bg-base-100 rounded-md">
+      <li>
+        <button
+          type="button"
+          class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
+          on:click={() => selectCategory(null)}
+        >
+          All Reports
+          {selectedCategoryId === null ? "➡" : ""}
+        </button>
+      </li>
+      {#each filteredCategories as category}
+        <li class="py-1 flex flex-row items-center">
+          {#if editingCategories}
+            <input
+              type="text"
+              bind:value={tempCategoryNames[category.id]}
+              class="input input-bordered flex-grow mr-2"
+            />
+          {:else}
+            <button
+              type="button"
+              class={`btn-sm btn-ghost flex-grow flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
+              on:click={() => selectCategory(category.id)}
+            >
+              <span class="truncate max-w-80" title={category.name}>{category.name}</span>
+              {selectedCategoryId === category.id ? "➡" : ""}
+            </button>
+          {/if}
           <button
-            type="button"
-            class={`btn btn-ghost w-full flex justify-between items-center ${selectedCategoryId === null ? "bg-blue-100" : ""}`}
-            on:click={() => selectCategory(null)}
+            class="btn btn-sm btn-error ml-2"
+            on:click={() => deleteCategory(category.id)}
           >
-            All Reports
-            {selectedCategoryId === null ? "➡" : ""}
+           
+ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+</svg>
           </button>
         </li>
-        {#each filteredCategories as category}
-          <li class="py-1">
-            {#if editingCategories}
-              <input
-                type="text"
-                bind:value={tempCategoryNames[category.id]}
-                class="input input-bordered flex-grow mr-2"
-              />
-            {:else}
-              <button
-                type="button"
-                class={`btn-sm btn-ghost w-full flex justify-between items-center ${selectedCategoryId === category.id ? "bg-blue-100" : ""}`}
-                on:click={() => selectCategory(category.id)}
-              >
-                <span class="truncate w-72" title={category.name}>{category.name}
-                
-                </span>
-                <button
-                class="btn btn-sm btn-error"
-                on:click={() => deleteCategory(category.id)}
-              >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 text-primary-content" viewBox="0 0 16 16">
-                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-              </svg>
-              </button>
-                {selectedCategoryId === category.id ? "➡" : ""}
-              </button>
-            {/if}
-          </li>
-        {/each}
-      </ul>
-    </div>
-  {:else}
-    <p>No categories found.</p>
-  {/if}
+      {/each}
+    </ul>
+  </div>
+{:else}
+  <p>No categories found.</p>
+{/if}
+
 </div>
+
 
 
   <!-- Reports Column -->
    <div class="flex flex-col bg-base-100 border border-gray-400 w-full md:w-1/2 h-auto p-4 rounded-md shadow-lg">
+      <!-- Success Notifications -->
+
     <!-- Error Ribbon -->
     {#if showError}
       <div class="alert alert-error mb-4">
@@ -361,6 +403,20 @@ const deleteCategory = async (categoryId) => {
         </div>
       </div>
     </div>
+      <!-- New  Report Form -->
+  <div class="flex flex-col items-center md:flex-row gap-2 mt-4 m-1">
+    <input
+      type="text"
+      placeholder="Enter new  Report name..."
+      bind:value={newReportName}
+      class="input input-bordered h-10 w-full md:w-2/3 rounded-md shadow-lg"
+    />
+    <button class="btn btn-sm btn-secondary" on:click={addReport}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+      </svg>
+    </button>
+  </div>
 
     {#if filteredReportsBySearch && filteredReportsBySearch.length}
       <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">
@@ -374,7 +430,7 @@ const deleteCategory = async (categoryId) => {
                   class="input input-bordered flex-grow mr-2"
                 />
               {:else}
-                <div class="flex justify-between  ">
+                <div class="flex justify-between py-0 ">
                   <span class="truncate w-72 " title={report.name}>{report.reportCustomizedName}</span>
                   <div class="flex gap-2">
                     <button class="btn btn-primary btn-sm" on:click={() => runReport(report.report.id)}>Run</button>

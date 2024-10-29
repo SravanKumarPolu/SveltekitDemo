@@ -189,7 +189,7 @@
   }
 </script>
 
-<div class="card  bg-base-100 text-primary-content p-2 shadow-xl">
+<div class="card  bg-base-100 text-primary-content mt-4 p-2 shadow-xl">
   <!-- Card Header -->
 
   <!-- Header Section with Background -->
@@ -386,7 +386,7 @@
 
           <!-- Card Footer -->
           <div
-            class="card-footer h-auto bg-gray-100 p-2 flex flex-wrap justify-between items-center rounded-b-md overflow-hidden"
+            class="card-footer h-auto  p-2 flex flex-wrap justify-between items-center rounded-b-md overflow-hidden"
             style="max-width: 100%;"
           >
             <!-- Status Button -->
