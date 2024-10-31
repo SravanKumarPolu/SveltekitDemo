@@ -7,14 +7,31 @@
 const mockCategories = [
   { id: 1, name: "Sales Reports asdfgh dferyadgkkccvffdgh Quarterly sales report for Q1", reports: [{ id: 101, name: "Sales Q1", reportCustomizedName: "Custom Sales Q1", description: "Quarterly sales report for Q1 Quarterly sales report for Q1" }] },
   { id: 2, name: "Marketing Reports", reports: [{ id: 102, name: "Marketing Q1", reportCustomizedName: "Custom Marketing Q1", description: "Marketing analysis for Q1" }] },
-  
+  { id: 3, name: "Finance Reports", reports: [{ id: 103, name: "Finance Q1", reportCustomizedName: "Custom Finance Q1", description: "Financial performance for Q1" }] },
+  { id: 4, name: "HR Reports", reports: [{ id: 104, name: "HR Q1", reportCustomizedName: "Custom HR Q1", description: "HR data for Q1" }] },
+  { id: 5, name: "IT Reports", reports: [{ id: 105, name: "IT Q1", reportCustomizedName: "Custom IT Q1", description: "IT infrastructure report for Q1" }] },
+  { id: 6, name: "Customer Feedback Reports", reports: [{ id: 106, name: "Customer Feedback Q1", reportCustomizedName: "Custom Customer Feedback Q1", description: "Customer feedback report for Q1" }] },
+  { id: 7, name: "Product Performance Reports", reports: [{ id: 107, name: "Product Performance Q1", reportCustomizedName: "Custom Product Performance Q1", description: "Product performance report for Q1" }] },
+  { id: 8, name: "Compliance Reports", reports: [{ id: 108, name: "Compliance Q1", reportCustomizedName: "Custom Compliance Q1", description: "Compliance report for Q1" }] },
+  { id: 9, name: "Risk Management Reports", reports: [{ id: 109, name: "Risk Management Q1", reportCustomizedName: "Custom Risk Management Q1", description: "Risk management report for Q1" }] },
+  { id: 10, name: "Operational Reports", reports: [{ id: 110, name: "Operational Q1", reportCustomizedName: "Custom Operational Q1", description: "Operational report for Q1" }] },
+  { id: 11, name: "Training and Development Reports", reports: [{ id: 111, name: "Training Q1", reportCustomizedName: "Custom Training Q1", description: "Training and development report for Q1" }] },
+  { id: 12, name: "Environmental Impact Reports", reports: [{ id: 112, name: "Environmental Q1", reportCustomizedName: "Custom Environmental Q1", description: "Environmental impact report for Q1" }] }
 ];
 
 const mockReports = [
   { id: 101, report: { id: 101, name: "Sales Q1", description: "Quarterly sales report for Q1" }, reportCustomizedName: "Custom Sales Q1" },
   { id: 102, report: { id: 102, name: "Marketing Q1", description: "Marketing analysis for Q1" }, reportCustomizedName: "Custom Marketing Q1" },
   { id: 103, report: { id: 103, name: "Finance Q1", description: "Financial performance for Q1" }, reportCustomizedName: "Custom Finance Q1" },
-
+  { id: 104, report: { id: 104, name: "HR Q1", description: "HR data for Q1" }, reportCustomizedName: "Custom HR Q1" },
+  { id: 105, report: { id: 105, name: "IT Q1", description: "IT infrastructure report for Q1" }, reportCustomizedName: "Custom IT Q1" },
+  { id: 106, report: { id: 106, name: "Customer Feedback Q1", description: "Customer feedback report for Q1" }, reportCustomizedName: "Custom Customer Feedback Q1" },
+  { id: 107, report: { id: 107, name: "Product Performance Q1", description: "Product performance report for Q1" }, reportCustomizedName: "Custom Product Performance Q1" },
+  { id: 108, report: { id: 108, name: "Compliance Q1", description: "Compliance report for Q1" }, reportCustomizedName: "Custom Compliance Q1 Compliance report for Q1" },
+  { id: 109, report: { id: 109, name: "Risk Management Q1", description: "Risk management report for Q1" }, reportCustomizedName: "Custom Risk Management Q1" },
+  { id: 110, report: { id: 110, name: "Operational Q1", description: "Operational report for Q1" }, reportCustomizedName: "Custom Operational Q1" },
+  { id: 111, report: { id: 111, name: "Training Q1", description: "Training and development report for Q1" }, reportCustomizedName: "Custom Training Q1" },
+  { id: 112, report: { id: 112, name: "Environmental Q1", description: "Environmental impact report for Q1" }, reportCustomizedName: "Custom Environmental Q1" }
 ];
 
 
@@ -129,29 +146,7 @@ const mockReports = [
     }
   };
 
-  async function saveChanges(type) {
-    try {
-      if (type === "categories") {
-        const updates = Object.keys(tempCategoryNames).map((id) => ({
-          id,
-          name: tempCategoryNames[id]
-        }));
-        await bulkUpdateCategories(updates);
-      } else {
-        const updates = Object.keys(tempReportNames).map((id) => ({
-          id,
-          name: tempReportNames[id]
-        }));
-        await bulkUpdateReports(updates);
-      }
-      showSuccess = true;
-      setTimeout(() => (showSuccess = false), 3000);
-      loadData();
-    } catch (error) {
-      console.error("Error saving changes:", error);
-      showError = true;
-    }
-  }
+
   const addCategory = async () => {
   if (!newCategoryName.trim()) return; // Avoid empty input
 
@@ -171,24 +166,25 @@ const mockReports = [
 
   console.log("New category added:", newCategory);
 };
-const addReport = () => {
-    if (!newReportName.trim()) {
-      showError = true;
+// Add a new report
+function addReport() {
+    if (newReportName.trim() === '') {
+      showError = true; // Error if the report name is empty
       return;
     }
 
     const newReport = {
-      id: Date.now(),
-      report: { id: Date.now(), name: newReportName.trim(), description: '' },
-      reportCustomizedName: newReportName.trim(),
+      id: Date.now(), // Unique ID using timestamp
+      name: newReportName.trim(),
     };
 
+    // Add the new report to the reports store
     reports.update((currentReports) => [...currentReports, newReport]);
+
+    // Reset the input field
     newReportName = '';
     showError = false;
-
-    console.log('New report added:', newReport);
-  };
+  }
 const deleteCategory = async (categoryId) => {
   const confirmed = confirm("Are you sure you want to delete this category?");
   if (!confirmed) return; // Exit if the user cancels

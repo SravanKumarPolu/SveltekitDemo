@@ -6,6 +6,9 @@
   import Reports from './Reports.svelte';
   import Report from './Report.svelte';
     import CustomizeReport from './customizeReport.svelte';
+    import Cusm from './cusm.svelte';
+    import Cusms from './cusms.svelte';
+  
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -22,6 +25,10 @@
       <slot />
       <Report />
       <CustomizeReport />
+    <Cusms />
+   
+      <Cusm />
+
     </main>
   </div>
 
