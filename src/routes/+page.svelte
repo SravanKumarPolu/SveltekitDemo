@@ -8,6 +8,8 @@
     import CustomizeReport from './customizeReport.svelte';
     import Cusm from './cusm.svelte';
     import Cusms from './cusms.svelte';
+    import Finalcusm from './finalcusm.svelte';
+    import Finalcusm2 from './finalcusm2.svelte';
   
 </script>
 
@@ -23,8 +25,11 @@
     <!-- Main Content -->
     <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
+     <Reports />
       <Report />
+     <Finalcusm2 />
       <CustomizeReport />
+      <Finalcusm />
     <Cusms />
    
       <Cusm />

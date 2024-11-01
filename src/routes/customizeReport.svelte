@@ -290,7 +290,6 @@
     />
     <button class="btn btn-sm btn-secondary" on:click={addReport}>Add</button>
   </div>
-
   {#if selectedCategoryId}
 
   <div class="h-[32rem] md:h-[31rem] overflow-y-auto scrollbar scrollbar-thin ">

@@ -189,7 +189,7 @@
   }
 </script>
 
-<div class="card  bg-base-100 text-primary-content mt-4 p-2 shadow-xl">
+<div class="card  bg-base-100 mt-4 p-2 shadow-xl">
   <!-- Card Header -->
 
   <!-- Header Section with Background -->
@@ -197,7 +197,7 @@
     class="card-header bg-base-100 p-2 w-full rounded-lg flex flex-col items-between shadow-md"
   >
     <div class="flex justify-between items-center gap-2 mb-4">
-      <h2 class="text-2xl font-semibold text-primary-content">Reports</h2>
+      <h2 class="text-2xl font-semibold ">Reports</h2>
 
       <div class="flex flex-wrap gap-2 items-center">
         <!-- Status Filters -->
@@ -261,16 +261,16 @@
   </div>
 
   <!-- Card Body -->
-  <div class="card-body">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="card-body  px-0 border ">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {#each $filteredReports.slice(($currentPage - 1) * $itemsPerPage, $currentPage * $itemsPerPage) as report, index (report.id)}
         <div
-          class="card h-auto bg-base-100 shadow-xl rounded-md transition-transform transform hover:scale-105 duration-500 ease-in-out border border-gray-300 hover:shadow-2xl"
+          class="card h-auto bg-base-100 shadow-xl rounded-md transition-transform transform hover:scale-105 duration-500 ease-in-out border border-gray-500 hover:shadow-2xl"
         >
           <!-- Card Header -->
           <div
             class={`card-header h-20 p-2 text-left rounded-t-md text-primary-content
-      ${getStatusStyles(report.status)} flex flex-row  gap-1`}
+      ${getStatusStyles(report.status)} flex flex-row  gap-2`}
           >
             <div class="flex flex-col">
               <div class="flex">
@@ -325,10 +325,10 @@
             </div>
           </div>
 
-          <div class="card-body p-2 text-sm text-left leading-tight space-y-1">
+          <div class="card-body p-2 text-sm text-left leading-tight space-y-1 ">
             <div class="flex flex-row justify-between h-auto space-x-2">
               <div class="flex flex-col gap-2">
-                <p class="text-gray-500 leading-tight">
+                <p class=" leading-tight">
                   File Size:
                   <span class="font-semibold">
                     {report.fileSizeInKbs
@@ -336,7 +336,7 @@
                       : "N/A"}
                   </span>
                 </p>
-                <p class="text-gray-500 leading-tight">
+                <p class="font-normal leading-tight">
                   Status:
                   <span class="font-semibold">{report.status || "N/A"}</span>
                 </p>
@@ -350,7 +350,7 @@
               {/if}
             </div>
 
-            <p class="text-gray-500 leading-tight">
+            <p class="font-normal leading-tight">
               Completed:
               <span class="font-semibold">
                 {report.completionDate
@@ -358,13 +358,13 @@
                   : "N/A"}
               </span>
             </p>
-            <p class="text-gray-500 leading-tight">
+            <p class="font-normal leading-tight">
               Expires:
               <span class="font-semibold">
                 {report.expiresDate ? formatDate(report.expiresDate) : "N/A"}
               </span>
             </p>
-            <p class="text-gray-500 leading-tight">
+            <p class="font-normal leading-tight">
               Time Taken (HH:mm:ss):
               <span class="font-semibold">
                 {report.queryRuntimeInMillis
@@ -373,12 +373,12 @@
               </span>
             </p>
             {#if report.isScheduled}
-            <p class="text-gray-500 leading-tight">
+            <p class="font-normal leading-tight">
               Scheduled: 
               <span class="font-semibold">Yes</span>
             </p>
           {:else}
-            <p class="text-gray-500 leading-tight">
+            <p class="font-normal leading-tight">
               Not Scheduled
             </p>
           {/if}
@@ -391,7 +391,7 @@
           >
             <!-- Status Button -->
             {#if report.status === "Failed"}
-              <button class="btn btn-xs flex items-center" title="Error">
+              <button class=" flex items-center" title="Error">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -408,12 +408,12 @@
                 </svg>
               </button>
             {:else if report.status === "Running"}
-              <button class="btn btn-xs flex items-center" title="Running">
+              <button class=" flex items-center" title="Running">
                 <span class="loading loading-spinner text-primary"></span>
               </button>
             {:else}
               <button
-                class="btn btn-xs flex items-center"
+                class=" flex items-center"
                 title="Download"
                 on:click={() => downloadFile(report.filePath)}
                 disabled={!report.filePath}
@@ -440,7 +440,7 @@
 
             <!-- Delete Button -->
             <button
-              class="btn btn-xs flex items-center"
+              class=" flex items-center"
               title="Delete"
               on:click={() => deleteReport(report.id)}
             >
@@ -461,7 +461,7 @@
             </button>
 
             <!-- Upload Button -->
-            <button class="btn btn-xs flex items-center" title="Upload">
+            <button class=" flex items-center" title="Upload">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -482,7 +482,7 @@
 
             <!-- Refresh Button -->
             <button
-              class="btn btn-xs flex items-center"
+              class=" flex items-center"
               title="Refresh"
               on:click={() => refreshCard(report.id)}
             >
@@ -505,7 +505,7 @@
             </button>
 
             <!-- Database Button -->
-            <div class="btn btn-xs flex items-center" title="Database">
+            <div class=" flex items-center" title="Database">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 stroke-width="1.4 "
