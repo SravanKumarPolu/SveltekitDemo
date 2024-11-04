@@ -1,0 +1,392 @@
+{
+    "status": "success",
+    "charts": [
+        {
+            "id": 7,
+            "name": "Spend By Service", 
+            "data": null,
+            "options": null,
+            "component": "SpendByService",
+            "chartData": [
+                {
+                    "service": "International",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 224437,
+                    "shipments": 44788
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 1051,
+                    "shipments": 0
+                },
+                {
+                    "service": "Unknown Service Level Charges",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 321,
+                    "shipments": 11
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 125,
+                    "shipments": 31
+                },
+                {
+                    "service": "1-Day",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 50926,
+                    "shipments": 1789
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "June-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 670,
+                    "shipments": 43
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "June-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 147,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "July-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 108,
+                    "shipments": 0
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "July-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 140,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "August-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 9592,
+                    "shipments": 2326
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "August-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 426,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "September-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 334,
+                    "shipments": 8
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "September-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 168,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "October-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 4908,
+                    "shipments": 807
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "October-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 135,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 16372,
+                    "shipments": 4416
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 545,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 14804,
+                    "shipments": 4281
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 318,
+                    "shipments": 0
+                },
+                {
+                    "service": "SurePost",
+                    "month_year": "June-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 363,
+                    "shipments": 8
+                },
+                {
+                    "service": "1-Day",
+                    "month_year": "June-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 121,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "April-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "April-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 39,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "May-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 104,
+                    "shipments": 5
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "May-2023",
+                    "quarter_year": "Q2-2023",
+                    "spend": 117,
+                    "shipments": 0
+                },
+                {
+                    "service": "1-Day",
+                    "month_year": "September-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 75,
+                    "shipments": 8
+                },
+                {
+                    "service": "3-Day",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 12,
+                    "shipments": 0
+                },
+                {
+                    "service": "1-Day",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 216,
+                    "shipments": 11
+                },
+                {
+                    "service": "2-Day",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 315,
+                    "shipments": 20
+                },
+                {
+                    "service": "3-Day",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 101,
+                    "shipments": 0
+                },
+                {
+                    "service": "2-Day",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 2594,
+                    "shipments": 86
+                },
+                {
+                    "service": "Unknown",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 379,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 150,
+                    "shipments": 40
+                },
+                {
+                    "service": "3-Day",
+                    "month_year": "July-2024",
+                    "quarter_year": "Q3-2024",
+                    "spend": 20,
+                    "shipments": 3
+                },
+                {
+                    "service": "International",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 850,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "August-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 10250,
+                    "shipments": 2324
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 93160,
+                    "shipments": 25321
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 90185,
+                    "shipments": 23692
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "February-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 104,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "February-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 27912,
+                    "shipments": 9421
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "February-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 9143,
+                    "shipments": 2843
+                },
+                {
+                    "service": "Unknown",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 10,
+                    "shipments": 0
+                },
+                {
+                    "service": "1-Day",
+                    "month_year": "December-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 123,
+                    "shipments": 8
+                },
+                {
+                    "service": "2-Day",
+                    "month_year": "September-2023",
+                    "quarter_year": "Q3-2023",
+                    "spend": 132,
+                    "shipments": 18
+                },
+                {
+                    "service": "Service Charges And Others",
+                    "month_year": "April-2024",
+                    "quarter_year": "Q2-2024",
+                    "spend": 61,
+                    "shipments": 0
+                },
+                {
+                    "service": "Ground Commercial",
+                    "month_year": "April-2024",
+                    "quarter_year": "Q2-2024",
+                    "spend": 13779,
+                    "shipments": 4177
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "April-2024",
+                    "quarter_year": "Q2-2024",
+                    "spend": 40089,
+                    "shipments": 13887
+                },
+                {
+                    "service": "International",
+                    "month_year": "October-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 581,
+                    "shipments": 8
+                },
+                {
+                    "service": "International",
+                    "month_year": "November-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 388,
+                    "shipments": 4
+                },
+                {
+                    "service": "International",
+                    "month_year": "February-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 3866,
+                    "shipments": 4
+                },
+                {
+                    "service": "International",
+                    "month_year": "March-2023",
+                    "quarter_year": "Q1-2023",
+                    "spend": 158,
+                    "shipments": 8
+                },
+                {
+                    "service": "2-Day",
+                    "month_year": "February-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 118,
+                    "shipments": 5
+                },
+                {
+                    "service": "2-Day",
+                    "month_year": "March-2024",
+                    "quarter_year": "Q1-2024",
+                    "spend": 1087,
+                    "shipments": 41
+                },
+                {
+                    "service": "Ground Residential",
+                    "month_year": "October-2023",
+                    "quarter_year": "Q4-2023",
+                    "spend": 50480,
+                    "shipments": 9553
+                }
+            ]
+        }
+    ]
+}

@@ -10,6 +10,7 @@
     import Cusms from './cusms.svelte';
     import Finalcusm from './finalcusm.svelte';
     import Finalcusm2 from './finalcusm2.svelte';
+    import Chart from './Chart.svelte';
   
 </script>
 
@@ -25,6 +26,7 @@
     <!-- Main Content -->
     <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
+   <Chart />
      <Reports />
       <Report />
      <Finalcusm2 />

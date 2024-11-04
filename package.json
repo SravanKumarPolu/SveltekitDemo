@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/line-clamp": "^0.4.4",
+		"echarts": "^5.5.1",
 		"flatpickr": "^4.6.13",
 		"sortablejs": "^1.15.3",
 		"svelte-dnd-action": "^0.9.52",

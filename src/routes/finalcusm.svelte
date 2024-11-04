@@ -231,7 +231,7 @@ window.addEventListener("click", handleClickOutside);
 </script>
 
 <!-- Page Layout -->
-<div class="flex flex-col md:flex-row gap-4 mt-4">
+<div class="flex flex-col  md:flex-row gap-2 mt-2 py-4 ">
   <!-- Categories Column -->
   <div class="w-full md:w-1/2 p-4 rounded-md shadow-md border border-gray-400">
     
