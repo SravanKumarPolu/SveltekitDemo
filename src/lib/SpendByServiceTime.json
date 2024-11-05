@@ -1,0 +1,815 @@
+{
+    "status": "success",
+    "charts": [
+        {
+            "id": 9,
+            "name": "Spend By Service Time",
+            "builder": "dashboards.builders.eCharts.SpendByServiceTime.SpendByServiceTime",
+            "data": null,
+            "options": null,
+            "component": "SpendByServiceTime",
+            "chartData": [
+                {
+                    "invoice_date": "2023-03-09",
+                    "week_end_date": "2023-03-11",
+                    "month_year": "March-2023",
+                    "service": "International",
+                    "spend": 159,
+                    "shipments": 8
+                },
+                {
+                    "invoice_date": "2023-03-10",
+                    "week_end_date": "2023-03-11",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-11",
+                    "week_end_date": "2023-03-11",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-12",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-13",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-14",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-15",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-16",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-17",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-18",
+                    "week_end_date": "2023-03-18",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-19",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-20",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-21",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-22",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-23",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-24",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-25",
+                    "week_end_date": "2023-03-25",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-26",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-27",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-28",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-29",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-30",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-03-31",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "March-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-01",
+                    "week_end_date": "2023-04-01",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-02",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-03",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-04",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-05",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-06",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-07",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-08",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Ground Commercial",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-08",
+                    "week_end_date": "2023-04-08",
+                    "month_year": "April-2023",
+                    "service": "Service Charges And Others",
+                    "spend": 39,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-09",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-10",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-11",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-12",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-13",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-14",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-15",
+                    "week_end_date": "2023-04-15",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-16",
+                    "week_end_date": "2023-04-22",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-17",
+                    "week_end_date": "2023-04-22",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2023-04-18",
+                    "week_end_date": "2023-04-22",
+                    "month_year": "April-2023",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-23",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-24",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-25",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-26",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-27",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-28",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-29",
+                    "week_end_date": "2024-06-29",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-06-30",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "June-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-01",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Service Charges And Others",
+                    "spend": 329,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-02",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Service Charges And Others",
+                    "spend": 284,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-03",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-04",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 9,
+                    "shipments": 2
+                },
+                {
+                    "invoice_date": "2024-07-04",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Ground Commercial",
+                    "spend": 12,
+                    "shipments": 3
+                },
+                {
+                    "invoice_date": "2024-07-04",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 86980,
+                    "shipments": 19131
+                },
+                {
+                    "invoice_date": "2024-07-04",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Unknown Service Level Charges",
+                    "spend": 10,
+                    "shipments": 2
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 11523,
+                    "shipments": 469
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "2-Day",
+                    "spend": 283,
+                    "shipments": 25
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Ground Commercial",
+                    "spend": 19,
+                    "shipments": 5
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Ground Residential",
+                    "spend": 151,
+                    "shipments": 40
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 9501,
+                    "shipments": 38
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Service Charges And Others",
+                    "spend": 417,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-05",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 229,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-06",
+                    "week_end_date": "2024-07-06",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-07",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-08",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 368,
+                    "shipments": 8
+                },
+                {
+                    "invoice_date": "2024-07-09",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-10",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-11",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 9511,
+                    "shipments": 297
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "2-Day",
+                    "spend": 38,
+                    "shipments": 7
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "3-Day",
+                    "spend": 20,
+                    "shipments": 3
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 1479,
+                    "shipments": 19
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Service Charges And Others",
+                    "spend": 6,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-12",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 11,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-13",
+                    "week_end_date": "2024-07-13",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-14",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-15",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 271,
+                    "shipments": 3
+                },
+                {
+                    "invoice_date": "2024-07-16",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-17",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-18",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-19",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 19550,
+                    "shipments": 614
+                },
+                {
+                    "invoice_date": "2024-07-19",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "2-Day",
+                    "spend": 1961,
+                    "shipments": 23
+                },
+                {
+                    "invoice_date": "2024-07-19",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Ground Commercial",
+                    "spend": 57,
+                    "shipments": 12
+                },
+                {
+                    "invoice_date": "2024-07-19",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 1006,
+                    "shipments": 22
+                },
+                {
+                    "invoice_date": "2024-07-19",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 66,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-20",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 123650,
+                    "shipments": 25534
+                },
+                {
+                    "invoice_date": "2024-07-20",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Service Charges And Others",
+                    "spend": 17,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-20",
+                    "week_end_date": "2024-07-20",
+                    "month_year": "July-2024",
+                    "service": "Unknown Service Level Charges",
+                    "spend": 312,
+                    "shipments": 9
+                },
+                {
+                    "invoice_date": "2024-07-21",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-22",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-23",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-24",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 0,
+                    "shipments": 0
+                },
+                {
+                    "invoice_date": "2024-07-25",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 210,
+                    "shipments": 6
+                },
+                {
+                    "invoice_date": "2024-07-26",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "1-Day",
+                    "spend": 10124,
+                    "shipments": 401
+                },
+                {
+                    "invoice_date": "2024-07-26",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "2-Day",
+                    "spend": 313,
+                    "shipments": 31
+                },
+                {
+                    "invoice_date": "2024-07-26",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Ground Commercial",
+                    "spend": 37,
+                    "shipments": 11
+                },
+                {
+                    "invoice_date": "2024-07-26",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "International",
+                    "spend": 1184,
+                    "shipments": 33
+                },
+                {
+                    "invoice_date": "2024-07-26",
+                    "week_end_date": "2024-07-27",
+                    "month_year": "July-2024",
+                    "service": "Unknown",
+                    "spend": 74,
+                    "shipments": 0
+                }
+            ]
+        }
+    ]
+}

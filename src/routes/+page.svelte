@@ -11,6 +11,9 @@
     import Finalcusm from './finalcusm.svelte';
     import Finalcusm2 from './finalcusm2.svelte';
     import Chart from './Chart.svelte';
+    import SpendByServiceMultiPies1 from './SpendByServiceMultiPies1.svelte';
+    import SpendByServiceTime1 from './SpendByServiceTime1.svelte';
+    import FinalCustReport from './FinalCustReport.svelte';
   
 </script>
 
@@ -26,6 +29,9 @@
     <!-- Main Content -->
     <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
+      <FinalCustReport />
+    <SpendByServiceTime1 />
+      <SpendByServiceMultiPies1 />
    <Chart />
      <Reports />
       <Report />

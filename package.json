@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/line-clamp": "^0.4.4",
+		"date-fns": "^4.1.0",
 		"echarts": "^5.5.1",
 		"flatpickr": "^4.6.13",
 		"sortablejs": "^1.15.3",
