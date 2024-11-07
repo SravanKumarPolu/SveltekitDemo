@@ -1,0 +1,60 @@
+{
+  "dashboards": [
+    {
+      "name": "Dashboards",
+      "route": "/reports",
+      "icon": "DashboardIcon",
+      "subitems": [
+        {
+          "name": "Spend",
+          "chatIds": [
+            5,
+            6
+          ],
+          "icon": "DashboardIcon"
+        },
+        {
+          "name": "ECharts",
+          "chatIds": [
+            7,
+            8,
+            9
+          ],
+          "icon": "DashboardIcon"
+        },
+        {
+          "name": "GEO",
+          "chatIds": [
+            10
+          ],
+          "icon": "DashboardIcon"
+        },
+        {
+          "name": "AnalyticsPage",
+          "chatIds": [
+            1,
+            2
+          ],
+          "icon": "DashboardIcon"
+        },
+        {
+          "name": "SavingsPage",
+          "chatIds": [
+            4,
+            2
+          ],
+          "icon": "DashboardIcon"
+        },
+        {
+          "name": "OverviewPage",
+          "chatIds": [
+            1,
+            2,
+            3
+          ],
+          "icon": "DashboardIcon"
+        }
+      ]
+    }
+  ]
+}
