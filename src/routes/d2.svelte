@@ -1,33 +1,22 @@
 <script>
   import { onMount } from "svelte";
-  import Sortable from "sortablejs";
-  import data from "$lib/dashboards.json";
 
   let newDashboardName = "";
-  let dashboards = [];
-  let charts = [];
+  let newChartName = "";
+  let dashboards = [
+    { id: 1, name: "Spend", charts: [103] },
+    { id: 2, name: "ECharts Dashboard", charts: [101] },
+  ];
+  let charts = [
+    { id: 101, name: "Bar Chart", chartCustomizedName: "Custom Bar Chart" },
+    { id: 102, name: "Line Chart", chartCustomizedName: "Custom Line Chart" },
+    { id: 103, name: "Pie Chart", chartCustomizedName: "Custom Pie Chart" },
+  ];
   let selectedDashboardId = null;
   let selectedDashboardCharts = [];
-  let selectedChartIds = [];
-  let isDropdownOpen = false;
-  let inputTags = [];
-
 
   // Load initial data
-  const loadDashboardAndCharts = () => {
-    const firstDashboard = data.dashboards[0];
-    dashboards = firstDashboard.subitems.map((item, index) => ({
-      id: index + 1,
-      name: item.name,
-      charts: item.charts || [], // Ensure charts exist as an array
-    }));
-
-    charts = firstDashboard.charts.map((chart) => ({
-      id: chart.id,
-      name: chart.name,
-      chartCustomizedName: chart.chartCustomizedName,
-    }));
-  };
+  const loadDashboardAndCharts = () => {};
 
   // Add a new dashboard
   const addDashboard = () => {
@@ -50,9 +39,20 @@
     }
   };
 
-
+  // Select a dashboard
+  const selectDashboard = (dashboardId) => {
+    selectedDashboardId = dashboardId;
+    const dashboard = dashboards.find((d) => d.id === dashboardId);
+    selectedDashboardCharts = dashboard
+      ? dashboard.charts.map((id) => charts.find((c) => c.id === id))
+      : [];
+  };
 
   // Add charts to a dashboard
+  let selectedChartIds = [];
+  let isDropdownOpen = false;
+  let inputTags = [];
+
   const toggleDropdown = () => {
     isDropdownOpen = !isDropdownOpen;
   };
@@ -84,13 +84,16 @@
       return;
     }
 
-    const dashboard = dashboards.find((dash) => dash.id === selectedDashboardId);
-    if (!dashboard) {
-      alert("Please select a valid dashboard.");
+    const dashboardIndex = dashboards.findIndex(
+      (dash) => dash.id === selectedDashboardId
+    );
+    if (dashboardIndex === -1) {
+      alert("Please select a dashboard.");
       return;
     }
 
-    const existingCharts = new Set(dashboard.charts || []);
+    const dashboard = dashboards[dashboardIndex];
+    const existingCharts = new Set(dashboard.charts);
     const newChartIds = selectedChartIds.filter((id) => !existingCharts.has(id));
 
     if (newChartIds.length === 0) {
@@ -98,7 +101,7 @@
       return;
     }
 
-    dashboard.charts = [...(dashboard.charts || []), ...newChartIds];
+    dashboard.charts = [...dashboard.charts, ...newChartIds];
     dashboards = [...dashboards];
     selectDashboard(selectedDashboardId);
 
@@ -115,66 +118,15 @@
     charts = charts.filter((chart) => chart.id !== chartId);
     dashboards = dashboards.map((dashboard) => ({
       ...dashboard,
-      charts: (dashboard.charts || []).filter((id) => id !== chartId),
+      charts: dashboard.charts.filter((id) => id !== chartId),
     }));
 
     if (selectedDashboardId) {
       selectDashboard(selectedDashboardId);
     }
   };
-  // Select a dashboard
-  const selectDashboard = (dashboardId) => {
-    selectedDashboardId = dashboardId;
-    const dashboard = dashboards.find((d) => d.id === dashboardId);
-    if (dashboard && Array.isArray(dashboard.charts)) {
-      selectedDashboardCharts = dashboard.charts
-        .map((id) => charts.find((c) => c.id === id))
-        .filter((chart) => chart);
-    } else {
-      selectedDashboardCharts = [];
-    }
-    initializeChartSortable();
-  };
 
-  // Initialize SortableJS for dashboard reordering
-  const initializeDashboardSortable = () => {
-    const dashboardList = document.getElementById("dashboard-list");
-    if (dashboardList) {
-      Sortable.create(dashboardList, {
-        animation: 150,
-        onEnd: (event) => {
-          const [movedItem] = dashboards.splice(event.oldIndex, 1);
-          dashboards.splice(event.newIndex, 0, movedItem);
-        },
-      });
-    }
-  };
-
-  // Initialize SortableJS for chart reordering
-  const initializeChartSortable = () => {
-    const chartList = document.getElementById("chart-list");
-    if (chartList) {
-      Sortable.create(chartList, {
-        animation: 150,
-        onEnd: (event) => {
-          const dashboard = dashboards.find((d) => d.id === selectedDashboardId);
-          if (dashboard) {
-            const [movedChartId] = dashboard.charts.splice(event.oldIndex, 1);
-            dashboard.charts.splice(event.newIndex, 0, movedChartId);
-            selectDashboard(selectedDashboardId); // Update the selected dashboard charts
-          }
-        },
-      });
-    }
-  };
-
-  onMount(() => {
-    loadDashboardAndCharts();
-    initializeDashboardSortable();
-  });
-
-
- 
+  onMount(loadDashboardAndCharts);
 </script>
 
 <div class="flex flex-col md:flex-row gap-2 mt-2 py-4">
@@ -192,7 +144,7 @@
         Add Dashboard
       </button>
     </div>
-    <ul id="dashboard-list" class="mt-4">
+    <ul class="mt-4">
       {#each dashboards as dashboard}
         <li class="flex justify-between items-center py-2 border-b">
           <span class="cursor-pointer" on:click={() => selectDashboard(dashboard.id)}>
@@ -245,11 +197,11 @@
     </div>
 
     {#if selectedDashboardId}
-      <ul id="chart-list" class="mt-4">
+      <ul class="mt-4">
         <h3>Charts for Selected Dashboard:</h3>
         {#each selectedDashboardCharts as chart}
           <li class="flex justify-between items-center py-2 border-b">
-            <span class="cursor-pointer">{chart.name}</span>
+            <span>{chart.name}</span>
             <button class="btn btn-sm btn-error" on:click={() => deleteChart(chart.id)}>
               Delete
             </button>

@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import Sortable from "sortablejs";
   import data from "$lib/dashboards.json";
 
   let newDashboardName = "";
@@ -11,7 +10,6 @@
   let selectedChartIds = [];
   let isDropdownOpen = false;
   let inputTags = [];
-
 
   // Load initial data
   const loadDashboardAndCharts = () => {
@@ -50,7 +48,18 @@
     }
   };
 
-
+  // Select a dashboard
+  const selectDashboard = (dashboardId) => {
+    selectedDashboardId = dashboardId;
+    const dashboard = dashboards.find((d) => d.id === dashboardId);
+    if (dashboard && Array.isArray(dashboard.charts)) {
+      selectedDashboardCharts = dashboard.charts
+        .map((id) => charts.find((c) => c.id === id))
+        .filter((chart) => chart); // Filter out undefined charts
+    } else {
+      selectedDashboardCharts = [];
+    }
+  };
 
   // Add charts to a dashboard
   const toggleDropdown = () => {
@@ -122,59 +131,8 @@
       selectDashboard(selectedDashboardId);
     }
   };
-  // Select a dashboard
-  const selectDashboard = (dashboardId) => {
-    selectedDashboardId = dashboardId;
-    const dashboard = dashboards.find((d) => d.id === dashboardId);
-    if (dashboard && Array.isArray(dashboard.charts)) {
-      selectedDashboardCharts = dashboard.charts
-        .map((id) => charts.find((c) => c.id === id))
-        .filter((chart) => chart);
-    } else {
-      selectedDashboardCharts = [];
-    }
-    initializeChartSortable();
-  };
 
-  // Initialize SortableJS for dashboard reordering
-  const initializeDashboardSortable = () => {
-    const dashboardList = document.getElementById("dashboard-list");
-    if (dashboardList) {
-      Sortable.create(dashboardList, {
-        animation: 150,
-        onEnd: (event) => {
-          const [movedItem] = dashboards.splice(event.oldIndex, 1);
-          dashboards.splice(event.newIndex, 0, movedItem);
-        },
-      });
-    }
-  };
-
-  // Initialize SortableJS for chart reordering
-  const initializeChartSortable = () => {
-    const chartList = document.getElementById("chart-list");
-    if (chartList) {
-      Sortable.create(chartList, {
-        animation: 150,
-        onEnd: (event) => {
-          const dashboard = dashboards.find((d) => d.id === selectedDashboardId);
-          if (dashboard) {
-            const [movedChartId] = dashboard.charts.splice(event.oldIndex, 1);
-            dashboard.charts.splice(event.newIndex, 0, movedChartId);
-            selectDashboard(selectedDashboardId); // Update the selected dashboard charts
-          }
-        },
-      });
-    }
-  };
-
-  onMount(() => {
-    loadDashboardAndCharts();
-    initializeDashboardSortable();
-  });
-
-
- 
+  onMount(loadDashboardAndCharts);
 </script>
 
 <div class="flex flex-col md:flex-row gap-2 mt-2 py-4">
@@ -192,7 +150,7 @@
         Add Dashboard
       </button>
     </div>
-    <ul id="dashboard-list" class="mt-4">
+    <ul class="mt-4">
       {#each dashboards as dashboard}
         <li class="flex justify-between items-center py-2 border-b">
           <span class="cursor-pointer" on:click={() => selectDashboard(dashboard.id)}>
@@ -245,11 +203,11 @@
     </div>
 
     {#if selectedDashboardId}
-      <ul id="chart-list" class="mt-4">
+      <ul class="mt-4">
         <h3>Charts for Selected Dashboard:</h3>
         {#each selectedDashboardCharts as chart}
           <li class="flex justify-between items-center py-2 border-b">
-            <span class="cursor-pointer">{chart.name}</span>
+            <span>{chart.name}</span>
             <button class="btn btn-sm btn-error" on:click={() => deleteChart(chart.id)}>
               Delete
             </button>

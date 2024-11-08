@@ -7,52 +7,72 @@
       "subitems": [
         {
           "name": "Spend",
-          "chatIds": [
-            5,
-            6
+          "charts": [
+            104
           ],
           "icon": "DashboardIcon"
         },
         {
           "name": "ECharts",
-          "chatIds": [
-            7,
-            8,
-            9
+          "charts": [
+            101
           ],
           "icon": "DashboardIcon"
         },
         {
           "name": "GEO",
-          "chatIds": [
-            10
+          "charts": [
+            103
           ],
           "icon": "DashboardIcon"
         },
         {
           "name": "AnalyticsPage",
-          "chatIds": [
-            1,
-            2
+          "charts": [
+            102
           ],
           "icon": "DashboardIcon"
         },
         {
           "name": "SavingsPage",
-          "chatIds": [
-            4,
-            2
+          "charts": [
+            104
           ],
           "icon": "DashboardIcon"
         },
         {
           "name": "OverviewPage",
-          "chatIds": [
-            1,
-            2,
-            3
+          "charts": [
+            105
           ],
           "icon": "DashboardIcon"
+        }
+      ],
+      "charts": [
+        {
+          "id": 101,
+          "name": "Bar Chart",
+          "chartCustomizedName": "Custom Bar Chart"
+        },
+        {
+          "id": 102,
+          "name": "Line Chart",
+          "chartCustomizedName": "Custom Line Chart"
+        },
+        {
+          "id": 103,
+          "name": "Pie Chart",
+          "chartCustomizedName": "Custom Pie Chart"
+        },
+        {
+          "id": 104,
+          "name": "Scatter Plot",
+          "chartCustomizedName": "Custom Scatter Plot"
+        },
+        {
+          "id": 105,
+          "name": "Stacked Bar Chart",
+          "chartCustomizedName": "Custom Stacked Bar Chart"
         }
       ]
     }

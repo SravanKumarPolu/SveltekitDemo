@@ -431,19 +431,19 @@
                   
                   <span class="truncate min-w-80 flex gap-1" title={category.name}>
                     <div>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title">
-                       
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title">
+                        <title id="title">Icon with Up and Down Arrows and Three Horizontal Bars with Enhanced Spacing</title>
                         
                         <!-- Up arrow with more spacing from bars -->
                         <path d="M12 2L8 7H16L12 2Z" fill="currentColor"/>
                         
                         <!-- Three horizontal bars with further increased spacing -->
                         <rect x="6" y="8" width="12" height="2" rx="1" fill="currentColor"/>
-                        <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"/>
                         <rect x="6" y="14" width="12" height="2" rx="1" fill="currentColor"/>
+                        <rect x="6" y="17" width="12" height="2" rx="1" fill="currentColor"/>
                         
                         <!-- Down arrow with additional spacing from bars -->
-                        <path d="M12 22L8 17.2H16L12 22Z" fill="currentColor"/>
+                        <path d="M13 26L9 20H16L12 23Z" fill="currentColor"/>
                       </svg>
                       
                       

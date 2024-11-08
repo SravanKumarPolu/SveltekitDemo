@@ -293,7 +293,7 @@
 
       <ul id="chart-id-list" class="mt-4 space-y-2">
         {#each chartIds as id}
-          <li class="flex justify-between items- gap-4 py-2 px-4 rounded-md hover:bg-base-300">
+          <li class="flex justify-between items-between gap-4 py-2 px-4 rounded-md hover:bg-base-300">
             {#if editingChartIds}
               <input
                 type="text"
