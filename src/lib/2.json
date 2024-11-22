@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "name": "krishna",
+        "description": null,
+        "isRunCarriersTogether": 1,
+        "isCustomizable": 1,
+        "builderClass": "reports.builders.krishna.Krishna",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": null,
+        "isSupportRunbyShipperGroup": null,
+        "isAdminAccessible": null
+    },
+    {
+        "id": 2,
+        "name": "Sample Jasper Xlsx",
+        "description": null,
+        "isRunCarriersTogether": 0,
+        "isCustomizable": 0,
+        "builderClass": "reports.builders.sampleJasperXlsx.SampleJasperXlsx",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": null,
+        "isSupportRunbyShipperGroup": null,
+        "isAdminAccessible": null
+    },
+    {
+        "id": 3,
+        "name": "Shipment Details",
+        "description": null,
+        "isRunCarriersTogether": 1,
+        "isCustomizable": 1,
+        "builderClass": "reports.builders.ShipmentDetails.ShipmentDetails",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": 1,
+        "isSupportRunbyShipperGroup": 1,
+        "isAdminAccessible": null
+    },
+    {
+        "id": 4,
+        "name": "Analysis Details",
+        "description": null,
+        "isRunCarriersTogether": 1,
+        "isCustomizable": 1,
+        "builderClass": "reports.builders.AnalysisDetails.AnalysisDetails",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": 1,
+        "isSupportRunbyShipperGroup": 1,
+        "isAdminAccessible": null
+    },
+    {
+        "id": 5,
+        "name": "Analysis Details - UPS",
+        "description": null,
+        "isRunCarriersTogether": 0,
+        "isCustomizable": 1,
+        "builderClass": "reports.builders.AnalysisDetailsUPS.AnalysisDetailsUPS",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": 1,
+        "isSupportRunbyShipperGroup": 1,
+        "isAdminAccessible": null
+    },
+    {
+        "id": 6,
+        "name": "Accessorial Summary",
+        "description": null,
+        "isRunCarriersTogether": 1,
+        "isCustomizable": 1,
+        "builderClass": "reports.builders.AccessorialSummary.AccessorialSummary",
+        "isActive": 1,
+        "isInternal": null,
+        "isSupportRunbyShipper": 1,
+        "isSupportRunbyShipperGroup": 1,
+        "isAdminAccessible": null
+    }
+]

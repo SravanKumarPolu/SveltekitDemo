@@ -18,6 +18,7 @@
     import Dashboardes from './Dashboardes.svelte';
     import D7 from './d7.svelte';
     import D6 from './d6.svelte';
+    import Rp2 from './Rp (2).svelte';
   
 </script>
 
@@ -33,7 +34,7 @@
     <!-- Main Content -->
     <main class="flex-grow ml-64 mt-20 p-4">
       <slot />
-      
+      <Rp2 />
       <D7 />
       <Dashboardes />
       <FinalCustReport />
