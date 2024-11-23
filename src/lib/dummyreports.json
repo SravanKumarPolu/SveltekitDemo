@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Sales Report"
+  },
+  {
+    "id": 3,
+    "name": "Expense Report"
+  },
+  {
+    "id": 2,
+    "name": "Inventory Report"
+  },
+  {
+    "id": 5,
+    "name": "Shipment Report"
+  },
+  {
+    "id": 4,
+    "name": "Profit and Loss Report"
+  },
+  {
+    "id": 6,
+    "name": "Customer Feedback Report"
+  },
+  {
+    "id": 7,
+    "name": "Employee Performance Report"
+  },
+  {
+    "id": 8,
+    "name": "Revenue Report"
+  },
+  {
+    "id": 9,
+    "name": "Market Analysis Report"
+  },
+  {
+    "id": 10,
+    "name": "Operational Efficiency Report"
+  }
+]

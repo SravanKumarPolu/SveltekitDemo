@@ -1,4 +1,5 @@
 <script>
+
 	import Sortable from "sortablejs";
 	import { onMount, onDestroy,afterUpdate } from "svelte";
 	import { writable } from "svelte/store"; 
@@ -23,6 +24,7 @@
 	  selectedFilterToDateStore,
 	} from "$lib/store";
   
+	let activeSection = ""; // Tracks the currently active section
 	let reportDropDown = [];
 	let selectedReport = "";
 	let reportDetails = null;
@@ -164,6 +166,7 @@
 	}
   
 	function toggleSection(section) {
+		activeSection = section;
 	  if (activeCustomizationSection === section) {
 		activeCustomizationSection = null;
 	  } else {
@@ -546,215 +549,150 @@
 	  showScheduler = !showScheduler;
 	}
   
+
+
+
 	onMount(() => {
 	  return () => {
 		unsubscribe();
 	  };
 	});
+
   </script>
   
-  <div class="card shadow-lg p-2 rounded-lg mt-4">
+  <div class="card shadow-lg p-2 rounded-lg mt-4 border border-gray-400">
 	<!-- Form section with DaisyUI classes for spacing and responsiveness -->
 	<form on:submit|preventDefault={handleRunReport} class="space-y-6">
-	  <div class="card-body">
-		<h2 class="card-title">Run Reports</h2>
-  
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-		  <!-- First Row with Select Inputs and Carriers -->
-		  <select
-			class="select select-primary w-full max-w-md"
-			id="report-type"
-			bind:value={selectedReport}
-		  >
-			<option disabled selected>Select Report</option>
-			{#each reportDropDown as report}
-			  <option value={report.id}>{report.name}</option>
-			{/each}
-		  </select>
-  
-		  <select
-			class="select select-primary w-full max-w-xs"
-			id="report-format"
-			bind:value={formatId}
-		  >
-			<option disabled selected>Select a Format</option>
-			{#if reportDetails}
-			  {#each reportDetails.formats as format}
-				<option value={format.id}>{format.name}</option>
-			  {/each}
-			{/if}
-		  </select>
-  
-		  <div class="flex items-center space-x-2">
-			<!-- Checkbox -->
-			<div
-			  class="form-check lg:tooltip"
-			  data-tip="Run Selected Carriers Together"
-			>
-			  <input
-				type="checkbox"
-				class="checkbox checkbox-lg"
-				id="runCarriersTogether"
-				bind:checked={runCarriersTogether}
-			  />
-			</div>
-		  </div>
-		</div>
-  
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
-		  <!-- Second Row with Filename Input and Add to Filename Dropdown -->
-		  <div class="form-group flex-1">
-			<input
-			  type="text"
-			  id="file-name"
-			  bind:value={$fileName}
-			  placeholder="Type here"
-			  class="input input-bordered w-full max-w-lg"
-			/>
-		  </div>
-  
-		  <select
-			class="select select-primary w-full max-w-xs"
-			id="report-format"
-			on:change={(e) => appendToFileName(e.target.value)}
-		  >
-			<option disabled selected>Add Details to File Name</option>
-			{#each fileNameOptions as option}
-			  <option value={option}>{option}</option>
-			{/each}
-		  </select>
-		</div>
-	  </div>
-	  <div class="divider"></div>
-  
-	  <div class="flex flex-wrap justify-end space-x-2">
-		<!-- Personalize Report Button -->
-		<button
-		  type="button"
-		  class="btn btn-primary mt-1 flex items-center justify-center"
-		  on:click={toggleCustomization}
-		>
-		  <svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-6 w-6 mr-2"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
-		  >
-			<path
-			  stroke-linecap="round"
-			  stroke-linejoin="round"
-			  stroke-width="2"
-			  d="M5 12h14M7 16h10M9 8h6"
-			/>
-		  </svg>
-		  Personalize Report
-		</button>
-  
-		<!-- Schedule a Report Button -->
-		<button
-		  type="button"
-		  class="btn btn-primary mt-1 flex items-center justify-center"
-		  on:click={toggleScheduler}
-		>
-		  <svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-6 w-6 mr-2"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
-		  >
-			<path
-			  stroke-linecap="round"
-			  stroke-linejoin="round"
-			  stroke-width="2"
-			  d="M8 7V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-1V5a2 2 0 00-2-2H8zm4 0v2m0 4v6m4-6h2m-2 2h2m-8-2h2m-2 2h2m-2 2h2"
-			/>
-		  </svg>
-		  Schedule a Report
-		</button>
-  
-		<!-- Generate Report Button -->
-		<button
-		  class="btn btn-primary mt-1 flex items-center justify-center"
-		  type="submit"
-		>
-		  Generate Report
-		  <svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-6 w-6 ml-2"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
-		  >
-			<path
-			  stroke-linecap="round"
-			  stroke-linejoin="round"
-			  stroke-width="2"
-			  d="M9 17v-2h6v2H9zM3 13h18M9 13V5h6v8H9zM5 11V7h14v4H5zM4 17h16a2 2 0 002-2v-2a2 2 0 00-2-2H4a2 2 0 00-2 2v2a2 2 0 002 2z"
-			/>
-		  </svg>
-		</button>
-  
-		<!-- Save as Blueprint Button -->
-		<button
-		  class="btn btn-primary mt-1 flex items-center justify-center"
-		  on:click={handleSaveAsTemplate}
-		>
-		  Save as Blueprint
-		  <svg
-			xmlns="http://www.w3.org/2000/svg"
-			class="h-6 w-6 ml-2"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke="currentColor"
-		  >
-			<path
-			  stroke-linecap="round"
-			  stroke-linejoin="round"
-			  stroke-width="2"
-			  d="M5 12l5 5L20 7"
-			/>
-		  </svg>
-		</button>
-	  </div>
-  
-	  {#if showCustomization}
+    <div class="flex flex-col lg:flex-row card-body space-y-5 lg:space-y-0 lg:space-x-5">
+      <!-- Left Section -->
+      <div class="flex flex-col flex-1 space-y-4">
+        <h2 class="card-title text-xl font-bold">Run Reports</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <!-- First Row with Select Inputs and Carriers -->
+					<select class="select select-primary w-full max-w-md" id="report-type" bind:value={selectedReport}>
+						<option disabled selected>Select Report</option>
+						{#each reportDropDown as report}
+						<option value={report.id} class="truncate">{report.name}</option>
+						
+						{/each}
+					</select>
+    
+          <select class="select select-primary w-full max-w-xs" id="report-format" bind:value={formatId}>
+            <option disabled selected>Select a Format</option>
+            {#if reportDetails}
+              {#each reportDetails.formats as format}
+                <option value={format.id}>{format.name}</option>
+              {/each}
+            {/if}
+          </select>
+    
+          <div class="flex items-center space-x-2">
+            <!-- Checkbox -->
+            <div class="form-check lg:tooltip" data-tip="Run Selected Carriers Together">
+              <input type="checkbox" class="checkbox checkbox-lg" id="runCarriersTogether" bind:checked={runCarriersTogether} />
+            </div>
+          </div>
+        </div>
+    
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+          <!-- Second Row with Filename Input and Add to Filename Dropdown -->
+          <div class="form-group flex-1">
+            <input type="text" id="file-name" bind:value={$fileName} placeholder="Type here" class="input input-bordered w-full max-w-lg" />
+          </div>
+    
+          <select class="select select-primary w-full max-w-xs" id="report-format" on:change={(e) => appendToFileName(e.target.value)}>
+            <option disabled selected>Add Details to File Name</option>
+            {#each fileNameOptions as option}
+              <option value={option}>{option}</option>
+            {/each}
+          </select>
+        </div>
+      </div>
+    
+      <!-- Right Section -->
+      <div class="flex flex-col justify-between space-y-3">
+        <!-- Personalize Report Button -->
+        <button
+          type="button"
+          class="btn btn-primary flex items-center justify-center"
+          on:click={toggleCustomization}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M7 16h10M9 8h6" />
+          </svg>
+          Personalize Report
+        </button>
+    
+        <!-- Schedule a Report Button -->
+        <button
+          type="button"
+          class="btn btn-primary flex items-center justify-center"
+          on:click={toggleScheduler}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2h-1V5a2 2 0 00-2-2H8zm4 0v2m0 4v6m4-6h2m-2 2h2m-8-2h2m-2 2h2m-2 2h2" />
+          </svg>
+          Schedule a Report
+        </button>
+    
+        <!-- Save as Blueprint Button -->
+        <button
+          class="btn btn-primary flex items-center justify-center"
+          on:click={handleSaveAsTemplate}
+        >
+          Save as Blueprint
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l5 5L20 7" />
+          </svg>
+        </button>
+      </div>
+      
+    </div>
+    
+    {#if showCustomization}
 		<div class="card bg-primary text-primary-content shadow-xl p-4">
-		  <div class="card-body flex flex-row space-x-4">
-			<!-- Flex container with row direction -->
-			<button
-			  type="button"
-			  class="btn btn-secondary flex-1 flex items-center justify-center"
-			  on:click={() => toggleSection("columns")}
-			>
-			  Include/Exclude Columns
-			</button>
-  
-			<button
-			  type="button"
-			  class="btn btn-secondary flex-1 flex items-center justify-center"
-			  on:click={() => toggleSection("criteria")}
-			>
-			  Criteria
-			</button>
-  
-			<button
-			  type="button"
-			  class="btn btn-secondary flex-1 flex items-center justify-center"
-			  on:click={() => toggleSection("sort")}
-			>
-			  Sort by Columns
-			</button>
-  
-			<button
-			  type="button"
-			  class="btn btn-secondary flex-1 flex items-center justify-center"
-			  on:click={() => toggleSection("subtotals")}
-			>
-			  Subtotals
-			</button>
-		  </div>
+			<div class="card-body flex flex-row space-x-4">
+				<!-- Flex container with row direction -->
+				<button
+					type="button"
+					class={`btn btn-secondary flex-1 flex items-center justify-center ${
+						activeSection === "columns" ? "text-gray-400" : ""
+					}`}
+					on:click={() => toggleSection("columns")}
+				>
+					Include/Exclude Columns
+				</button>
+			
+				<button
+					type="button"
+					class={`btn btn-secondary flex-1 flex items-center justify-center ${
+						activeSection === "criteria" ? "text-gray-400" : ""
+					}`}
+					on:click={() => toggleSection("criteria")}
+				>
+					Criteria
+				</button>
+			
+				<button
+					type="button"
+					class={`btn btn-secondary flex-1 flex items-center justify-center ${
+						activeSection === "sort" ? "text-gray-400" : ""
+					}`}
+					on:click={() => toggleSection("sort")}
+				>
+					Sort by Columns
+				</button>
+			
+				<button
+					type="button"
+					class={`btn btn-secondary flex-1 flex items-center justify-center ${
+						activeSection === "subtotals" ? "text-gray-400" : ""
+					}`}
+					on:click={() => toggleSection("subtotals")}
+				>
+					Subtotals
+				</button>
+			</div>
   
 		  {#if activeCustomizationSection === "columns"}
 			{#each Object.keys(reportColumnsBySections) as section, index}
@@ -803,7 +741,7 @@
 		  {#if activeCustomizationSection === "criteria"}
 			{#each Object.keys(criteriaColumnsBySections) as section, index}
 			  <div class="mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
-				<h3 class="text-lg font-bold mb-4 text-secondary">
+				<h3 class="text-lg font-bold mb-4 ">
 				  Criteria (Section {section})
 				</h3>
   
@@ -861,9 +799,20 @@
 					<button
 					  type="button"
 					  on:click={() => removeCriteria(section, criteria.id)}
-					  class="btn btn-error btn-sm ml-2"
+					  class="btn  btn-sm ml-2"
 					>
-					  Remove
+					<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					fill="currentColor"
+					class="bi bi-trash3 text-error"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+					/>
+				</svg>
 					</button>
 				  </div>
 				{/each}
@@ -875,7 +824,22 @@
 					on:click={() => addCriteria(section)}
 					class="btn btn-success btn-sm"
 				  >
-					Add Criteria
+					<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-plus-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+          />
+        </svg>
+					 Criteria
 				  </button>
 				</div>
 			  </div>
@@ -885,7 +849,7 @@
 		  {#if activeCustomizationSection === "sort"}
 			{#each Object.keys(sortableColumnsBySections) as section, index}
 			  <div class="mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
-				<h3 class="text-lg font-bold mb-4 text-secondary">
+				<h3 class="text-lg font-bold mb-4 ">
 				  Sort by Columns (Section {section})
 				</h3>
   
@@ -916,9 +880,20 @@
 					<button
 					  type="button"
 					  on:click={() => removeSort(section, sort.id)}
-					  class="btn btn-error btn-sm ml-2"
+					  class="btn  btn-sm ml-2"
 					>
-					  Remove
+					<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					fill="currentColor"
+					class="bi bi-trash3 text-error"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+					/>
+				</svg>
 					</button>
 				  </div>
 				{/each}
@@ -930,7 +905,21 @@
 					on:click={() => addSort(section)}
 					class="btn btn-success btn-sm"
 				  >
-					Add Sort
+					<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-plus-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+          />
+        </svg><p> Sort</p>
 				  </button>
 				</div>
 			  </div>
@@ -940,7 +929,7 @@
 		  {#if activeCustomizationSection === "subtotals"}
 			{#each Object.keys(subtotalColumnsBySections) as section, index}
 			  <div class="mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
-				<h3 class="text-lg font-bold mb-4 text-secondary">
+				<h3 class="text-lg font-bold mb-4 ">
 				  Subtotals (Section {section})
 				</h3>
   
@@ -961,9 +950,20 @@
 					<button
 					  type="button"
 					  on:click={() => removeSubtotal(section, subtotal.id)}
-					  class="btn btn-error btn-sm ml-2"
+					  class="btn  btn-sm ml-2"
 					>
-					  Remove
+					<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					fill="currentColor"
+					class="bi bi-trash3 text-error"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+					/>
+				</svg>
 					</button>
 				  </div>
 				{/each}
@@ -975,7 +975,21 @@
 					on:click={() => addSubtotal(section)}
 					class="btn btn-success btn-sm"
 				  >
-					Add Subtotal
+					<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-plus-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+          />
+        </svg><p>Subtotal</p>
 				  </button>
 				</div>
 			  </div>
@@ -989,7 +1003,7 @@
 		  <div class="card-body">
 			{#if selectedDateOption === "RollingPeriod" && (selectedRollingPeriod === "current_week" || selectedRollingPeriod === "previous_week")}
 			  <div class="flex items-center space-x-4">
-				<p class="text-lg font-semibold">
+				<p class="text- font-semibold">
 				  You are scheduling the report for
 				</p>
   
@@ -1249,6 +1263,34 @@
 		  </div>
 		</div>
 	  {/if}
+  	<!-- Generate Report Button -->
+    <div class="card-footer flex justify-end p-4 bg-base-200">
+      <button
+        class="btn btn-primary mt-1 flex items-center justify-center"
+        type="submit"
+      >
+        Generate Report
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 ml-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 17v-2h6v2H9zM3 13h18M9 13V5h6v8H9zM5 11V7h14v4H5zM4 17h16a2 2 0 002-2v-2a2 2 0 00-2-2H4a2 2 0 00-2 2v2a2 2 0 002 2z"
+          />
+        </svg>
+      </button>
+    </div>
+    
+	
+	 
+  
+	 
 	</form>
   </div>
   
