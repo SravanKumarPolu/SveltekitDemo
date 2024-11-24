@@ -564,50 +564,62 @@
 	<!-- Form section with DaisyUI classes for spacing and responsiveness -->
 	<form on:submit|preventDefault={handleRunReport} class="space-y-6">
     <div class="flex flex-col lg:flex-row card-body space-y-5 lg:space-y-0 lg:space-x-5">
-      <!-- Left Section -->
-      <div class="flex flex-col flex-1 space-y-4">
-        <h2 class="card-title text-xl font-bold">Run Reports</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-          <!-- First Row with Select Inputs and Carriers -->
-					<select class="select select-primary w-full max-w-md" id="report-type" bind:value={selectedReport}>
-						<option disabled selected>Select Report</option>
-						{#each reportDropDown as report}
-						<option value={report.id} class="truncate">{report.name}</option>
-						
-						{/each}
-					</select>
-    
-          <select class="select select-primary w-full max-w-xs" id="report-format" bind:value={formatId}>
-            <option disabled selected>Select a Format</option>
-            {#if reportDetails}
-              {#each reportDetails.formats as format}
-                <option value={format.id}>{format.name}</option>
-              {/each}
-            {/if}
-          </select>
-    
-          <div class="flex items-center space-x-2">
-            <!-- Checkbox -->
-            <div class="form-check lg:tooltip" data-tip="Run Selected Carriers Together">
-              <input type="checkbox" class="checkbox checkbox-lg" id="runCarriersTogether" bind:checked={runCarriersTogether} />
-            </div>
-          </div>
-        </div>
-    
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
-          <!-- Second Row with Filename Input and Add to Filename Dropdown -->
-          <div class="form-group flex-1">
-            <input type="text" id="file-name" bind:value={$fileName} placeholder="Type here" class="input input-bordered w-full max-w-lg" />
-          </div>
-    
-          <select class="select select-primary w-full max-w-xs" id="report-format" on:change={(e) => appendToFileName(e.target.value)}>
-            <option disabled selected>Add Details to File Name</option>
-            {#each fileNameOptions as option}
-              <option value={option}>{option}</option>
-            {/each}
-          </select>
-        </div>
+     <!-- Left Section -->
+<div class="flex flex-col flex-1 space-y-4">
+  <h2 class="card-title text-xl font-bold">Run Reports</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+    <!-- First Row with Select Inputs and Carriers -->
+    <select class="select select-primary w-full max-w-md" id="report-type" bind:value={selectedReport}>
+      <option disabled selected>Select Report</option>
+      {#each reportDropDown as report}
+        <option value={report.id} class="truncate">{report.name}</option>
+      {/each}
+    </select>
+
+    <select class="select select-primary w-full max-w-xs" id="report-format" bind:value={formatId}>
+      <option disabled selected>Select a Format</option>
+      {#if reportDetails}
+        {#each reportDetails.formats as format}
+          <option value={format.id}>{format.name}</option>
+        {/each}
+      {/if}
+    </select>
+
+    <div class="flex items-center space-x-2">
+      <!-- Checkbox -->
+      <div class="form-check lg:tooltip" data-tip="Run Selected Carriers Together">
+        <input type="checkbox" class="checkbox checkbox-lg" id="runCarriersTogether" bind:checked={runCarriersTogether} />
       </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+    <!-- Second Row with Filename Input and Add to Filename Dropdown -->
+    <div class="form-group flex-1">
+      <input
+        type="text"
+        id="file-name"
+        bind:value={$fileName}
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-lg"
+        aria-label="File Name"
+      />
+    </div>
+
+    <select
+      class="select select-primary w-full max-w-xs"
+      id="file-details"
+      on:change={(e) => appendToFileName(e.target.value)}
+    >
+      <option disabled selected>Add Details to File Name</option>
+      {#each fileNameOptions as option}
+        <option value={option}>{option}</option>
+      {/each}
+    </select>
+  </div>
+</div>
+
     
       <!-- Right Section -->
       <div class="flex flex-col justify-between space-y-3">
@@ -656,7 +668,7 @@
 				<button
 					type="button"
 					class={`btn btn-secondary flex-1 flex items-center justify-center ${
-						activeSection === "columns" ? "text-gray-400" : ""
+						activeSection === "columns" ? "text-primary" : ""
 					}`}
 					on:click={() => toggleSection("columns")}
 				>
@@ -666,7 +678,7 @@
 				<button
 					type="button"
 					class={`btn btn-secondary flex-1 flex items-center justify-center ${
-						activeSection === "criteria" ? "text-gray-400" : ""
+						activeSection === "criteria" ? "text-primary": ""
 					}`}
 					on:click={() => toggleSection("criteria")}
 				>
@@ -676,7 +688,7 @@
 				<button
 					type="button"
 					class={`btn btn-secondary flex-1 flex items-center justify-center ${
-						activeSection === "sort" ? "text-gray-400" : ""
+						activeSection === "sort" ? "text-primary" : ""
 					}`}
 					on:click={() => toggleSection("sort")}
 				>
@@ -686,7 +698,7 @@
 				<button
 					type="button"
 					class={`btn btn-secondary flex-1 flex items-center justify-center ${
-						activeSection === "subtotals" ? "text-gray-400" : ""
+						activeSection === "subtotals" ? "text-primary" : ""
 					}`}
 					on:click={() => toggleSection("subtotals")}
 				>
@@ -740,14 +752,14 @@
 		  <!-- Criteria Section -->
 		  {#if activeCustomizationSection === "criteria"}
 			{#each Object.keys(criteriaColumnsBySections) as section, index}
-			  <div class="mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
+			  <div class="mb-6 p-4 text-md bg-base-100 rounded-lg shadow-lg">
 				<h3 class="text-lg font-bold mb-4 ">
 				  Criteria (Section {section})
 				</h3>
   
 				<!-- Loop through criteria -->
 				{#each criteriaListBySection[section] as criteria (criteria.id)}
-				  <div class="criteria-row space-x-4 mb-4 flex items-center">
+				  <div class="criteria-row space-x-2 mb-4 flex items-center">
 					<select
 					  bind:value={criteria.column}
 					  class="select select-bordered w-full"
@@ -777,9 +789,9 @@
 					  class="input input-bordered w-full"
 					/>
   
-					<div class="form-control">
-					  <label class="cursor-pointer label">
-						<span class="label-text">Match Case</span>
+					<div class="form-control flex ">
+					  <label class="cursor-pointer label ">
+						<span class="label-text w-20 ">Match Case</span>
 						<input
 						  type="checkbox"
 						  bind:checked={criteria.matchCase}
@@ -999,7 +1011,7 @@
 	  {/if}
   
 	  {#if showScheduler}
-		<div class="card bg-primary text-primary-content shadow-xl p-4">
+		<div class="card bg-primary text-primary-content shadow-xl ">
 		  <div class="card-body">
 			{#if selectedDateOption === "RollingPeriod" && (selectedRollingPeriod === "current_week" || selectedRollingPeriod === "previous_week")}
 			  <div class="flex items-center space-x-4">
