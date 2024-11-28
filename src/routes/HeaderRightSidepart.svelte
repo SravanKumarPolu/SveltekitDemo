@@ -51,9 +51,23 @@
 
 <div class="flex flex-col justify-center items-center gap-1  ">
 	<!-- User Name -->
-	<div class="badge badge-outline text-lg p-3 text-center w-28 h-[28px] ">
-		{user}
-	</div>
+	 <!-- User Name -->
+	 <div class="relative group">
+    <div
+      class="badge badge-outline text-lg px-4 py-2 text-center max-w-[120px] overflow-hidden"
+    >
+      <span class="truncate" title="{user}">
+        {user}
+      </span>
+         <!-- Tooltip -->
+				 <div
+         class="absolute left-0 -translate-x-1/2 top-1/2  w-[10rem]   text-sm text-white bg-gray-400 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+       >
+         {user}
+       </div>
+    </div>
+ 
+  </div>
 
 	<!-- Theme Toggle -->
 	<div class="flex  items-center gap-2 w-28">

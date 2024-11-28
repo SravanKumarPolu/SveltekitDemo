@@ -4,6 +4,7 @@
 	import { writable } from "svelte/store";
 	import reportsData from "$lib/2.json";
 	import rep from "$lib/1.json";
+
 	import {
 		selectedReportStore,
 		selectedCustomersStore,
@@ -568,10 +569,10 @@
 			<div class="flex flex-col flex-1 space-y-4">
 				<h2 class="card-title text-xl font-bold">Run Reports</h2>
 
-				<div class="flex w-full  gap-5">
+				<div class="flex w-full gap-5">
 					<!-- First Row with Select Inputs and Carriers -->
 					<select
-						class="select select-primary w-full max-w-xs"
+						class="select select-sm select-primary w-full max-w-xs"
 						id="report-type"
 						bind:value={selectedReport}
 					>
@@ -584,7 +585,7 @@
 					</select>
 
 					<select
-						class="select select-primary w-full max-w-xs"
+						class="select select-sm select-primary w-full max-w-xs"
 						id="report-format"
 						bind:value={formatId}
 					>
@@ -620,13 +621,13 @@
 							id="file-name"
 							bind:value={$fileName}
 							placeholder="Type here"
-							class="input input-bordered w-full max-w-lg"
+							class="input input-sm input-bordered w-full max-w-lg"
 							aria-label="File Name"
 						/>
 					</div>
 
 					<select
-						class="select select-primary w-full max-w-xs"
+						class="select select-sm select-primary w-full max-w-xs"
 						id="file-details"
 						on:change={(e) => appendToFileName(e.target.value)}
 					>
@@ -639,12 +640,12 @@
 			</div>
 
 			<!-- Right Section -->
-			<div class="flex flex-col justify-between space-y-3">
+			<div class="flex flex-col justify-center space-y-1">
 				<!-- Personalize Report Button -->
 				<button
 					type="button"
-					class={`btn btn-primary flex items-center justify-center ${
-						activeButton === "customization" ? "text-opacity-50" : ""
+					class={`btn btn-sm btn-primary flex items-center justify-center ${
+						activeButton === "customization" ? "text-secondary" : ""
 					}`}
 					on:click={toggleCustomization}
 				>
@@ -668,8 +669,8 @@
 				<!-- Schedule a Report Button -->
 				<button
 					type="button"
-					class={`btn btn-primary flex items-center justify-center ${
-						activeButton === "scheduler" ? "text-opacity-50" : ""
+					class={`btn btn-primary btn-sm flex items-center justify-center ${
+						activeButton === "scheduler" ? "text-secondary" : ""
 					}`}
 					on:click={toggleScheduler}
 				>
@@ -692,8 +693,8 @@
 
 				<!-- Save as Blueprint Button -->
 				<button
-					class={`btn btn-primary flex items-center justify-center ${
-						activeButton === "save" ? "text-opacity-50" : ""
+					class={`btn btn-primary btn-sm flex items-center justify-center ${
+						activeButton === "save" ? "text-secondary" : ""
 					}`}
 					on:click={handleSaveAsTemplate}
 				>
@@ -717,84 +718,94 @@
 		</div>
 
 		{#if showCustomization}
-			<div class="card bg-primary text-primary-content shadow-xl p-4">
-				<div class="card-body flex flex-row space-x-4">
+			<div class="card bg-base-200 text-primary-content shadow-xl p-4  gap-4">
+				<div class="card-header justify-start ">
 					<!-- Flex container with row direction -->
-					<button
-						type="button"
-						class={`btn btn-secondary flex-1 flex items-center justify-center ${
-							activeSection === "columns" ? "text-primary" : ""
-						}`}
-						on:click={() => toggleSection("columns")}
+					<div
+						role="tablist"
+						class="tabs  justify-start flex-row tabs-lifted   flex"
 					>
-						Include/Exclude Columns
-					</button>
+						<a
+							role="tab"
+							class={`tab flex-1 ${
+								activeSection === "columns" ? "tab-active" : ""
+							}`}
+							on:click={() => toggleSection("columns")}
+						>
+							Include/Exclude Columns
+						</a>
 
-					<button
-						type="button"
-						class={`btn btn-secondary flex-1 flex items-center justify-center ${
-							activeSection === "criteria" ? "text-primary" : ""
-						}`}
-						on:click={() => toggleSection("criteria")}
-					>
-						Criteria
-					</button>
+						<a
+							role="tab"
+							class={`tab flex-1 ${
+								activeSection === "criteria" ? "tab-active" : ""
+							}`}
+							on:click={() => toggleSection("criteria")}
+						>
+							Criteria
+						</a>
 
-					<button
-						type="button"
-						class={`btn btn-secondary flex-1 flex items-center justify-center ${
-							activeSection === "sort" ? "text-primary" : ""
-						}`}
-						on:click={() => toggleSection("sort")}
-					>
-						Sort by Columns
-					</button>
+						<a
+							role="tab"
+							class={`tab flex-1 ${
+								activeSection === "sort" ? "tab-active" : ""
+							}`}
+							on:click={() => toggleSection("sort")}
+						>
+							Sort by Columns
+						</a>
 
-					<button
-						type="button"
-						class={`btn btn-secondary flex-1 flex items-center justify-center ${
-							activeSection === "subtotals" ? "text-primary" : ""
-						}`}
-						on:click={() => toggleSection("subtotals")}
-					>
-						Subtotals
-					</button>
+						<a
+							role="tab"
+							class={`tab flex-1 ${
+								activeSection === "subtotals" ? "tab-active" : ""
+							}`}
+							on:click={() => toggleSection("subtotals")}
+						>
+							Subtotals
+						</a>
+					</div>
 				</div>
 
 				{#if activeCustomizationSection === "columns"}
 					{#each Object.keys(reportColumnsBySections) as section, index}
-						<div class="flex justify-between mt-4">
+						<div class="flex justify-between  ">
 							<div
-								class="w-1/2 p-4 border border-gray-300 rounded-lg mr-2"
+								class="w-1/2 p-4 border bg-base-100 rounded-lg mr-2"
 								data-section-included={section}
 							>
-								<h3 class="text-lg font-bold mb-2">
+								<h3 class="text-lg text-primary font-bold mb-2">
 									Included (Section {section})
 								</h3>
 								<div class="sortable-items">
 									{#each reportColumnsBySections[section].included as item (item.id)}
 										<div
-											class="p-2 mb-2 bg-gray-100 border border-gray-200 rounded cursor-move"
+											class="p-2 mb-2 flex gap-1 bg-gray-100 border border-gray-200 rounded cursor-move"
 											data-id={item.id}
-										>
+										> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M12 2L9 5L10.5 6.5L12 5V9H14V5L15.5 6.5L17 5L14 2H12ZM12 22L15 19L13.5 17.5L12 19V15H10V19L8.5 17.5L7 19L10 22H12ZM2 12L5 15L6.5 13.5L5 12H9V10H5L6.5 8.5L5 7L2 10V12ZM22 12L19 9L17.5 10.5L19 12H15V14H19L17.5 15.5L19 17L22 14V12Z" fill="currentColor"/>
+										</svg>
 											{item.name}
 										</div>
 									{/each}
 								</div>
 							</div>
 							<div
-								class="w-1/2 p-4 border border-gray-300 rounded-lg ml-2"
+								class="w-1/2 p-4 border bg-base-100 rounded-lg ml-2"
 								data-section-excluded={section}
 							>
-								<h3 class="text-lg font-bold mb-2">
+								<h3 class="text-lg text-primary font-bold mb-2">
 									Excluded (Section {section})
 								</h3>
 								<div class="sortable-items">
 									{#each reportColumnsBySections[section].excluded as item (item.id)}
 										<div
-											class="p-2 mb-2 bg-gray-100 border border-gray-200 rounded cursor-move"
+											class="p-2 mb-2 flex gap-1 bg-gray-100 border border-gray-200 rounded cursor-move"
 											data-id={item.id}
 										>
+										<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M12 2L9 5L10.5 6.5L12 5V9H14V5L15.5 6.5L17 5L14 2H12ZM12 22L15 19L13.5 17.5L12 19V15H10V19L8.5 17.5L7 19L10 22H12ZM2 12L5 15L6.5 13.5L5 12H9V10H5L6.5 8.5L5 7L2 10V12ZM22 12L19 9L17.5 10.5L19 12H15V14H19L17.5 15.5L19 17L22 14V12Z" fill="currentColor"/>
+										</svg>
 											{item.name}
 										</div>
 									{/each}
@@ -807,8 +818,8 @@
 				<!-- Criteria Section -->
 				{#if activeCustomizationSection === "criteria"}
 					{#each Object.keys(criteriaColumnsBySections) as section, index}
-						<div class="mb-6 p-4 text-md bg-base-100 rounded-lg shadow-lg">
-							<h3 class="text-lg font-bold mb-4">
+						<div class="mb-4 p-4 text-md bg-base-100 rounded-lg shadow-lg">
+							<h3 class="text-lg text-primary font-bold mb-4">
 								Criteria (Section {section})
 							</h3>
 
@@ -916,60 +927,59 @@
 				{#if activeCustomizationSection === "sort"}
 					{#each Object.keys(sortableColumnsBySections) as section, index}
 						<div class="mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
-							<h3 class="text-lg font-bold mb-4">
+							<h3 class="text-lg text-primary font-bold mb-4">
 								Sort by Columns (Section {section})
 							</h3>
-                
-
 
 							<!-- Loop through sort list -->
-							<div class="flex  justify-center items-center">
+							<div class="flex justify-start items-center">
 								{#each sortListBySection[section] as sort (sort.id)}
-								<div class="sort-row space-x-4 mb-4 flex items-center flex-2 w-5/6">
-									<select
-										bind:value={sort.column}
-										class="select select-bordered w-full"
+									<div
+										class="sort-row space-x-4 mb-4 flex items-center flex-2 w-5/6"
 									>
-										{#each sortableColumnsBySections[section].included.filter((col) => col.isSortable) as column}
-											<option value={JSON.stringify(column)}>
-												{column.name}
-											</option>
-										{/each}
-									</select>
-
-									{#if sort.column}
 										<select
-											bind:value={sort.order}
-											class="select select-bordered w-full"
+											bind:value={sort.column}
+											class="select select-bordered flex-1"
 										>
-											<option value="ASC">Ascending</option>
-											<option value="DESC">Descending</option>
+											{#each sortableColumnsBySections[section].included.filter((col) => col.isSortable) as column}
+												<option value={JSON.stringify(column)}>
+													{column.name}
+												</option>
+											{/each}
 										</select>
-									{/if}
-									<div class="flex w-1/6 flex-1 justify-start">
-										<button
-										type="button"
-										on:click={() => removeSort(section, sort.id)}
-										class="btn btn-sm ml-2"
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="20"
-											height="20"
-											fill="currentColor"
-											class="bi bi-trash3 text-error"
-											viewBox="0 0 16 16"
-										>
-											<path
-												d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
-											/>
-										</svg>
-									</button></div>
-								
-								</div>
-							{/each}
+
+										{#if sort.column}
+											<select
+												bind:value={sort.order}
+												class="select select-bordered flex-1"
+											>
+												<option value="ASC">Ascending</option>
+												<option value="DESC">Descending</option>
+											</select>
+										{/if}
+										<div class="flex w-1/6 flex-1 justify-start">
+											<button
+												type="button"
+												on:click={() => removeSort(section, sort.id)}
+												class="btn btn-sm ml-2"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="20"
+													height="20"
+													fill="currentColor"
+													class="bi bi-trash3 text-error"
+													viewBox="0 0 16 16"
+												>
+													<path
+														d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+													/>
+												</svg>
+											</button>
+										</div>
+									</div>
+								{/each}
 							</div>
-						
 
 							<!-- Add Sort Button (Small, Right-Aligned) -->
 							<div class="flex justify-end">
@@ -1003,29 +1013,31 @@
 				{#if activeCustomizationSection === "subtotals"}
 					{#each Object.keys(subtotalColumnsBySections) as section, index}
 						<div class=" mb-6 p-4 bg-base-100 rounded-lg shadow-lg">
-							<h3 class="text-lg font-bold mb-4">
+							<h3 class="text-lg text-primary font-bold mb-4">
 								Subtotals (Section {section})
 							</h3>
 
-						<div class="flex  justify-center items-center">
+							<div class="flex justify-start items-center">
 								<!-- Loop through subtotals list -->
 								{#each subtotalListBySection[section] as subtotal (subtotal.id)}
-								<div class="subtotal-row space-x-4 mb-4 flex items-center flex-2 w-5/6">
-									<select
-										bind:value={subtotal.column}
-										class="flex-1 select select-bordered w-full"
+									<div
+										class="subtotal-row space-x-4 mb-4 flex items-center flex-2 w-5/6"
 									>
-										{#each subtotalColumnsBySections[section].included.filter((col) => col.isSubtotable) as column}
-											<option value={JSON.stringify(column)}>
-												{column.name}
-											</option>
-										{/each}
-									</select>
-                       <div class="flex w-1/6 flex-1 justify-start">
-												<button
+										<select
+											bind:value={subtotal.column}
+											class="flex-1 select select-bordered w-full"
+										>
+											{#each subtotalColumnsBySections[section].included.filter((col) => col.isSubtotable) as column}
+												<option value={JSON.stringify(column)}>
+													{column.name}
+												</option>
+											{/each}
+										</select>
+										<div class="flex w-1/6 flex-1 justify-start">
+											<button
 												type="button"
-												on:click={() => removeSubtotal(section , subtotal.id)}
-												class="btn btn-sm ml-2 "
+												on:click={() => removeSubtotal(section, subtotal.id)}
+												class="btn btn-sm ml-2"
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -1040,13 +1052,12 @@
 													/>
 												</svg>
 											</button>
-											 </div>
-											
-								</div>
-							{/each}
-						</div>
+										</div>
+									</div>
+								{/each}
+							</div>
 							<!-- Add Subtotal Button (Small, Right-Aligned) -->
-							<div class="flex  justify-end">
+							<div class="flex justify-end">
 								<button
 									type="button"
 									on:click={() => addSubtotal(section)}
@@ -1070,7 +1081,6 @@
 									<p>Subtotal</p>
 								</button>
 							</div>
-						
 						</div>
 					{/each}
 				{/if}
@@ -1078,7 +1088,7 @@
 		{/if}
 
 		{#if showScheduler}
-			<div class="card bg-primary text-primary-content shadow-xl">
+			<div class="card bg-base-200 text-primary-content shadow-xl">
 				<div class="card-body">
 					{#if selectedDateOption === "RollingPeriod" && (selectedRollingPeriod === "current_week" || selectedRollingPeriod === "previous_week")}
 						<div class="flex items-center space-x-4">
@@ -1345,7 +1355,7 @@
 		<!-- Generate Report Button -->
 		<div class="card-footer flex justify-end p-4 bg-base-200">
 			<button
-				class="btn btn-primary mt-1 flex items-center justify-center"
+				class="btn btn-sm btn-primary mt-1 flex items-center justify-center"
 				type="submit"
 			>
 				Generate Report
