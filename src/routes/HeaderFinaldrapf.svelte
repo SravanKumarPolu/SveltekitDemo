@@ -1,6 +1,13 @@
 <script>
-	import { page } from "$app/stores";
-
+	import { page } from "$app/stores";     
+ import { CustomersIcon } from "$lib/HeaderIcon.js"
+  import { CarrierIcon } from "$lib/HeaderIcon.js"
+   import { DateIcon } from "$lib/HeaderIcon.js"
+   import { ShipperGroupIcon } from "$lib/HeaderIcon.js"
+   import { ShippersIcon} from "$lib/HeaderIcon.js"
+   import { CurrencyIcon } from "$lib/HeaderIcon.js"
+      import { FilterIcon } from "$lib/HeaderIcon.js"
+        import { MenubarIcon } from "$lib/HeaderIcon.js"
 	// Define the navigation links array once
 	const links = [
 		{ path: "/admin", label: "Admin" },
@@ -21,6 +28,7 @@
 		selectedShippersStore,
 		selectedShipperGroupsStore,
 		selectedDateRangeStore,
+    
 	} from "$lib/headerfiltersStore"; // Import the store
 
 	import { themeStore } from '$lib/themeStore'; // Import the theme store
@@ -43,7 +51,7 @@
 		shipperGroups: "",
 		carriers: "",
 	};
-
+ let Date="12-09-1025 To 1024-8-19"
 	// Subscribe to the selectedCustomersStore to automatically update
 	selectedCustomersStore.subscribe((value) => {
 		selectedCustomers = value;
@@ -129,10 +137,16 @@
 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-lg">
 	<div class="flex-1 relative navbar bg-base-100 px-4">
     <!-- Hide logo on small screens and show it on larger screens -->
-    <a href="/profile" class="hidden lg:flex items-center text-xl font-bold space-x-2">
-    
-      <span class="text-primary">P.V.Sravan</span>
+    <a href="/profile" class="hidden lg:flex items-center text-xl font-bold space-x-1 group">
+      <span class="text-primary w-28 truncate">P.V.Sravan Kumar</span>
+      <span
+        class="absolute left-0 top-full mt-1 hidden bg-gray-800 text-white text-sm px-2 py-1 rounded group-hover:block"
+      >
+        P.V.Sravan Kumar
+      </span>
     </a>
+    
+    
   
     <!-- Desktop Navigation -->
     <nav class="hidden lg:flex">
@@ -154,20 +168,7 @@
         class="btn btn-square btn-ghost"
         on:click={() => (showMenu = !showMenu)}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
+      {@html MenubarIcon}
       </button>
     </div>
   
@@ -202,251 +203,114 @@
   >
     <!-- Display selected filters in the navbar -->
     <div
-      class="flex flex-col sm:flex-row sm:gap-2 sm:w-auto h-auto mb-2 md:h-[8rem] w-full md:w-[18.8rem] gap-4 md:grid md:grid-cols-4 lg:grid-cols-4 font-bold p-2"
-    >
-      <!-- Item 1 (Customers) -->
-      <div class="flex items-center col-span-2 space-x-2 relative group">
-     
-          <div class="flex items-center">
-            <div class="badge badge-primary">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <!-- User group icon -->
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7 19C6.44772 19 6 18.5523 6 18C6 16.3077 6.81186 15.0179 7.98298 14.1851C9.12436 13.3734 10.5892 13 12 13C13.4108 13 14.8756 13.3734 16.017 14.1851C17.1881 15.0178 18 16.3076 18 18C18 18.5523 17.5523 19 17 19C15.6012 19 8.39878 19 7 19Z"
-                fill="currentColor"
-              />
-              <path
-                d="M19.5 18C19.5 18 19.5 18 19.5 18C19.5 16.0565 18.6712 14.498 17.4529 13.4137C18.0999 13.1329 18.8086 13 19.5 13C20.5581 13 21.6567 13.3112 22.5128 13.9875C23.3911 14.6815 24 15.7564 24 17.1667C24 17.6269 23.6642 18 23.25 18H19.5Z"
-                fill="currentColor"
-              />
-              <path
-                d="M6.54712 13.4137C5.32885 14.498 4.5 16.0564 4.5 18C4.5 18 4.5 18 4.5 18L0.75 18C0.335786 18 0 17.6269 0 17.1667C0 15.7564 0.608892 14.6815 1.48723 13.9875C2.34327 13.3112 3.44193 13 4.5 13C5.19138 13 5.90009 13.1329 6.54712 13.4137Z"
-                fill="currentColor"
-              />
-              <path
-                d="M12 5C10.067 5 8.5 6.567 8.5 8.5C8.5 10.433 10.067 12 12 12C13.933 12 15.5 10.433 15.5 8.5C15.5 6.567 13.933 5 12 5Z"
-                fill="currentColor"
-              />
-              <path
-                d="M4.5 7C3.11929 7 2 8.11929 2 9.5C2 10.8807 3.11929 12 4.5 12C5.88071 12 7 10.8807 7 9.5C7 8.11929 5.88071 7 4.5 7Z"
-                fill="currentColor"
-              />
-              <path
-                d="M19.5 7C18.1193 7 17 8.11929 17 9.5C17 10.8807 18.1193 12 19.5 12C20.8807 12 22 10.8807 22 9.5C22 8.11929 20.8807 7 19.5 7Z"
-                fill="currentColor"
-              />
-            </svg>
+    class="flex flex-col sm:flex-row sm:gap-2 sm:w-auto h-auto mb-2 md:h-[8rem] w-full md:w-[19rem] 
+     md:grid md:grid-cols-4 lg:grid-cols-4 font-bold "
+  >
 
-          
-          </div>
-
-          <span>&#58;<span> </span></span>
+    <!-- Item 1 (Customers) -->
+    <div class="flex items-center col-span-2 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-primary">
+          <span>{@html CustomersIcon}</span>
         </div>
-        
-        <span
-          class="truncate max-w-[150px]"
-          title="{appliedFilters.customersTooltip}"
-        >
-          {appliedFilters.customers}
-        </span>
-        <div
-          class="absolute hidden group-hover:flex bg-gray-800 text-white text-sm rounded-md p-2 shadow-md max-w-xs z-10 whitespace-normal"
-          style="top: 100%; left: 0; transform: translateY(0.5rem);"
-        >
-          {appliedFilters.customersTooltip}
-        </div>
+        <span>&#58;</span>
       </div>
-  
-      <!-- Item 2 (Carriers) -->
-      <div class="flex items-center col-span-2 space-x-2 relative group">
-        <div  class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center">
-          <div class="badge badge-secondary">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-truck"
-            ><path
-              d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
-            /><path d="M15 18H9" /><path
-              d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"
-            /><circle cx="17" cy="18" r="2" /><circle
-              cx="7"
-              cy="18"
-              r="2"
-            /></svg
-          >
-          </div>
-
-          <span>&#58;<span> </span></span>
-          </div>
-        <span
-          class="truncate max-w-[150px]"
-          title="{appliedFilters.carriersTooltip}"
-        >
-          {appliedFilters.carriers}
-        </span>
-        <div
-          class="absolute hidden group-hover:flex bg-gray-800 text-white text-sm rounded-md p-2 shadow-md max-w-xs z-10 whitespace-normal"
-          style="top: 100%; left: 0; transform: translateY(0.5rem);"
-        >
-          {appliedFilters.carriersTooltip}
-        </div>
-      </div>
-  
-      <!-- Item 3 (Date) -->
-      <div class="flex items-center col-span-4 space-x-2 relative">
-        <div class="badge badge-accent">
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"></path>
-          </svg>
-        </div>
-        <span>&#58;<span> </span></span>
-        <span class="truncate max-w-[300px]" title="Invoice date: 12-09-1025 to 1024-8-19">
-          Invoice date: 12-09-1025 to 1024-8-19
-        </span>
-      </div>
-  
-      <!-- Item 4 (Shipper Groups) -->
-      <div class="flex items-center col-span-2 space-x-2 relative group">
-        
-          <div
-          class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center"
-        ><div class="badge badge-info">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            width="24"
-            height="24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 17v-6a2 2 0 012-2h3m4 9a2 2 0 104 0 2 2 0 00-4 0zm-9 2a2 2 0 100-4 2 2 0 000 4zm11-4V9a2 2 0 00-2-2h-1l-2-2H8a2 2 0 00-2 2v9h13z"
-            />
-          </svg>
-
-         
-        </div>
-        <span>&#58;<span> </span></span>
-        </div>
-        <span
-          class="truncate max-w-[150px]"
-          title="{appliedFilters.shipperGroupsTooltip}"
-        >
-          {appliedFilters.shipperGroups}
-        </span>
-        <div
-          class="absolute hidden group-hover:flex bg-gray-800 text-white text-sm rounded-md p-2 shadow-md max-w-xs z-10 whitespace-normal"
-          style="top: 100%; left: 0; transform: translateY(0.5rem);"
-        >
-          {appliedFilters.shipperGroupsTooltip}
-        </div>
-      </div>
-  
-      <!-- Item 5 (Shippers) -->
-      <div class="flex items-center col-span-2 space-x-2 relative group">
-        
-          <div
-          class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center"
-        >
-        <div class="badge badge-warning">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              d="M21 16V8l-9-5l-9 5v8l9 5l9-5zm-9-11v10"
-            />
-          </svg>
-
-       
-        </div>
-        <span>&#58;<span> </span></span>
-        </div>
-        <span
-          class="truncate max-w-[150px]"
-          title="{appliedFilters.shippersTooltip}"
-        >
-          {appliedFilters.shippers}
-        </span>
-        <div
-          class="absolute hidden group-hover:flex bg-gray-800 text-white text-sm rounded-md p-2 shadow-md max-w-xs z-10 whitespace-normal"
-          style="top: 100%; left: 0; transform: translateY(0.5rem);"
-        >
-          {appliedFilters.shippersTooltip}
-        </div>
-      </div>
-  
-      <!-- Item 6 (Currencies) -->
-      <div class="flex items-center col-span-3 space-x-2 relative group">
-     
-          <div
-										class="flex w-[2rem] min-w-[2rem] gap-1 justify-center items-center"
-									>
-                  <div class="badge badge-success">
-										<svg
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<!-- Currency icon -->
-											<path
-												fill-rule="evenodd"
-												clip-rule="evenodd"
-												d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.39.49-4.83-.15-6.54-1.72C5.16 17.16 5 15.12 5.89 13.46c.44-.83 1.15-1.49 2.05-1.84.86-.32 1.78-.45 2.67-.45 1.71 0 3.3.82 4.28 2.1.29.38.67.69 1.09.89v.05c-.69 1.45-1.92 2.7-3.48 3.39v.33zM16 11V7.07c-1.15.16-2.22.64-3 1.33V11h3zM13 4.07c-.47 0-.94.04-1.4.12C13.31 4.55 15 6.1 15 8v3h3V8c0-2.94-2.39-5.33-5.33-5.93-.34-.07-.69-.1-1.04-.1z"
-												fill="currentColor"
-											/>
-										</svg>
-
-										
-									</div>
-                  <span>&#58;<span> </span></span>
-        </div>
-        <span
-          class="truncate max-w-[150px]"
-          title="{appliedFilters.selectedCurrenciesTooltip}"
-        >
-          {appliedFilters.selectedCurrencies}
-        </span>
-        <div
-          class="absolute hidden group-hover:flex bg-gray-800 text-white text-sm rounded-md p-2 shadow-md max-w-xs z-10 whitespace-normal"
-          style="top: 100%; left: 0; transform: translateY(0.5rem);"
-        >
-          {appliedFilters.selectedCurrenciesTooltip}
-        </div>
-      </div>
+      <span class="truncate w-[160px]">{appliedFilters.customers}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30"
+      >
+        {appliedFilters.customers}
+      </span>
     </div>
+  
+    <!-- Item 2 (Carriers) -->
+    <div class="flex items-center col-span-2 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-secondary">
+          <span>{@html CarrierIcon}</span>
+        </div>
+        <span>&#58;</span>
+      </div>
+      <span class="truncate w-[160px]">{appliedFilters.carriers}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30"
+      >
+        {appliedFilters.carriers}
+      </span>
+    </div>
+  
+    <!-- Item 3 (Date) -->
+    <div class="flex items-center col-span-4 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-accent">
+          <span>{@html DateIcon}</span>
+        </div>
+        <span>&#58;</span>
+      </div>
+      <span class="truncate w-[320px]">Invoice: {Date}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30 max-w-[400px] whitespace-normal"
+      >
+        Invoice date: {Date}
+      </span>
+    </div>
+  
+    <!-- Item 4 (Shipper Groups) -->
+    <div class="flex items-center col-span-2 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-info">
+          <span>{@html ShipperGroupIcon}</span>
+        </div>
+        <span>&#58;</span>
+      </div>
+      <span class="truncate w-[160px]">{appliedFilters.shipperGroups}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30"
+      >
+        {appliedFilters.shipperGroups}
+      </span>
+    </div>
+  
+    <!-- Item 5 (Shippers) -->
+    <div class="flex items-center col-span-2 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-warning">
+          <span>{@html ShippersIcon}</span>
+        </div>
+        <span>&#58;</span>
+      </div>
+      <span class="truncate w-[160px]">{appliedFilters.shippers}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30"
+      >
+        {appliedFilters.shippers}
+      </span>
+    </div>
+  
+    <!-- Item 6 (Currencies) -->
+    <div class="flex items-center col-span-3 space-x-3 relative group">
+      <div class="flex items-center">
+        <div class="badge badge-success">
+          <span>{@html CurrencyIcon}</span>
+        </div>
+        <span>&#58;</span>
+      </div>
+      <span class="truncate w-[160px]">{appliedFilters.selectedCurrencies}</span>
+      <!-- Tooltip for hover -->
+      <span
+        class="absolute left-0 top-full  hidden bg-gray-700 text-white text-sm px-3 py-2 rounded group-hover:block z-30"
+      >
+        {appliedFilters.selectedCurrencies}
+      </span>
+    </div>
+  </div>
+  
+
   </div>
   
   
@@ -454,20 +318,7 @@
 
 			<!-- Filter Icon (Shown only when activeMainPage is 'reports', 'dashboard', or 'parcel') -->
 			<div class="btn btn-square btn-ghost item-center">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-5.32 5.32A3 3 0 0014 14.83V19a1 1 0 01-.553.894l-4 2A1 1 0 018 21v-6.17a3 3 0 00-.88-2.12l-5.32-5.32A1 1 0 011 6V4z"
-					/>
-				</svg>
+        <span>{@html FilterIcon }</span> 
 			</div>
 		</label>
 	
@@ -504,18 +355,24 @@
   <!-- User Name -->
   <div class="relative group ">
     <div
-      class="badge badge-outline text-lg px-4 py-2 h-[28px] text-center max-w-[120px] overflow-hidden"
-    >
-      <span class="truncate" title="{user}">
-        {user}
+  class="badge badge-outline text-lg px-4 py-2 h-[28px] text-center max-w-[120px] overflow-hidden"
+>
+      <span class="text-primary w-20 truncate">   {user}</span>
+      <span
+        class="absolute left-0 top-full w-auto mt-1 hidden bg-primary text-secondary text-sm px-2 py-1 rounded group-hover:block"
+      >
+      {user}
       </span>
-     
     </div>
+    
  
   </div>
   
   
-  
+
+
+ 
+
   
     <!-- Theme Toggle -->
     <div class="flex  items-center gap-2 w-28">

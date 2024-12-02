@@ -14,9 +14,9 @@ export default {
   ],
   daisyui: {
     themes: [
-      'default', 'retro', 'cyberpunk', 'valentine', 'aqua', 'dark', // Existing themes
+      'default', 'emerald', 'retro', 'cyberpunk', 'valentine', 'aqua', 'dark', // Existing themes
       'luxury', 'dracula', 'coffee', 'autumn', 'emerald', 'business', 'forest', // New themes
-      'night', 'halloween', 'pastel', 'fantasy', 'emerald', 'synthwave',
+      'night', 'halloween', 'pastel', 'fantasy', 'synthwave',
       'winter', 'lofi',
     ],
   },

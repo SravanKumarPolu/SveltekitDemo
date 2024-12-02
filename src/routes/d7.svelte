@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Sortable from "sortablejs";
   import data from "$lib/dashboards.json";
-
+  import { SortingIcon } from '$lib/SortorderIcon.js';
   let newDashboardName = "";
   let dashboards = [];
   let charts = [];
@@ -330,10 +330,8 @@
             </div>
           {:else}
 
-          <div class=" flex gap-1">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L9 5L10.5 6.5L12 5V9H14V5L15.5 6.5L17 5L14 2H12ZM12 22L15 19L13.5 17.5L12 19V15H10V19L8.5 17.5L7 19L10 22H12ZM2 12L5 15L6.5 13.5L5 12H9V10H5L6.5 8.5L5 7L2 10V12ZM22 12L19 9L17.5 10.5L19 12H15V14H19L17.5 15.5L19 17L22 14V12Z" fill="currentColor"/>
-            </svg>
+          <div class=" flex gap-1 items-center">
+         <span>{@html SortingIcon}</span>   
               <span
                 class="font-medium cursor-pointer flex-grow"
                 on:click={() => selectDashboard(dashboard.id)}
@@ -471,10 +469,8 @@
                 </button>
               </div>
             {:else}
-                       <div class=" flex gap-1">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L9 5L10.5 6.5L12 5V9H14V5L15.5 6.5L17 5L14 2H12ZM12 22L15 19L13.5 17.5L12 19V15H10V19L8.5 17.5L7 19L10 22H12ZM2 12L5 15L6.5 13.5L5 12H9V10H5L6.5 8.5L5 7L2 10V12ZM22 12L19 9L17.5 10.5L19 12H15V14H19L17.5 15.5L19 17L22 14V12Z" fill="currentColor"/>
-                        </svg>
+                       <div class=" flex items-center gap-1">
+                        <span>{@html SortingIcon}</span>   
                           <span class="font-medium flex-grow">{chart.name}</span>
                        </div>
               <div class="ml-4 flex gap-2">

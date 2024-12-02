@@ -1,0 +1,3 @@
+export const SortingIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2L9 5L10.5 6.5L12 5V9H14V5L15.5 6.5L17 5L14 2H12ZM12 22L15 19L13.5 17.5L12 19V15H10V19L8.5 17.5L7 19L10 22H12ZM2 12L5 15L6.5 13.5L5 12H9V10H5L6.5 8.5L5 7L2 10V12ZM22 12L19 9L17.5 10.5L19 12H15V14H19L17.5 15.5L19 17L22 14V12Z" fill="currentColor" />
+</svg>`;
